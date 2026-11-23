@@ -17,6 +17,7 @@ from app.config import get_settings
 
 bearer = HTTPBearer(auto_error=False)
 ALGORITHMS = ["ES256", "RS256"]
+CLOCK_SKEW_LEEWAY_S = 30  # tolerate small clock differences; signature, audience and issuer stay strict
 
 
 @dataclass(frozen=True)
@@ -35,7 +36,12 @@ class TokenVerifier:
         try:
             key = self._jwks.get_signing_key_from_jwt(token)
             claims: dict[str, Any] = jwt.decode(
-                token, key.key, algorithms=ALGORITHMS, audience="authenticated", issuer=self.issuer
+                token,
+                key.key,
+                algorithms=ALGORITHMS,
+                audience="authenticated",
+                issuer=self.issuer,
+                leeway=CLOCK_SKEW_LEEWAY_S,  # a token issued "in the future" by a few seconds is fine
             )
         except jwt.PyJWTError as e:
             raise HTTPException(401, "Invalid or expired sign-in") from e
