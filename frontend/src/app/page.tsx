@@ -20,6 +20,9 @@ export default function Home() {
           <Button asChild variant="secondary">
             <Link href="/compare">{t("compare.link")}</Link>
           </Button>
+          <Button asChild variant="secondary">
+            <Link href="/documents">{t("nav.documents")}</Link>
+          </Button>
         </div>
         <p className="rounded-2xl bg-teal-100 px-4 py-3 text-[15px] text-ink-2">{t("home.scope")}</p>
         <Disclaimer text={t("common.disclaimer")} />

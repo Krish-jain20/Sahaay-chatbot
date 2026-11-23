@@ -158,3 +158,8 @@ def test_upload_response_never_contains_full_numbers(client):
         "/documents", data={"doc_type": "aadhaar"}, files={"file": ("a.png", img, "image/png")}
     ).text
     assert "234567890124" not in text and "2345 6789" not in text and "0124" in text
+
+
+def test_doc_types_listed(client):
+    ids = {d["id"] for d in client.get("/doc-types").json()}
+    assert {"income_certificate", "aadhaar", "bank_passbook"} <= ids

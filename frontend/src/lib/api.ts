@@ -42,3 +42,76 @@ export async function deleteMyData(): Promise<boolean> {
 export async function reportIncorrect(serviceId: string, note: string): Promise<boolean> {
   return (await authed("/reports/incorrect", { method: "POST", body: JSON.stringify({ service_id: serviceId, note }) })).ok;
 }
+
+// ---- Cases and documents ----------------------------------------------------------------
+
+export interface Check {
+  doc_type: string;
+  required: boolean;
+  status: "ok" | "missing" | "expired" | "too_old";
+  evaluated: "scanned_and_confirmed" | "user_declared" | "not_provided";
+  issue_date: string | null;
+  expires_on: string | null;
+}
+export interface Readiness {
+  completed: number;
+  total: number;
+  checks: Check[];
+}
+export interface CaseView {
+  id: string;
+  service_id: string;
+  readiness: Readiness;
+}
+export interface DocTypeInfo {
+  id: string;
+  extract_fields: string[];
+  required_fields: string[];
+}
+export interface ScanResult {
+  doc_type: string;
+  fields: Record<string, string | number | null>;
+  findings: { code: string; field: string | null }[];
+}
+
+export async function openCase(serviceId: string): Promise<CaseView | null> {
+  const created = await authed("/cases", { method: "POST", body: JSON.stringify({ service_id: serviceId }) });
+  if (!created.ok) return null;
+  const { id } = (await created.json()) as { id: string };
+  const res = await authed(`/cases/${id}`);
+  return res.ok ? ((await res.json()) as CaseView) : null;
+}
+
+export async function loadDocTypes(): Promise<DocTypeInfo[]> {
+  const res = await authed("/doc-types");
+  return res.ok ? ((await res.json()) as DocTypeInfo[]) : [];
+}
+
+/** Upload for reading only. The backend processes it in memory and returns masked fields. */
+export async function scanDocument(file: File, docType: string): Promise<ScanResult | { error: string }> {
+  const token = await getAccessToken();
+  const form = new FormData();
+  form.append("doc_type", docType);
+  form.append("file", file);
+  const res = await fetch(`${API_URL}/documents`, {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: form,
+  });
+  if (res.ok) return (await res.json()) as ScanResult;
+  const body = (await res.json().catch(() => ({}))) as { detail?: string };
+  return { error: body.detail ?? "other" };
+}
+
+export async function saveDocument(
+  caseId: string,
+  docType: string,
+  fields: Record<string, string | number | null>,
+  selfDeclared: boolean,
+): Promise<Readiness | null> {
+  const res = await authed(`/cases/${caseId}/documents`, {
+    method: "POST",
+    body: JSON.stringify({ doc_type: docType, fields, self_declared: selfDeclared }),
+  });
+  return res.ok ? ((await res.json()) as { readiness: Readiness }).readiness : null;
+}
