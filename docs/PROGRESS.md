@@ -43,8 +43,20 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 | S2-12 eval set | done | |
 | S2-13 Playwright acceptance flow | done | 6 tests, offline (stub AI, no Supabase): `cd frontend && PW_CHROMIUM=<chrome path> pnpm e2e` |
 
-## Stages 3 to 6
-Not started: documents and OCR (3), forms and complaints (4), glossary, screenshots, journey, dashboard (5),
+## Stage 3: Documents
+| ID | Status | Notes |
+|---|---|---|
+| S3-01 | done | `POST /documents`, type and size checks, in memory; test proves nothing is written to disk |
+| S3-02 | done | PDFs rendered with PyMuPDF; blur, resolution and blank-page checks (OpenCV) |
+| S3-03 | done | Tesseract English+Hindi via stdin; extractors for income certificate, Aadhaar, PAN, passbook, marksheet; tested on synthetic documents only |
+| S3-04 | done | IDs masked inside the extractors; tests check no full number in results, responses or logs |
+| S3-05 | todo | needs cases (Stage 5) to attach confirmed fields |
+| S3-06 | todo | readiness checker (expired, missing) not started |
+| S3-07 | done | document text is parsed by fixed patterns only and never reaches a model; injection fixture is inert |
+| S3-08 | todo | upload and readiness UI |
+
+## Stages 4 to 6
+Not started: forms and complaints (4), glossary, screenshots, journey, dashboard (5),
 email sign-in, privacy page, Postgres checkpointer, Docker and deploy, README polish (6).
 Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "doc_types": [
+    {"id": "income_certificate", "name": {"en": "Income Certificate", "hi": "आय प्रमाण पत्र", "hn": "Aay Praman Patra"},
+     "extract_fields": ["holder_name", "annual_income_inr", "issue_date", "issuing_authority"],
+     "required_fields": ["holder_name", "annual_income_inr", "issue_date"],
+     "quality": {"min_dpi": 150, "min_blur_score": 60}},
+    {"id": "aadhaar", "name": {"en": "Aadhaar card", "hi": "आधार कार्ड", "hn": "Aadhaar card"},
+     "extract_fields": ["aadhaar_masked"], "required_fields": ["aadhaar_masked"],
+     "quality": {"min_dpi": 150, "min_blur_score": 60}},
+    {"id": "pan", "name": {"en": "PAN card", "hi": "पैन कार्ड", "hn": "PAN card"},
+     "extract_fields": ["pan_masked"], "required_fields": ["pan_masked"],
+     "quality": {"min_dpi": 150, "min_blur_score": 60}},
+    {"id": "bank_passbook", "name": {"en": "Bank passbook", "hi": "बैंक पासबुक", "hn": "Bank passbook"},
+     "extract_fields": ["holder_name", "account_masked", "ifsc"], "required_fields": ["account_masked", "ifsc"],
+     "quality": {"min_dpi": 150, "min_blur_score": 60}},
+    {"id": "marksheet", "name": {"en": "Marksheet", "hi": "अंक पत्र", "hn": "Marksheet"},
+     "extract_fields": ["holder_name", "percentage"], "required_fields": ["percentage"],
+     "quality": {"min_dpi": 150, "min_blur_score": 60}}
+  ]
+}

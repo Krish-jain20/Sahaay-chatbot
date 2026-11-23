@@ -3,12 +3,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, chat, compare, me, services
+from app.api import auth, chat, compare, documents, me, services
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
 from app.graph.graph import build_graph
 from app.llm.client import LLM
+from app.ocr.pipeline import load_doc_types
 
 
 @asynccontextmanager
@@ -17,6 +18,7 @@ async def lifespan(app: FastAPI):
     app.state.catalog = load_catalog(settings.data_dir)
     app.state.llm = LLM()
     app.state.graph = build_graph()
+    app.state.doc_types = load_doc_types(settings.data_dir)
     app.state.store = (
         SupabaseStore(settings.supabase_url, settings.supabase_secret_key)
         if settings.supabase_url and settings.supabase_secret_key
@@ -36,6 +38,7 @@ app.add_middleware(
 app.include_router(chat.router)
 app.include_router(services.router)
 app.include_router(compare.router)
+app.include_router(documents.router)
 app.include_router(me.router)
 
 
