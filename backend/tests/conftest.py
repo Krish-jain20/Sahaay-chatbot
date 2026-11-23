@@ -1,9 +1,12 @@
 import pytest
 from fastapi.testclient import TestClient
 
+import app.api.chat as chat_api
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.main import app
+
+chat_api.TOKEN_DELAY_S = 0
 
 
 @pytest.fixture(scope="session")

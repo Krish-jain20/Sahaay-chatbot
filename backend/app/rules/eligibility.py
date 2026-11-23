@@ -10,7 +10,7 @@ from datetime import date
 from enum import StrEnum
 from typing import Any
 
-from app.data.models import Exclusion, Rule, ServiceRecord
+from app.data.models import Condition, Exclusion, Rule, ServiceRecord
 
 
 class RuleResult(StrEnum):
@@ -90,7 +90,7 @@ def apply_op(op: str, actual: Any, expected: Any, today: date) -> bool:
     raise ValueError(f"unknown operator {op}")
 
 
-def evaluate_rule(rule: Rule | Exclusion, facts: dict[str, Fact], today: date) -> RuleResult:
+def evaluate_rule(rule: Rule | Exclusion | Condition, facts: dict[str, Fact], today: date) -> RuleResult:
     fact = facts.get(rule.field)
     if fact is None or not fact.confirmed or fact.value is None:
         return RuleResult.UNKNOWN
@@ -100,11 +100,21 @@ def evaluate_rule(rule: Rule | Exclusion, facts: dict[str, Fact], today: date) -
         return RuleResult.UNKNOWN
 
 
+def _outcome(rule: Rule, facts: dict[str, Fact], today: date) -> RuleOutcome | None:
+    """None when the rule does not apply (its applies_if condition is confirmed false)."""
+    if rule.applies_if is not None:
+        cond = evaluate_rule(rule.applies_if, facts, today)
+        if cond is RuleResult.NOT_MET:
+            return None
+        if cond is RuleResult.UNKNOWN:
+            return RuleOutcome(
+                rule.id, rule.applies_if.field, rule.required, RuleResult.UNKNOWN, rule.source_ref
+            )
+    return RuleOutcome(rule.id, rule.field, rule.required, evaluate_rule(rule, facts, today), rule.source_ref)
+
+
 def check(record: ServiceRecord, facts: dict[str, Fact], today: date) -> EligibilityResult:
-    outcomes = [
-        RuleOutcome(r.id, r.field, r.required, evaluate_rule(r, facts, today), r.source_ref)
-        for r in record.eligibility.rules
-    ]
+    outcomes = [o for r in record.eligibility.rules if (o := _outcome(r, facts, today)) is not None]
     exclusions_hit = [x.id for x in record.exclusions if evaluate_rule(x, facts, today) is RuleResult.MET]
     required = [o for o in outcomes if o.required]
     if exclusions_hit or any(o.result is RuleResult.NOT_MET for o in required):
@@ -113,5 +123,5 @@ def check(record: ServiceRecord, facts: dict[str, Fact], today: date) -> Eligibi
         verdict = Verdict.INCOMPLETE
     else:
         verdict = Verdict.LIKELY
-    unknown = [o.field for o in required if o.result is RuleResult.UNKNOWN]
+    unknown = list(dict.fromkeys(o.field for o in required if o.result is RuleResult.UNKNOWN))
     return EligibilityResult(record.id, verdict, outcomes, exclusions_hit, unknown)

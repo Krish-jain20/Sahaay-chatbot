@@ -85,6 +85,8 @@ export function Chat() {
           patchBot((m) => ({ ...m, citations: [...m.citations, data as Citation] }));
         } else if (event === "chips") {
           patchBot((m) => ({ ...m, chips: (data as { chips: Chip[] }).chips }));
+        } else if (event === "error") {
+          patchBot((m) => ({ ...m, note: (data as { message: string }).message }));
         } else if (event === "done" && (data as { stopped?: boolean }).stopped) {
           patchBot((m) => ({ ...m, note: t("stopped") }));
         }
@@ -131,9 +133,13 @@ export function Chat() {
         {messages.length === 0 && (
           <div className="space-y-3 text-center text-ink-2">
             <p>{t("empty")}</p>
-            <Button variant="chip" onClick={() => void ask(t("suggestion"), t("suggestion"), facts)}>
-              {t("suggestion")}
-            </Button>
+            <div className="flex flex-col items-center gap-2">
+              {(["suggestion", "suggestion2", "suggestion3"] as const).map((k) => (
+                <Button key={k} variant="chip" className="whitespace-normal text-left" onClick={() => void ask(t(k), t(k), facts)}>
+                  {t(k)}
+                </Button>
+              ))}
+            </div>
           </div>
         )}
         {messages.map((m, i) =>

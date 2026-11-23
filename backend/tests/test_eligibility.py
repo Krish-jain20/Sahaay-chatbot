@@ -60,3 +60,17 @@ def test_bad_type_is_unknown_not_crash(catalog):
     rec2 = rec.model_copy(update={"eligibility": rec.eligibility.model_copy(update={"rules": [rule]})})
     res = check(rec2, {"state_of_residence": Fact("Delhi", True)}, TODAY)
     assert res.rules[0].result is RuleResult.UNKNOWN
+
+
+def test_applies_if(catalog):
+    rec = catalog.services["delhi-merit-scholarship-scstobc"]
+    base = {"occupation": Fact("student", True), "previous_year_marks_percent": Fact(70, True)}
+    # Category unknown: the OBC-only income rule is unknown too, never met.
+    res = check(rec, base, TODAY)
+    assert res.verdict is Verdict.INCOMPLETE and "social_category" in res.unknown_fields
+    # SC: income rule does not apply.
+    res = check(rec, {**base, "social_category": Fact("sc", True)}, TODAY)
+    assert res.verdict is Verdict.LIKELY and "r4" not in [o.rule_id for o in res.rules]
+    # OBC without income: unknown.
+    res = check(rec, {**base, "social_category": Fact("obc", True)}, TODAY)
+    assert res.unknown_fields == ["annual_family_income_inr"]

@@ -52,12 +52,19 @@ class Benefit(Strict):
     source_ref: str
 
 
+class Condition(Strict):
+    field: str
+    op: Op
+    value: Any = None
+
+
 class Rule(Strict):
     id: str
     field: str
     op: Op
     value: Any = None
     required: bool = True
+    applies_if: Condition | None = None  # rule only applies when this condition is met
     label: LText
     source_ref: str
 
@@ -99,7 +106,7 @@ class Fees(Strict):
 
 class Timeline(Strict):
     sla_days: int | None
-    day_type: Literal["working", "calendar"]
+    day_type: Literal["working", "calendar"] | None
     source_ref: str
 
 

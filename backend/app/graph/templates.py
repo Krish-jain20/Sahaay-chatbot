@@ -41,30 +41,70 @@ T: dict[str, dict[Lang, str]] = {
         "hn": "Eligibility check karne se pehle mujhe aapse kuch details chahiye.",
     },
     "verify_locally_note": {
-        "en": "Fees and processing time are not verified yet, so please verify them locally.",
-        "hi": "फ़ीस और समय अभी सत्यापित नहीं हैं, कृपया स्थानीय रूप से पुष्टि करें।",
-        "hn": "Fees aur processing time abhi verified nahi hain, please locally verify karein.",
+        "en": "Some fees or times are not on the official pages, so please verify them locally.",
+        "hi": "कुछ फ़ीस या समय आधिकारिक पेज पर नहीं हैं, कृपया स्थानीय रूप से पुष्टि करें।",
+        "hn": "Kuch fees ya time official pages par nahi hain, please locally verify karein.",
     },
     "refusal.no_source": {
-        "en": "I don't have verified information on that yet. Right now I can help with the Delhi income certificate.",
-        "hi": "इसकी सत्यापित जानकारी अभी मेरे पास नहीं है। अभी मैं दिल्ली आय प्रमाण पत्र में मदद कर सकता हूँ।",
-        "hn": "Iski verified jaankari abhi mere paas nahi hai. Abhi main Delhi income certificate mein madad kar sakta hoon.",
+        "en": "I don't have verified information on that yet. Right now I can help with three Delhi services: income certificate, the SC/ST/OBC merit scholarship and old-age pension.",
+        "hi": "इसकी सत्यापित जानकारी अभी मेरे पास नहीं है। अभी मैं दिल्ली की तीन सेवाओं में मदद कर सकता हूँ: आय प्रमाण पत्र, SC/ST/OBC मेरिट छात्रवृत्ति और वृद्धावस्था पेंशन।",
+        "hn": "Iski verified jaankari abhi mere paas nahi hai. Abhi main Delhi ki teen services mein madad kar sakta hoon: income certificate, SC/ST/OBC merit scholarship aur old-age pension.",
     },
-    "chip.confirm.state_of_residence": {
-        "en": "Yes, I live in {value}",
-        "hi": "हाँ, मैं {value} में रहता/रहती हूँ",
-        "hn": "Haan, main {value} mein rehta/rehti hoon",
+    "error.busy": {
+        "en": "I'm getting too many requests right now. Please try again in a minute.",
+        "hi": "अभी बहुत ज़्यादा अनुरोध आ रहे हैं। कृपया एक मिनट बाद फिर कोशिश करें।",
+        "hn": "Abhi bahut zyada requests aa rahi hain. Please ek minute baad try karein.",
     },
-    "chip.ask.state_of_residence": {
+    "prereq.note": {
+        "en": "You may need this first: {names}.",
+        "hi": "पहले इसकी ज़रूरत हो सकती है: {names}।",
+        "hn": "Pehle iski zaroorat ho sakti hai: {names}.",
+    },
+    "chip.confirm_said": {
+        "en": "Yes, that's right: {facts}",
+        "hi": "हाँ, यह सही है: {facts}",
+        "hn": "Haan, yeh sahi hai: {facts}",
+    },
+    "opt.state.delhi": {
         "en": "I live in Delhi",
         "hi": "मैं दिल्ली में रहता/रहती हूँ",
         "hn": "Main Delhi mein rehta/rehti hoon",
     },
-    "chip.ask.state_other": {
+    "opt.state.other": {
         "en": "I live outside Delhi",
         "hi": "मैं दिल्ली से बाहर रहता/रहती हूँ",
         "hn": "Main Delhi se bahar rehta/rehti hoon",
     },
+    "opt.cat.sc": {"en": "SC", "hi": "SC", "hn": "SC"},
+    "opt.cat.st": {"en": "ST", "hi": "ST", "hn": "ST"},
+    "opt.cat.obc": {"en": "OBC", "hi": "OBC", "hn": "OBC"},
+    "opt.cat.general": {"en": "General / other", "hi": "सामान्य / अन्य", "hn": "General / other"},
+    "opt.occ.student": {
+        "en": "I'm a college student",
+        "hi": "मैं कॉलेज में पढ़ता/पढ़ती हूँ",
+        "hn": "Main college mein padhta/padhti hoon",
+    },
+    "opt.occ.other": {"en": "I'm not a student", "hi": "मैं छात्र नहीं हूँ", "hn": "Main student nahi hoon"},
+    "opt.age.60": {"en": "Age 60 to 69", "hi": "उम्र 60 से 69", "hn": "Umar 60 se 69"},
+    "opt.age.70": {"en": "Age 70 or more", "hi": "उम्र 70 या ज़्यादा", "hn": "Umar 70 ya zyada"},
+    "opt.age.under": {"en": "Under 60", "hi": "60 से कम", "hn": "60 se kam"},
+    "opt.res.5": {"en": "In Delhi 5+ years", "hi": "दिल्ली में 5+ साल से", "hn": "Delhi mein 5+ saal se"},
+    "opt.res.less": {"en": "Less than 5 years", "hi": "5 साल से कम", "hn": "5 saal se kam"},
+    "opt.inc.1": {"en": "Income below ₹1 lakh", "hi": "आय ₹1 लाख से कम", "hn": "Income ₹1 lakh se kam"},
+    "opt.inc.3": {"en": "₹1 to 3 lakh", "hi": "₹1 से 3 लाख", "hn": "₹1 se 3 lakh"},
+    "opt.inc.more": {"en": "Above ₹3 lakh", "hi": "₹3 लाख से ज़्यादा", "hn": "₹3 lakh se zyada"},
+    "opt.marks.60": {
+        "en": "60% or more last year",
+        "hi": "पिछले साल 60% या ज़्यादा",
+        "hn": "Pichhle saal 60% ya zyada",
+    },
+    "opt.marks.less": {"en": "Below 60%", "hi": "60% से कम", "hn": "60% se kam"},
+    "opt.bank.yes": {
+        "en": "Yes, Aadhaar-linked bank account",
+        "hi": "हाँ, आधार से जुड़ा बैंक खाता है",
+        "hn": "Haan, Aadhaar se juda bank account hai",
+    },
+    "opt.bank.no": {"en": "No linked account", "hi": "जुड़ा खाता नहीं है", "hn": "Linked account nahi hai"},
 }
 
 

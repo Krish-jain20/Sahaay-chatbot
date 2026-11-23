@@ -26,6 +26,8 @@ PROFILE_KEYS = {
     "has_bank_account_linked",
     "marital_status",
     "years_resident_in_state",
+    "age",
+    "previous_year_marks_percent",
 }
 
 
@@ -70,7 +72,8 @@ def validate_record(rec: ServiceRecord, filename: str, allowlist: Allowlist) -> 
     for url in urls:
         if not is_allowed(url, allowlist):
             raise DataError(f"{rec.id}: host of {url} is not in allowlist.json")
-    for rule in [*rec.eligibility.rules, *rec.exclusions]:
+    conditions = [r.applies_if for r in rec.eligibility.rules if r.applies_if]
+    for rule in [*rec.eligibility.rules, *rec.exclusions, *conditions]:
         if rule.field not in PROFILE_KEYS:
             raise DataError(f"{rec.id}: unknown profile key '{rule.field}'")
     if rec.status == "verified":

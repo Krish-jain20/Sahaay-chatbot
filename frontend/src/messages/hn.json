@@ -8,17 +8,19 @@
     "headline": "Sarkari kaam mein confusion se action tak",
     "sub": "Apni situation English, Hindi ya Hinglish mein batayein. Main official sources ke saath bataunga kya apply ho sakta hai.",
     "start": "Chat shuru karein",
-    "scope": "Abhi Delhi: income certificate. Scholarship aur old-age pension jaldi."
+    "scope": "Abhi Delhi: income certificate, SC/ST/OBC merit scholarship aur old-age pension."
   },
   "chat": {
     "placeholder": "Apna sawaal likhein…",
     "send": "Bhejein",
     "stop": "Rokein",
-    "empty": "Shuru karne ke liye Delhi income certificate ke baare mein poochhein.",
+    "empty": "Delhi income certificate, SC/ST/OBC merit scholarship ya old-age pension ke baare mein poochhein.",
     "suggestion": "Delhi mein income certificate kaise banwayein?",
     "error": "Kuch gadbad hui. Please dobara try karein.",
     "stopped": "Rok diya.",
-    "confirmed": "Confirm kiya"
+    "confirmed": "Confirm kiya",
+    "suggestion2": "Main Delhi mein student hoon, family income lagbhag 3 lakh hai",
+    "suggestion3": "Meri maa 67 saal ki hain, kya unhe pension mil sakti hai?"
   },
   "card": {
     "verified": "Official portal se verified · {date}",
@@ -35,6 +37,9 @@
     "openPortal": "Official portal kholein",
     "source": "Source {n}",
     "checkedOn": "Check kiya {date}",
-    "notApproval": "Aapki di gayi jaankari par based. Yeh approval nahi hai."
+    "notApproval": "Aapki di gayi jaankari par based. Yeh approval nahi hai.",
+    "prerequisites": "Pehle yeh banwayein",
+    "benefit": "Fayda",
+    "excluded": "Eligible nahi kyunki"
   }
 }

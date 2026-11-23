@@ -45,7 +45,7 @@ All curated knowledge lives in `data/` as JSON, validated by Pydantic on load. *
   "typical_duration_days": { "min": null, "max": null, "source_ref": "s1" },
 
   "fees": { "official_online_inr": null, "csc_max_inr": null, "notes": { "en": null }, "source_ref": "s1" },
-  "timeline": { "sla_days": null, "day_type": "working", "source_ref": "s1" },
+  "timeline": { "sla_days": null, "day_type": "working", "source_ref": "s1" },   // day_type null when the source does not say
 
   "apply": {
     "official_url": null,                  // host must be in allowlist.json
@@ -83,6 +83,8 @@ All curated knowledge lives in `data/` as JSON, validated by Pydantic on load. *
 `eq, ne, lt, lte, gt, gte, between [min,max], in, not_in, exists, is_true, is_false, age_between [min,max]`.
 Per rule result: `MET`, `NOT_MET`, `UNKNOWN` (fact missing or unconfirmed). Unknown never counts as met.
 
+A rule may carry `applies_if: { field, op, value }`. When that condition is confirmed false the rule is skipped; when it is unknown the rule is `UNKNOWN`. Example: the OBC-only income limit of the merit scholarship.
+
 ## 4. Profile keys
 
 | key | type |
@@ -103,6 +105,8 @@ Per rule result: `MET`, `NOT_MET`, `UNKNOWN` (fact missing or unconfirmed). Unkn
 | `has_bank_account_linked` | bool |
 | `marital_status` | enum |
 | `years_resident_in_state` | number |
+| `age` | integer (when the user gives an age, not a date of birth) |
+| `previous_year_marks_percent` | number |
 
 Each fact stores `source` (`user_said`, `form_input`, `document_extracted`), `confirmed`, `updated_at`. Only confirmed facts produce `MET`/`NOT_MET`. Aadhaar, PAN, phone and bank account numbers are **not** profile keys; when a form needs them they are entered at fill time, kept in memory for that request, and only the masked last 4 may be persisted.
 

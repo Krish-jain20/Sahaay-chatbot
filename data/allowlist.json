@@ -2,6 +2,35 @@
   "version": 1,
   "updated_on": "2026-11-23",
   "domains": [
-    { "host": "edistrict.delhi.gov.in", "owner": "Revenue Department, Govt of NCT of Delhi", "verified_on": null }
+    {
+      "host": "edistrict.delhigovt.nic.in",
+      "owner": "e-District Delhi (IT Department, GNCTD)",
+      "verified_on": "2026-11-23"
+    },
+    {
+      "host": "edistrict.delhi.gov.in",
+      "owner": "e-District Delhi (mirror)",
+      "verified_on": "2026-11-23"
+    },
+    {
+      "host": "revenue.delhi.gov.in",
+      "owner": "Revenue Department, GNCTD",
+      "verified_on": "2026-11-23"
+    },
+    {
+      "host": "dmnorthwest.delhi.gov.in",
+      "owner": "DM North West, Revenue Department",
+      "verified_on": "2026-11-23"
+    },
+    {
+      "host": "socialwelfare.delhi.gov.in",
+      "owner": "Social Welfare Department, GNCTD",
+      "verified_on": "2026-11-23"
+    },
+    {
+      "host": "scstwelfare.delhi.gov.in",
+      "owner": "Department for Welfare of SC/ST/OBC, GNCTD",
+      "verified_on": "2026-11-23"
+    }
   ]
 }

@@ -16,6 +16,7 @@ export interface ServiceCardData {
     name: string;
     department: string;
     summary: string;
+    benefit: string | null;
     status: "verified" | "partial";
     stale: boolean;
     official_url: string | null;
@@ -24,13 +25,14 @@ export interface ServiceCardData {
   eligibility: {
     verdict: "likely" | "not_eligible" | "incomplete";
     rules: { rule_id: string; label: string; result: RuleResult; required: boolean; source_n: number }[];
-    exclusions_hit: string[];
+    exclusions_hit: { id: string; label: string }[];
   };
+  prerequisites: { id: string; name: string }[];
   fee_strip: {
     official_fee_inr: number | null;
     csc_max_inr: number | null;
     processing_days: number | null;
-    day_type: string;
+    day_type: string | null;
     source_n: number;
   };
 }

@@ -40,7 +40,7 @@ function RuleRow({ label, result }: { label: string; result: RuleResult }) {
   return (
     <li className="flex items-center justify-between gap-3 py-1.5">
       <span className="flex items-center gap-2">
-        <span className={cn("inline-flex size-6 items-center justify-center rounded-full", style.chip)}>{style.icon}</span>
+        <span className={cn("inline-flex size-6 shrink-0 items-center justify-center rounded-full", style.chip)}>{style.icon}</span>
         {label}
       </span>
       <span className={cn("rounded-full px-2.5 py-0.5 text-[12.5px] font-semibold", style.chip)}>{style.text}</span>
@@ -77,6 +77,12 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
       </div>
 
       <p className="mt-2 text-[15px] text-ink-2">{service.summary}</p>
+      {service.benefit && (
+        <p className="mt-2 text-[15px]">
+          <span className="font-semibold">{t("benefit")}: </span>
+          {service.benefit}
+        </p>
+      )}
 
       <h4 className="mt-3 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">{t("eligibility")}</h4>
       <ul className="text-[15px]">
@@ -84,7 +90,40 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
           <RuleRow key={r.rule_id} label={r.label} result={r.result} />
         ))}
       </ul>
+      {eligibility.exclusions_hit.length > 0 && (
+        <div className="mt-2 rounded-2xl bg-bad-100 p-3 text-[15px] text-bad-700">
+          <p className="font-semibold">{t("excluded")}</p>
+          <ul>
+            {eligibility.exclusions_hit.map((x) => (
+              <li key={x.id} className="flex items-start gap-2">
+                <XIcon className="mt-0.5 size-4 shrink-0" />
+                {x.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <p className="text-[12.5px] text-ink-3">{t("notApproval")}</p>
+
+      {card.prerequisites.length > 0 && (
+        <>
+          <h4 className="mt-3 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">{t("prerequisites")}</h4>
+          <ol className="mt-1 flex flex-wrap items-center gap-2 text-[14px]">
+            {[...card.prerequisites.map((p) => p.name), service.name].map((name, i, all) => (
+              <li
+                key={name}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1",
+                  i === all.length - 1 ? "border-teal-700 bg-teal-700 text-white" : "border-line bg-surface",
+                )}
+              >
+                <span className="font-bold">{i + 1}</span>
+                {name}
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
 
       <dl className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-teal-100 p-3 text-[14px]">
         <div>
@@ -98,7 +137,7 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         <div>
           <dt className="text-ink-3">{t("processing")}</dt>
           <dd className="font-semibold">
-            {fee.processing_days === null ? t("verifyLocally") : t("days", { n: fee.processing_days, type: fee.day_type })}
+            {fee.processing_days === null ? t("verifyLocally") : t("days", { n: fee.processing_days, type: fee.day_type ?? "other" })}
           </dd>
         </div>
       </dl>

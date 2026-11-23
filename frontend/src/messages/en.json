@@ -8,17 +8,19 @@
     "headline": "From confusion to action on government services",
     "sub": "Tell me your situation in English, Hindi or Hinglish. I'll show what may apply, with official sources.",
     "start": "Start a chat",
-    "scope": "Now covering Delhi: income certificate. Scholarship and old-age pension coming next."
+    "scope": "Now covering Delhi: income certificate, SC/ST/OBC merit scholarship and old-age pension."
   },
   "chat": {
     "placeholder": "Type your question…",
     "send": "Send",
     "stop": "Stop",
-    "empty": "Ask about the Delhi income certificate to get started.",
+    "empty": "Ask about a Delhi income certificate, the SC/ST/OBC merit scholarship or old-age pension.",
     "suggestion": "How do I get an income certificate in Delhi?",
     "error": "Something went wrong. Please try again.",
     "stopped": "Stopped.",
-    "confirmed": "Confirmed"
+    "confirmed": "Confirmed",
+    "suggestion2": "I'm a student in Delhi, family income about 3 lakh",
+    "suggestion3": "My mother is 67, can she get a pension?"
   },
   "card": {
     "verified": "Verified from official portal · {date}",
@@ -35,6 +37,9 @@
     "openPortal": "Open official portal",
     "source": "Source {n}",
     "checkedOn": "Checked {date}",
-    "notApproval": "Based on what you told me. Not an approval."
+    "notApproval": "Based on what you told me. Not an approval.",
+    "prerequisites": "Get these first",
+    "benefit": "Benefit",
+    "excluded": "Not eligible because"
   }
 }

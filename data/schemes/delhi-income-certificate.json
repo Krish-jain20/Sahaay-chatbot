@@ -2,47 +2,221 @@
   "id": "delhi-income-certificate",
   "kind": "service",
   "status": "partial",
-  "jurisdiction": { "level": "state", "state": "Delhi" },
-  "name": { "en": "Income Certificate", "hi": "आय प्रमाण पत्र", "hn": "Aay Praman Patra" },
-  "department": { "en": "Revenue Department, Delhi", "hi": "राजस्व विभाग, दिल्ली", "hn": "Revenue Department, Delhi" },
-  "category": ["certificate"],
-  "aliases": ["income certificate", "aay praman patra", "आय प्रमाण पत्र", "income proof"],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "name": {
+    "en": "Income Certificate",
+    "hi": "आय प्रमाण पत्र",
+    "hn": "Aay Praman Patra"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "category": [
+    "certificate"
+  ],
+  "aliases": [
+    "income certificate",
+    "aay praman patra",
+    "aay praman",
+    "आय प्रमाण पत्र",
+    "income proof"
+  ],
   "summary": {
     "en": "An official certificate that states your family's yearly income. Many scholarships and pensions ask for it.",
     "hi": "एक सरकारी प्रमाण पत्र जिसमें आपके परिवार की सालाना आय लिखी होती है। कई छात्रवृत्ति और पेंशन के लिए यह ज़रूरी है।",
     "hn": "Ek sarkari certificate jisme aapke parivaar ki saalana income likhi hoti hai. Kai scholarship aur pension ke liye yeh zaroori hai."
   },
-  "benefit": { "amount_text": { "en": null }, "amount_inr": null, "frequency": null, "source_ref": "s1" },
+  "benefit": {
+    "amount_text": {
+      "en": null,
+      "hi": null,
+      "hn": null
+    },
+    "amount_inr": null,
+    "frequency": null,
+    "source_ref": "s1"
+  },
   "eligibility": {
     "rules": [
       {
-        "id": "r1", "field": "state_of_residence", "op": "eq", "value": "Delhi", "required": true,
-        "label": { "en": "Resident of Delhi", "hi": "दिल्ली का निवासी", "hn": "Delhi ka nivasi" },
-        "source_ref": "s1"
+        "id": "r1",
+        "field": "state_of_residence",
+        "op": "eq",
+        "value": "Delhi",
+        "required": true,
+        "label": {
+          "en": "Permanent resident of Delhi",
+          "hi": "दिल्ली के स्थायी निवासी",
+          "hn": "Delhi ke sthayi nivasi"
+        },
+        "source_ref": "s3"
       }
     ]
   },
   "exclusions": [],
-  "documents": [],
+  "documents": [
+    {
+      "doc_type": "aadhaar",
+      "required": true,
+      "alternatives": [
+        "pan",
+        "passport",
+        "driving_licence",
+        "voter_id"
+      ],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "address_proof",
+      "required": true,
+      "alternatives": [
+        "voter_id",
+        "electricity_bill",
+        "water_bill",
+        "phone_bill"
+      ],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "income_proof",
+      "required": true,
+      "alternatives": [
+        "salary_slip"
+      ],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "expenditure_proof",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "self_declaration",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "passport_photo",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    }
+  ],
   "prerequisites": [],
-  "typical_duration_days": { "min": null, "max": null, "source_ref": "s1" },
-  "fees": { "official_online_inr": null, "csc_max_inr": null, "notes": { "en": null }, "source_ref": "s1" },
-  "timeline": { "sla_days": null, "day_type": "working", "source_ref": "s1" },
-  "apply": {
-    "official_url": "https://edistrict.delhi.gov.in/",
-    "mode": ["online", "csc", "office"],
-    "forms": [],
-    "steps": []
+  "typical_duration_days": {
+    "min": null,
+    "max": 14,
+    "source_ref": "s1"
   },
-  "grievance": { "channels": [], "appellate_authority": { "en": null, "source_ref": null } },
+  "fees": {
+    "official_online_inr": 0,
+    "csc_max_inr": null,
+    "notes": {
+      "en": "The official page says \"NO FEE Required\". A CSC may charge a service fee; verify locally.",
+      "hi": "आधिकारिक पेज पर लिखा है कि कोई फ़ीस नहीं है। CSC सेवा शुल्क ले सकता है, स्थानीय रूप से पुष्टि करें।",
+      "hn": "Official page par likha hai ki koi fees nahi hai. CSC service charge le sakta hai, locally verify karein."
+    },
+    "source_ref": "s1"
+  },
+  "timeline": {
+    "sla_days": 14,
+    "day_type": null,
+    "source_ref": "s4"
+  },
+  "apply": {
+    "official_url": "https://edistrict.delhigovt.nic.in/",
+    "mode": [
+      "online",
+      "csc",
+      "office"
+    ],
+    "forms": [
+      "delhi-income-certificate-form"
+    ],
+    "steps": [
+      {
+        "n": 1,
+        "text": {
+          "en": "Apply online on the e-District Delhi portal, at a CSC, or at the SDM / DC office.",
+          "hi": "e-District दिल्ली पोर्टल पर ऑनलाइन, CSC पर, या SDM / DC कार्यालय में आवेदन करें।",
+          "hn": "e-District Delhi portal par online, CSC par, ya SDM / DC office mein apply karein."
+        },
+        "source_ref": "s1"
+      },
+      {
+        "n": 2,
+        "text": {
+          "en": "Track your application on the e-District portal.",
+          "hi": "e-District पोर्टल पर अपना आवेदन ट्रैक करें।",
+          "hn": "e-District portal par apna application track karein."
+        },
+        "source_ref": "s1"
+      }
+    ]
+  },
+  "grievance": {
+    "channels": [],
+    "appellate_authority": {
+      "en": null,
+      "source_ref": null
+    }
+  },
   "sources": [
     {
-      "id": "s1", "title": "e-District Delhi portal", "url": "https://edistrict.delhi.gov.in/",
-      "publisher": "Govt of NCT of Delhi", "date_checked": null, "effective_date": null
+      "id": "s1",
+      "title": "Income Certificate (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/income-certificate",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Income Certificate, older page (outdated)",
+      "url": "https://revenue.delhi.gov.in/revenue/income-certificate-0",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s3",
+      "title": "Income Certificate (DM North West)",
+      "url": "https://dmnorthwest.delhi.gov.in/service/income-certificate/",
+      "publisher": "DM North West, Revenue Department",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s4",
+      "title": "e-District Delhi service timelines",
+      "url": "https://edistrict.delhi.gov.in/Public/Services",
+      "publisher": "e-District Delhi",
+      "date_checked": "2026-11-23",
+      "effective_date": null
     }
   ],
   "verification": {
-    "verified_by": null, "verified_on": null,
-    "notes": "Walking-skeleton record. Source not yet checked by a human; fees, timeline, documents and steps left null on purpose (S1-01, S1-03)."
+    "verified_by": null,
+    "verified_on": null,
+    "notes": "Drafted from /mnt sources file (official pages fetched 2026-11-23). Not yet checked field by field by a human, so status is partial (S1-03). Conflicts: processing time 21 days on the outdated page s2 vs 14 days on s1 and s4 (14 used, both current pages agree). Attestation: s1 says Gazetted Officer attestation, s3 says self-attested at CSC, so attestation is not shown. Office hours differ between pages, so not shown. Official form PDF carries a stray 'SURVIVING MEMBER CERTIFICATE' header."
   }
 }
