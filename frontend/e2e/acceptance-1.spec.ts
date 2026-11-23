@@ -65,3 +65,24 @@ test("Stop cancels a running answer", async ({ page }) => {
   await page.getByRole("button", { name: "Stop" }).click();
   await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
 });
+
+test("desktop shows the nav and the details panel; confirmed facts appear in it", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/chat");
+  await expect(page.getByRole("navigation", { name: "Main menu" })).toBeVisible();
+  const panel = page.getByRole("complementary", { name: "Your details" });
+  await expect(panel).toContainText("Details you confirm in the chat appear here");
+  await page.getByRole("button", { name: /student in Delhi, family income about 3 lakh/ }).click();
+  await page.getByRole("button", { name: /Yes, that's right/ }).click();
+  await expect(panel).toContainText("Occupation");
+  await expect(panel).toContainText("student");
+  await expect(panel).toContainText("Not saved");
+});
+
+test("phone has no side nav or panel and no horizontal scroll", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/chat");
+  await expect(page.getByRole("navigation", { name: "Main menu" })).toBeHidden();
+  await expect(page.getByRole("complementary", { name: "Your details" })).toBeHidden();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false);
+});

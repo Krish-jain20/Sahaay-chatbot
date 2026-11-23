@@ -76,5 +76,30 @@
     "error": "Yeh load nahi ho saka. Please dobara try karein.",
     "link": "Services ki tulna karein",
     "askChat": "Chat mein poochhein"
+  },
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "compare": "Tulna",
+    "menu": "Main menu"
+  },
+  "panel": {
+    "title": "Aapki details",
+    "empty": "Chat mein aap jo details confirm karenge woh yahan dikhengi. Ise sirf aap dekhte hain.",
+    "saved": "Aapki profile mein save",
+    "notSaved": "Save nahi hai. Chat band karte hi hat jayegi.",
+    "yes": "Haan",
+    "no": "Nahi"
+  },
+  "facts": {
+    "state_of_residence": "State",
+    "social_category": "Category",
+    "occupation": "Kaam",
+    "age": "Umar",
+    "years_resident_in_state": "Delhi mein saal",
+    "annual_family_income_inr": "Parivaar ki saalana income",
+    "previous_year_marks_percent": "Pichhle saal ke marks (%)",
+    "has_bank_account_linked": "Aadhaar se juda bank account",
+    "receives_pension": "Pehle se pension milti hai"
   }
 }

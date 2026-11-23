@@ -1,13 +1,12 @@
+import { AppShell } from "@/components/app-shell";
 import { Chat } from "@/components/chat/chat";
-import { TopBar } from "@/components/top-bar";
 
 export default function ChatPage() {
   return (
-    <>
-      <TopBar />
+    <AppShell>
       <main>
         <Chat />
       </main>
-    </>
+    </AppShell>
   );
 }
