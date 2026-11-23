@@ -16,6 +16,8 @@ cd backend && uv run fastapi dev app/main.py
 cd frontend && pnpm install && pnpm dev
 ```
 
+Browser tests (start their own servers on ports 8100 and 3100, no keys needed): `cd frontend && pnpm exec playwright install chromium && pnpm e2e`. If Chromium is already installed elsewhere, set `PW_CHROMIUM=/path/to/chrome`.
+
 Tests and lint: `cd backend && uv run pytest && uv run ruff check .` · `cd frontend && pnpm lint`.
 
 ## Status

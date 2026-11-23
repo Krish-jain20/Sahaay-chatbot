@@ -41,7 +41,7 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 | S2-10 consent + save facts | done | tested in a browser |
 | S2-11 report incorrect info | done | |
 | S2-12 eval set | done | |
-| S2-13 Playwright acceptance flow | todo | browser checks done by hand so far |
+| S2-13 Playwright acceptance flow | done | 4 tests, offline (stub AI, no Supabase): `cd frontend && PW_CHROMIUM=<chrome path> pnpm e2e` |
 
 ## Stages 3 to 6
 Not started: documents and OCR (3), forms and complaints (4), glossary, screenshots, journey, dashboard (5),
