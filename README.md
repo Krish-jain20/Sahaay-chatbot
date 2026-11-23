@@ -18,6 +18,8 @@ cd frontend && pnpm install && pnpm dev
 
 Browser tests (start their own servers on ports 8100 and 3100, no keys needed): `cd frontend && pnpm exec playwright install chromium && pnpm e2e`. If Chromium is already installed elsewhere, set `PW_CHROMIUM=/path/to/chrome`.
 
+Document scanning needs Tesseract with Hindi data (`apt install tesseract-ocr tesseract-ocr-hin`); the Docker image will include it. Those tests skip if it is missing.
+
 Tests and lint: `cd backend && uv run pytest && uv run ruff check .` · `cd frontend && pnpm lint`.
 
 ## Status
