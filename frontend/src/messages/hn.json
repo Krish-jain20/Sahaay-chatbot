@@ -1,0 +1,63 @@
+{
+  "common": {
+    "tagline": "Sarkari sevaon mein aapka saathi",
+    "disclaimer": "AI assistant · official sarkari channel nahi",
+    "language": "Bhasha"
+  },
+  "home": {
+    "headline": "Sarkari kaam mein confusion se action tak",
+    "sub": "Apni situation English, Hindi ya Hinglish mein batayein. Main official sources ke saath bataunga kya apply ho sakta hai.",
+    "start": "Chat shuru karein",
+    "scope": "Abhi Delhi: income certificate, SC/ST/OBC merit scholarship aur old-age pension."
+  },
+  "chat": {
+    "placeholder": "Apna sawaal likhein…",
+    "send": "Bhejein",
+    "stop": "Rokein",
+    "empty": "Delhi income certificate, SC/ST/OBC merit scholarship ya old-age pension ke baare mein poochhein.",
+    "suggestion": "Delhi mein income certificate kaise banwayein?",
+    "error": "Kuch gadbad hui. Please dobara try karein.",
+    "stopped": "Rok diya.",
+    "confirmed": "Confirm kiya",
+    "suggestion2": "Main Delhi mein student hoon, family income lagbhag 3 lakh hai",
+    "suggestion3": "Meri maa 67 saal ki hain, kya unhe pension mil sakti hai?"
+  },
+  "card": {
+    "verified": "Official portal se verified · {date}",
+    "verifyLocally": "Locally verify karein",
+    "notChecked": "Source abhi check nahi hua",
+    "eligibility": "Eligibility",
+    "met": "Poora",
+    "notMet": "Poora nahi",
+    "unknown": "Pata nahi",
+    "officialFee": "Official fees",
+    "cscMax": "CSC par (max)",
+    "processing": "Processing time",
+    "days": "{n} {type, select, working {working din} other {din}}",
+    "openPortal": "Official portal kholein",
+    "source": "Source {n}",
+    "checkedOn": "Check kiya {date}",
+    "notApproval": "Aapki di gayi jaankari par based. Yeh approval nahi hai.",
+    "prerequisites": "Pehle yeh banwayein",
+    "benefit": "Fayda",
+    "excluded": "Eligible nahi kyunki"
+  },
+  "consent": {
+    "title": "Agli baar ke liye yeh details save karein?",
+    "body": "Main sirf wahi rakhunga jo aapne confirm kiya hai, ID numbers kabhi nahi. Aap kabhi bhi sab kuch delete kar sakte hain.",
+    "yes": "Meri details save karein",
+    "no": "Abhi nahi",
+    "saved": "Save ho gaya. Aap ise kabhi bhi delete kar sakte hain.",
+    "delete": "Mera saved data delete karein",
+    "deleted": "Aapka saved data delete ho gaya.",
+    "welcome": "Mujhe aapki pehle save ki hui jaankari yaad hai."
+  },
+  "report": {
+    "button": "Galat jaankari report karein",
+    "label": "Kya galat lagta hai?",
+    "send": "Report bhejein",
+    "cancel": "Cancel",
+    "thanks": "Thank you. Hum ise check karenge.",
+    "hint": "Please ID numbers na likhein."
+  }
+}

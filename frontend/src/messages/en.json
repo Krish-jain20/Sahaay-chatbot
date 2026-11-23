@@ -1,0 +1,63 @@
+{
+  "common": {
+    "tagline": "Your companion for government services",
+    "disclaimer": "AI assistant · not an official government channel",
+    "language": "Language"
+  },
+  "home": {
+    "headline": "From confusion to action on government services",
+    "sub": "Tell me your situation in English, Hindi or Hinglish. I'll show what may apply, with official sources.",
+    "start": "Start a chat",
+    "scope": "Now covering Delhi: income certificate, SC/ST/OBC merit scholarship and old-age pension."
+  },
+  "chat": {
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "stop": "Stop",
+    "empty": "Ask about a Delhi income certificate, the SC/ST/OBC merit scholarship or old-age pension.",
+    "suggestion": "How do I get an income certificate in Delhi?",
+    "error": "Something went wrong. Please try again.",
+    "stopped": "Stopped.",
+    "confirmed": "Confirmed",
+    "suggestion2": "I'm a student in Delhi, family income about 3 lakh",
+    "suggestion3": "My mother is 67, can she get a pension?"
+  },
+  "card": {
+    "verified": "Verified from official portal · {date}",
+    "verifyLocally": "Verify locally",
+    "notChecked": "Source not yet checked",
+    "eligibility": "Eligibility",
+    "met": "Met",
+    "notMet": "Not met",
+    "unknown": "Unknown",
+    "officialFee": "Official fee",
+    "cscMax": "At a CSC (max)",
+    "processing": "Processing time",
+    "days": "{n} {type, select, working {working days} other {days}}",
+    "openPortal": "Open official portal",
+    "source": "Source {n}",
+    "checkedOn": "Checked {date}",
+    "notApproval": "Based on what you told me. Not an approval.",
+    "prerequisites": "Get these first",
+    "benefit": "Benefit",
+    "excluded": "Not eligible because"
+  },
+  "consent": {
+    "title": "Save these details for next time?",
+    "body": "I'll keep only what you confirmed, never ID numbers. You can delete everything any time.",
+    "yes": "Save my details",
+    "no": "Not now",
+    "saved": "Saved. You can delete it any time.",
+    "delete": "Delete my saved data",
+    "deleted": "Your saved data was deleted.",
+    "welcome": "I remembered the details you saved earlier."
+  },
+  "report": {
+    "button": "Report incorrect information",
+    "label": "What looks wrong?",
+    "send": "Send report",
+    "cancel": "Cancel",
+    "thanks": "Thank you. We'll check it.",
+    "hint": "Please don't write ID numbers."
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "id": "delhi-merit-scholarship-scstobc",
+  "kind": "scheme",
+  "status": "partial",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "name": {
+    "en": "Merit Scholarship for SC/ST/OBC students (colleges and professional institutions)",
+    "hi": "SC/ST/OBC छात्रों के लिए मेरिट छात्रवृत्ति (कॉलेज और प्रोफ़ेशनल संस्थान)",
+    "hn": "SC/ST/OBC students ke liye Merit Scholarship (college aur professional institutions)"
+  },
+  "department": {
+    "en": "Department for the Welfare of SC/ST/OBC, Govt of NCT of Delhi",
+    "hi": "SC/ST/OBC कल्याण विभाग, दिल्ली सरकार",
+    "hn": "SC/ST/OBC Welfare Department, Delhi Sarkar"
+  },
+  "category": [
+    "scholarship"
+  ],
+  "aliases": [
+    "merit scholarship",
+    "scholarship",
+    "chhatravritti",
+    "छात्रवृत्ति",
+    "sc st obc scholarship",
+    "obc scholarship",
+    "sc scholarship"
+  ],
+  "summary": {
+    "en": "A yearly scholarship for SC, ST and OBC students in recognised colleges who scored at least 60% in the previous year.",
+    "hi": "मान्यता प्राप्त कॉलेजों में पढ़ने वाले SC, ST और OBC छात्रों के लिए सालाना छात्रवृत्ति, जिन्होंने पिछले साल कम से कम 60% अंक पाए।",
+    "hn": "Recognised college mein padhne wale SC, ST aur OBC students ke liye saalana scholarship, jinke pichhle saal kam se kam 60% marks aaye."
+  },
+  "benefit": {
+    "amount_text": {
+      "en": "Per year (hosteller / day scholar): degree and technical ₹20,000 / ₹12,000; postgraduate ₹24,000 / ₹15,000; diploma ₹15,000 / ₹9,000; certificate ₹12,000 / ₹8,000; general UG ₹12,000 / ₹8,000; general PG ₹15,000 / ₹9,000.",
+      "hi": "प्रति वर्ष (हॉस्टल / डे स्कॉलर): डिग्री और तकनीकी ₹20,000 / ₹12,000; पोस्टग्रेजुएट ₹24,000 / ₹15,000; डिप्लोमा ₹15,000 / ₹9,000; सर्टिफ़िकेट ₹12,000 / ₹8,000; सामान्य UG ₹12,000 / ₹8,000; सामान्य PG ₹15,000 / ₹9,000।",
+      "hn": "Har saal (hosteller / day scholar): degree aur technical ₹20,000 / ₹12,000; PG ₹24,000 / ₹15,000; diploma ₹15,000 / ₹9,000; certificate ₹12,000 / ₹8,000; general UG ₹12,000 / ₹8,000; general PG ₹15,000 / ₹9,000."
+    },
+    "amount_inr": null,
+    "frequency": "yearly",
+    "source_ref": "s1"
+  },
+  "eligibility": {
+    "rules": [
+      {
+        "id": "r1",
+        "field": "social_category",
+        "op": "in",
+        "value": [
+          "sc",
+          "st",
+          "obc"
+        ],
+        "required": true,
+        "label": {
+          "en": "Belongs to SC, ST or OBC",
+          "hi": "SC, ST या OBC वर्ग से हैं",
+          "hn": "SC, ST ya OBC category se hain"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r2",
+        "field": "occupation",
+        "op": "eq",
+        "value": "student",
+        "required": true,
+        "label": {
+          "en": "Studying in a recognised college or institution",
+          "hi": "मान्यता प्राप्त कॉलेज या संस्थान में पढ़ रहे हैं",
+          "hn": "Recognised college ya institution mein padh rahe hain"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r3",
+        "field": "previous_year_marks_percent",
+        "op": "gte",
+        "value": 60,
+        "required": true,
+        "label": {
+          "en": "At least 60% marks in the previous year",
+          "hi": "पिछले साल कम से कम 60% अंक",
+          "hn": "Pichhle saal kam se kam 60% marks"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r4",
+        "field": "annual_family_income_inr",
+        "op": "lte",
+        "value": 300000,
+        "required": true,
+        "applies_if": {
+          "field": "social_category",
+          "op": "eq",
+          "value": "obc"
+        },
+        "label": {
+          "en": "For OBC: family income up to ₹3,00,000 a year (no income limit for SC/ST)",
+          "hi": "OBC के लिए: परिवार की सालाना आय ₹3,00,000 तक (SC/ST के लिए आय सीमा नहीं)",
+          "hn": "OBC ke liye: parivaar ki saalana income ₹3,00,000 tak (SC/ST ke liye koi income limit nahi)"
+        },
+        "source_ref": "s1"
+      }
+    ]
+  },
+  "exclusions": [],
+  "documents": [
+    {
+      "doc_type": "caste_certificate",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "income_certificate",
+      "required": false,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "domicile_certificate",
+      "required": false,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "study_gap_affidavit",
+      "required": false,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    }
+  ],
+  "prerequisites": [
+    "delhi-income-certificate"
+  ],
+  "typical_duration_days": {
+    "min": null,
+    "max": null,
+    "source_ref": "s1"
+  },
+  "fees": {
+    "official_online_inr": null,
+    "csc_max_inr": null,
+    "notes": {
+      "en": null,
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "timeline": {
+    "sla_days": null,
+    "day_type": null,
+    "source_ref": "s1"
+  },
+  "apply": {
+    "official_url": null,
+    "mode": [
+      "online"
+    ],
+    "forms": [],
+    "steps": []
+  },
+  "grievance": {
+    "channels": [],
+    "appellate_authority": {
+      "en": null,
+      "source_ref": null
+    }
+  },
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Scholarship schemes guidelines 2025-26",
+      "url": "https://scstwelfare.delhi.gov.in/sites/default/files/scstwelfare/circulars-orders/scholarship_schemes_2025-26_guidelines.pdf",
+      "publisher": "Dept for Welfare of SC/ST/OBC, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Scholarship guidelines 2024-25",
+      "url": "https://scstwelfare.delhi.gov.in/sites/default/files/scstwelfare/circulars-orders/guidelines_scholarship_2024-25.pdf",
+      "publisher": "Dept for Welfare of SC/ST/OBC, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s3",
+      "title": "Schemes and services",
+      "url": "https://scstwelfare.delhi.gov.in/scstwelfare/services-schemes",
+      "publisher": "Dept for Welfare of SC/ST/OBC, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    }
+  ],
+  "verification": {
+    "verified_by": null,
+    "verified_on": null,
+    "notes": "Drafted from /mnt sources file (official pages fetched 2026-11-23). Not yet checked field by field by a human, so status is partial (S1-03). Only about a third of the 2025-26 PDF was read; re-read fully before verifying. Conflicts left out: the summary-table PDF gives different day-scholar ranges and adds minorities (guidelines used instead); Delhi residence was required in 2020-21 but is not stated for 2024-25/2025-26, so it is not a rule here. Application portal and window not stated for merit, so official_url and dates are null. Income certificate is a prerequisite for OBC applicants only. Students getting this merit scholarship are not eligible for post-matric SC; tell users about that."
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "id": "delhi-old-age-pension",
+  "kind": "scheme",
+  "status": "partial",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "name": {
+    "en": "Old Age Assistance (old-age pension)",
+    "hi": "वृद्धावस्था सहायता (बुढ़ापा पेंशन)",
+    "hn": "Old Age Assistance (budhapa pension)"
+  },
+  "department": {
+    "en": "Social Welfare Department, Govt of NCT of Delhi",
+    "hi": "समाज कल्याण विभाग, दिल्ली सरकार",
+    "hn": "Social Welfare Department, Delhi Sarkar"
+  },
+  "category": [
+    "pension"
+  ],
+  "aliases": [
+    "old age pension",
+    "old-age pension",
+    "old age assistance",
+    "budhapa pension",
+    "vridhavastha pension",
+    "वृद्धावस्था पेंशन",
+    "बुढ़ापा पेंशन",
+    "senior citizen pension"
+  ],
+  "summary": {
+    "en": "A monthly pension from the Delhi government for residents aged 60 or more with low family income.",
+    "hi": "60 साल या उससे ज़्यादा उम्र के कम आय वाले दिल्ली निवासियों के लिए दिल्ली सरकार की मासिक पेंशन।",
+    "hn": "60 saal ya usse zyada umar ke kam income wale Delhi residents ke liye Delhi sarkar ki monthly pension."
+  },
+  "benefit": {
+    "amount_text": {
+      "en": "₹2,000 a month for age 60 to 69 (plus ₹500 for SC/ST/Minority); ₹2,500 a month for age 70 and above.",
+      "hi": "60 से 69 साल: ₹2,000 प्रति माह (SC/ST/अल्पसंख्यक को ₹500 अतिरिक्त); 70 साल और उससे ऊपर: ₹2,500 प्रति माह।",
+      "hn": "60 se 69 saal: ₹2,000 per month (SC/ST/Minority ko ₹500 extra); 70 saal aur upar: ₹2,500 per month."
+    },
+    "amount_inr": 2000,
+    "frequency": "monthly",
+    "source_ref": "s1"
+  },
+  "eligibility": {
+    "rules": [
+      {
+        "id": "r1",
+        "field": "age",
+        "op": "gte",
+        "value": 60,
+        "required": true,
+        "label": {
+          "en": "Age 60 or above",
+          "hi": "उम्र 60 साल या उससे ज़्यादा",
+          "hn": "Umar 60 saal ya zyada"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r2",
+        "field": "years_resident_in_state",
+        "op": "gte",
+        "value": 5,
+        "required": true,
+        "label": {
+          "en": "Living in Delhi for at least 5 years",
+          "hi": "कम से कम 5 साल से दिल्ली में रह रहे हैं",
+          "hn": "Kam se kam 5 saal se Delhi mein reh rahe hain"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r3",
+        "field": "annual_family_income_inr",
+        "op": "lt",
+        "value": 100000,
+        "required": true,
+        "label": {
+          "en": "Family income below ₹1,00,000 a year",
+          "hi": "परिवार की सालाना आय ₹1,00,000 से कम",
+          "hn": "Parivaar ki saalana income ₹1,00,000 se kam"
+        },
+        "source_ref": "s1"
+      },
+      {
+        "id": "r4",
+        "field": "has_bank_account_linked",
+        "op": "is_true",
+        "value": null,
+        "required": true,
+        "label": {
+          "en": "Has Aadhaar and a single-operated, Aadhaar-seeded bank account",
+          "hi": "आधार और आधार से जुड़ा, अकेले चलने वाला बैंक खाता है",
+          "hn": "Aadhaar aur Aadhaar se juda, akele chalne wala bank account hai"
+        },
+        "source_ref": "s1"
+      }
+    ]
+  },
+  "exclusions": [
+    {
+      "id": "x1",
+      "field": "receives_pension",
+      "op": "is_true",
+      "value": null,
+      "label": {
+        "en": "Already gets a pension or financial assistance from the Centre, State, MCD, NDMC or any other source",
+        "hi": "पहले से केंद्र, राज्य, MCD, NDMC या किसी अन्य स्रोत से पेंशन या आर्थिक सहायता मिल रही है",
+        "hn": "Pehle se Centre, State, MCD, NDMC ya kisi aur source se pension ya financial assistance mil rahi hai"
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "doc_type": "aadhaar",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s2"
+    },
+    {
+      "doc_type": "age_proof",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "address_proof",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "bank_passbook",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "passport_photo",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "income_self_declaration",
+      "required": true,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    },
+    {
+      "doc_type": "caste_certificate",
+      "required": false,
+      "alternatives": [],
+      "validity_months": null,
+      "issued_after": null,
+      "source_ref": "s1"
+    }
+  ],
+  "prerequisites": [],
+  "typical_duration_days": {
+    "min": null,
+    "max": 45,
+    "source_ref": "s3"
+  },
+  "fees": {
+    "official_online_inr": null,
+    "csc_max_inr": null,
+    "notes": {
+      "en": null,
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "timeline": {
+    "sla_days": 45,
+    "day_type": null,
+    "source_ref": "s3"
+  },
+  "apply": {
+    "official_url": "https://edistrict.delhigovt.nic.in/",
+    "mode": [
+      "online",
+      "office"
+    ],
+    "forms": [],
+    "steps": [
+      {
+        "n": 1,
+        "text": {
+          "en": "Apply online on the e-District Delhi portal or at your District Social Welfare Office. Aadhaar is mandatory.",
+          "hi": "e-District दिल्ली पोर्टल पर ऑनलाइन या अपने ज़िला समाज कल्याण कार्यालय में आवेदन करें। आधार ज़रूरी है।",
+          "hn": "e-District Delhi portal par online ya apne District Social Welfare Office mein apply karein. Aadhaar zaroori hai."
+        },
+        "source_ref": "s2"
+      },
+      {
+        "n": 2,
+        "text": {
+          "en": "Payment starts from the month after a complete application.",
+          "hi": "पूरा आवेदन जमा होने के अगले महीने से भुगतान शुरू होता है।",
+          "hn": "Poora application jama hone ke agle mahine se payment shuru hota hai."
+        },
+        "source_ref": "s1"
+      }
+    ]
+  },
+  "grievance": {
+    "channels": [],
+    "appellate_authority": {
+      "en": null,
+      "source_ref": null
+    }
+  },
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Financial Assistance Schemes",
+      "url": "https://socialwelfare.delhi.gov.in/social/financials-assistance-schemes",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Financial Assistance Schemes (table version)",
+      "url": "https://socialwelfare.delhi.gov.in/social/financial-assistance-schemes",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "s3",
+      "title": "Online services and timelines, Social Welfare Department",
+      "url": "https://socialwelfare.delhi.gov.in/our-services/online-services-social-welfare-department-gnctd",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-23",
+      "effective_date": null
+    }
+  ],
+  "verification": {
+    "verified_by": null,
+    "verified_on": null,
+    "notes": "Drafted from /mnt sources file (official pages fetched 2026-11-23). Not yet checked field by field by a human, so status is partial (S1-03). Conflicts between s1 and s2, left out of the record: payment mode (ECS/AEPS vs PFMS); bank account 'any bank' vs 'in NCT of Delhi'; family definition; s2 also asks for a Gazetted Officer or MP/MLA recommendation. News reports of a 2026 portal and higher amounts are not on any official page and are not used. Fee not stated."
+  }
+}

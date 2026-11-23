@@ -1,0 +1,27 @@
+/* Sahaay design tokens: docs/DESIGN.md §2. Components use these via the Tailwind theme only. */
+:root {
+  --teal-700: #0f4c5c;
+  --teal-100: #e3eff1;
+  --teal-050: #d3e4e8;
+  --marigold-500: #f2a541;
+  --marigold-100: #fce8c8;
+  --marigold-050: #fff3de;
+  --bg: #faf7f2;
+  --bg-sunken: #f3eee3;
+  --bg-panel: #f5f0e6;
+  --surface: #ffffff;
+  --line: #e4dccd;
+  --ink: #1c2b33;
+  --ink-2: #3f4f57;
+  --ink-3: #5b6b73;
+  --ok-700: #1b5e20;
+  --ok-500: #2e7d32;
+  --ok-100: #e6f2e7;
+  --warn-700: #7a3f06;
+  --warn-text: #b45309;
+  --warn-100: #fce8c8;
+  --bad-700: #8e1b1b;
+  --bad-500: #c62828;
+  --bad-100: #fce9e9;
+  --info-500: #1e5aa8;
+}
