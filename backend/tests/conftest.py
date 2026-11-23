@@ -1,6 +1,6 @@
 import os
 
-os.environ["GEMINI_API_KEY"] = (
+os.environ["GEMINI_API_KEY"] = ""  # tests stay offline (stub LLM)
     ""  # tests never call the live model; run the live smoke test with the key set explicitly
 )
 
