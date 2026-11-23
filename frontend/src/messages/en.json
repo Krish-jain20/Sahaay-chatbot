@@ -40,7 +40,8 @@
     "notApproval": "Based on what you told me. Not an approval.",
     "prerequisites": "Get these first",
     "benefit": "Benefit",
-    "excluded": "Not eligible because"
+    "excluded": "Not eligible because",
+    "verifiedShort": "Verified"
   },
   "consent": {
     "title": "Save these details for next time?",
@@ -59,5 +60,21 @@
     "cancel": "Cancel",
     "thanks": "Thank you. We'll check it.",
     "hint": "Please don't write ID numbers."
+  },
+  "compare": {
+    "title": "Compare services",
+    "pick": "Pick 2 or 3 services to compare",
+    "department": "Department",
+    "benefit": "Benefit",
+    "who": "Who can apply",
+    "exclusions": "Not allowed if",
+    "first": "Do this first",
+    "sources": "Sources",
+    "none": "None listed",
+    "free": "No fee",
+    "loading": "Loading…",
+    "error": "I couldn't load this. Please try again.",
+    "link": "Compare services",
+    "askChat": "Ask in chat"
   }
 }

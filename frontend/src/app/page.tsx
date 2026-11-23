@@ -13,9 +13,12 @@ export default function Home() {
         <p className="text-[11px] font-semibold uppercase tracking-[0.05em] text-teal-700">{t("common.tagline")}</p>
         <h1 className="text-[31px] font-extrabold sm:text-[34px]">{t("home.headline")}</h1>
         <p className="text-[17px] text-ink-2">{t("home.sub")}</p>
-        <div>
+        <div className="flex flex-wrap gap-3">
           <Button asChild variant="accent">
             <Link href="/chat">{t("home.start")}</Link>
+          </Button>
+          <Button asChild variant="secondary">
+            <Link href="/compare">{t("compare.link")}</Link>
           </Button>
         </div>
         <p className="rounded-2xl bg-teal-100 px-4 py-3 text-[15px] text-ink-2">{t("home.scope")}</p>
