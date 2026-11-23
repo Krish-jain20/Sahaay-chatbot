@@ -55,7 +55,12 @@ def test_me_with_valid_token(authed, key):
 
 @pytest.mark.parametrize(
     "over",
-    [{"exp": int(time.time()) - 10}, {"aud": "other"}, {"iss": "https://evil.example/auth/v1"}],
+    [
+        {"exp": int(time.time()) - 120},
+        {"nbf": int(time.time()) + 120},
+        {"aud": "other"},
+        {"iss": "https://evil.example/auth/v1"},
+    ],
 )
 def test_bad_tokens_rejected(authed, key, over):
     r = authed.get("/me", headers={"Authorization": f"Bearer {make_token(key, **over)}"})
@@ -66,3 +71,11 @@ def test_token_signed_by_other_key_rejected(authed):
     other = ec.generate_private_key(ec.SECP256R1())
     r = authed.get("/me", headers={"Authorization": f"Bearer {make_token(other)}"})
     assert r.status_code == 401
+
+
+@pytest.mark.parametrize(
+    "over", [{"iat": int(time.time()) + 10, "nbf": int(time.time()) + 10}, {"exp": int(time.time()) - 10}]
+)
+def test_small_clock_skew_is_tolerated(authed, key, over):
+    r = authed.get("/me", headers={"Authorization": f"Bearer {make_token(key, **over)}"})
+    assert r.status_code == 200
