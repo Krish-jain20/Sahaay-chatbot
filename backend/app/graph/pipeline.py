@@ -8,16 +8,12 @@ from __future__ import annotations
 
 import re
 from collections.abc import Iterator
-from dataclasses import asdict
-from datetime import date
 from typing import Any
 
 from app.data.loader import Catalog
 from app.data.models import Lang, ServiceRecord
 from app.graph.templates import t
-from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
-from app.rules.eligibility import Fact, check
-from app.rules.fees import fee_strip, is_stale
+from app.llm.client import Understanding
 
 Event = tuple[str, dict[str, Any]]
 
@@ -104,91 +100,3 @@ def ask_missing(u: Understanding, unknown: list[str], lang: Lang) -> list[dict[s
 def stream_words(text: str) -> Iterator[Event]:
     for piece in re.findall(r"\S+\s*", text):
         yield "token", {"text": piece}
-
-
-def run_turn(
-    catalog: Catalog,
-    llm: LLM,
-    message: str,
-    lang: Lang,
-    confirmed_facts: dict[str, Any],
-    today: date,
-    freshness_days: int,
-    user_id: str = "anonymous",
-) -> Iterator[Event]:
-    yield "status", {"id": "understand", "label": t("status.understand", lang), "state": "running"}
-    try:
-        u = llm.understand(message, user_id=user_id)
-    except (RateLimited, BudgetExceeded, LLMError):
-        yield "error", {"message": t("error.busy", lang)}
-        yield "done", {"refused": True}
-        return
-    yield "status", {"id": "understand", "label": t("status.understand", lang), "state": "done"}
-
-    yield "status", {"id": "search", "label": t("status.search", lang), "state": "running"}
-    matches = retrieve(catalog, message, u)
-    yield "status", {"id": "search", "label": t("status.search", lang), "state": "done"}
-
-    if not matches:
-        yield from stream_words(t("refusal.no_source", lang))
-        yield "done", {"refused": True}
-        return
-
-    rec = matches[0]
-    yield "status", {"id": "eligibility", "label": t("status.eligibility", lang), "state": "running"}
-    facts = {k: Fact(v, confirmed=True) for k, v in confirmed_facts.items()}
-    result = check(rec, facts, today)
-    yield "status", {"id": "eligibility", "label": t("status.eligibility", lang), "state": "done"}
-
-    labels = {r.id: r.label.get(lang) for r in rec.eligibility.rules}
-    xlabels = {x.id: x.label.get(lang) for x in rec.exclusions}
-    citations = _citations(rec)
-    cite_n = {c["id"]: c["n"] for c in citations}
-    prereqs = [{"id": p, "name": catalog.services[p].name.get(lang)} for p in rec.prerequisites]
-    yield (
-        "card",
-        {
-            "type": "service",
-            "service": {
-                "id": rec.id,
-                "name": rec.name.get(lang),
-                "department": rec.department.get(lang),
-                "summary": rec.summary.get(lang),
-                "benefit": rec.benefit.amount_text.get(lang),
-                "status": rec.status,
-                "stale": is_stale(rec, today, freshness_days),
-                "official_url": rec.apply.official_url,
-                "source_n": cite_n[rec.benefit.source_ref],
-            },
-            "eligibility": {
-                "verdict": result.verdict.value,
-                "rules": [
-                    {
-                        **asdict(o),
-                        "result": o.result.value,
-                        "label": labels[o.rule_id],
-                        "source_n": cite_n[o.source_ref],
-                    }
-                    for o in result.rules
-                ],
-                "exclusions_hit": [{"id": x, "label": xlabels[x]} for x in result.exclusions_hit],
-            },
-            "prerequisites": prereqs,
-            "fee_strip": {**asdict(fee_strip(rec)), "source_n": cite_n[rec.fees.source_ref]},
-        },
-    )
-
-    text = t("answer.found", lang, name=rec.name.get(lang), summary=rec.summary.get(lang))
-    text += " " + t(f"verdict.{result.verdict.value}", lang)
-    if prereqs:
-        text += " " + t("prereq.note", lang, names=", ".join(p["name"] for p in prereqs))
-    if rec.fees.official_online_inr is None or rec.timeline.sla_days is None:
-        text += " " + t("verify_locally_note", lang)
-    yield from stream_words(text + f" [{cite_n[rec.benefit.source_ref]}]")
-
-    for c in citations:
-        yield "citation", c
-    chips = ask_missing(u, result.unknown_fields, lang)
-    if chips:
-        yield "chips", {"chips": chips}
-    yield "done", {"refused": False}

@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api import auth, chat, services
 from app.config import get_settings
 from app.data.loader import load_catalog
+from app.graph.graph import build_graph
 from app.llm.client import LLM
 
 
@@ -14,6 +15,7 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     app.state.catalog = load_catalog(settings.data_dir)
     app.state.llm = LLM()
+    app.state.graph = build_graph()
     app.state.verifier = auth.TokenVerifier(settings.supabase_url) if settings.supabase_url else None
     yield
 

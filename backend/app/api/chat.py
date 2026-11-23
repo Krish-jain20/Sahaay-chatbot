@@ -13,7 +13,7 @@ from sse_starlette.sse import EventSourceResponse
 from app.api.auth import CurrentUser
 from app.config import get_settings
 from app.data.models import Lang
-from app.graph.pipeline import run_turn
+from app.graph.graph import run_turn
 from app.safety.pii import mask
 
 router = APIRouter()
@@ -45,6 +45,7 @@ async def chat(body: ChatRequest, request: Request, user: CurrentUser) -> EventS
             "data": json.dumps({"id": "stream", "stream_id": stream_id, "state": "open"}),
         }
         for name, data in run_turn(
+            request.app.state.graph,
             catalog,
             llm,
             mask(body.message),
