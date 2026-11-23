@@ -19,6 +19,7 @@ export async function AppShell({ children, wide = false }: { children: React.Rea
           <NavLink href="/">{t("nav.home")}</NavLink>
           <NavLink href="/chat">{t("nav.chat")}</NavLink>
           <NavLink href="/compare">{t("nav.compare")}</NavLink>
+          <NavLink href="/documents">{t("nav.documents")}</NavLink>
         </nav>
         <div className="mt-auto space-y-3">
           <LanguageSwitch />

@@ -13,6 +13,15 @@ router = APIRouter()
 log = logging.getLogger("sahaay.documents")
 
 
+@router.get("/doc-types")
+def list_doc_types(request: Request) -> list[dict[str, Any]]:
+    """Document types that can be scanned, with the fields a user will review."""
+    return [
+        {"id": d["id"], "extract_fields": d["extract_fields"], "required_fields": d["required_fields"]}
+        for d in request.app.state.doc_types.values()
+    ]
+
+
 @router.post("/documents")
 async def upload_document(
     request: Request,

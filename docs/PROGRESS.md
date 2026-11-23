@@ -50,10 +50,10 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 | S3-02 | done | PDFs rendered with PyMuPDF; blur, resolution and blank-page checks (OpenCV) |
 | S3-03 | done | Tesseract English+Hindi via stdin; extractors for income certificate, Aadhaar, PAN, passbook, marksheet; tested on synthetic documents only |
 | S3-04 | done | IDs masked inside the extractors; tests check no full number in results, responses or logs |
-| S3-05 | todo | needs cases (Stage 5) to attach confirmed fields |
-| S3-06 | todo | readiness checker (expired, missing) not started |
+| S3-05 | done | `POST /cases/{id}/documents` saves only user-confirmed fields, masked again server-side; upload never stored; checked on live Supabase |
+| S3-06 | partly | readiness (missing / expired / too old) is built and tested, but the three records have no `validity_months` yet, so nothing shows "expired" until those are verified from sources (shows no guess) |
 | S3-07 | done | document text is parsed by fixed patterns only and never reaches a model; injection fixture is inert |
-| S3-08 | todo | upload and readiness UI |
+| S3-08 | done | `/documents` page: pick service, upload or "I have this", review and edit fields, confirm, readiness bar. English, Hindi, Hinglish |
 
 ## Stages 4 to 6
 Not started: forms and complaints (4), glossary, screenshots, journey, dashboard (5),
