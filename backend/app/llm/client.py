@@ -49,6 +49,8 @@ class ExtractedFacts(BaseModel):
     occupation: str | None = None
     age: int | None = None
     social_category: str | None = None
+    years_resident_in_state: float | None = None
+    previous_year_marks_percent: float | None = None
 
 
 class Understanding(BaseModel):

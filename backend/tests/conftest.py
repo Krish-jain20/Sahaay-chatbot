@@ -1,3 +1,9 @@
+import os
+
+os.environ["GEMINI_API_KEY"] = (
+    ""  # tests never call the live model; run the live smoke test with the key set explicitly
+)
+
 import pytest
 from fastapi.testclient import TestClient
 
