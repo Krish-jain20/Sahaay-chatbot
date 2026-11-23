@@ -7,6 +7,7 @@ import { ServiceCard } from "@/components/cards/service-card";
 import { CheckIcon, SendIcon, StopIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { API_URL, readSse } from "@/lib/sse";
+import { getAccessToken } from "@/lib/supabase";
 import type { Chip, Citation, ServiceCardData, StatusPill } from "@/lib/types";
 
 interface BotMsg {
@@ -39,6 +40,10 @@ export function Chat() {
   const bottom = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    void getAccessToken(); // sign in as a guest as soon as the chat opens
+  }, []);
+
+  useEffect(() => {
     bottom.current?.scrollIntoView({ block: "end" });
   }, [messages]);
 
@@ -64,9 +69,10 @@ export function Chat() {
       { role: "bot", text: "", statuses: [], citations: [], chips: [], streaming: true },
     ]);
     try {
+      const token = await getAccessToken();
       const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify({ message: question, language: locale, confirmed_facts: confirmed, stream_id: id }),
         signal: abort.current.signal,
       });
@@ -105,9 +111,10 @@ export function Chat() {
     const id = streamId.current;
     abort.current?.abort();
     if (id) {
+      const token = await getAccessToken();
       await fetch(`${API_URL}/chat/stop`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify({ stream_id: id }),
       }).catch(() => undefined);
     }

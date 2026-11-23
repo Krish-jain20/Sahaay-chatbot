@@ -10,9 +10,11 @@ from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
 
+from app.api.auth import CurrentUser
 from app.config import get_settings
 from app.data.models import Lang
 from app.graph.pipeline import run_turn
+from app.safety.pii import mask
 
 router = APIRouter()
 _cancelled: set[str] = set()
@@ -31,7 +33,7 @@ class StopRequest(BaseModel):
 
 
 @router.post("/chat")
-async def chat(body: ChatRequest, request: Request) -> EventSourceResponse:
+async def chat(body: ChatRequest, request: Request, user: CurrentUser) -> EventSourceResponse:
     catalog = request.app.state.catalog
     llm = request.app.state.llm
     settings = get_settings()
@@ -45,11 +47,12 @@ async def chat(body: ChatRequest, request: Request) -> EventSourceResponse:
         for name, data in run_turn(
             catalog,
             llm,
-            body.message,
+            mask(body.message),
             body.language,
             body.confirmed_facts,
             date.today(),
             settings.freshness_days,
+            user.id,
         ):
             if stream_id in _cancelled or await request.is_disconnected():
                 _cancelled.discard(stream_id)
@@ -63,6 +66,6 @@ async def chat(body: ChatRequest, request: Request) -> EventSourceResponse:
 
 
 @router.post("/chat/stop")
-async def stop(body: StopRequest) -> dict[str, bool]:
+async def stop(body: StopRequest, _: CurrentUser) -> dict[str, bool]:
     _cancelled.add(body.stream_id)
     return {"ok": True}
