@@ -76,5 +76,30 @@
     "error": "I couldn't load this. Please try again.",
     "link": "Compare services",
     "askChat": "Ask in chat"
+  },
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "compare": "Compare",
+    "menu": "Main menu"
+  },
+  "panel": {
+    "title": "Your details",
+    "empty": "Details you confirm in the chat appear here. Only you see them.",
+    "saved": "Saved to your profile",
+    "notSaved": "Not saved. It disappears when you close the chat.",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "facts": {
+    "state_of_residence": "State",
+    "social_category": "Category",
+    "occupation": "Occupation",
+    "age": "Age",
+    "years_resident_in_state": "Years in Delhi",
+    "annual_family_income_inr": "Family income a year",
+    "previous_year_marks_percent": "Marks last year (%)",
+    "has_bank_account_linked": "Aadhaar-linked bank account",
+    "receives_pension": "Already gets a pension"
   }
 }

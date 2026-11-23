@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
+import { CasePanel } from "@/components/chat/case-panel";
 import { ServiceCard } from "@/components/cards/service-card";
 import { CheckIcon, SendIcon, StopIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -178,7 +179,8 @@ export function Chat() {
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100dvh-57px)] max-w-3xl flex-col px-4">
+    <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_352px]">
+    <div className="mx-auto flex min-h-[calc(100dvh-57px)] w-full max-w-3xl flex-col px-4 xl:min-h-dvh">
       <div className="flex-1 space-y-4 py-6" aria-live="polite">
         {messages.length === 0 && (
           <div className="space-y-3 text-center text-ink-2">
@@ -277,6 +279,8 @@ export function Chat() {
         </div>
         <p className="mt-2 text-center text-[12.5px] text-ink-3">{tc("disclaimer")}</p>
       </form>
+    </div>
+    <CasePanel facts={facts} saved={consent === "yes"} />
     </div>
   );
 }
