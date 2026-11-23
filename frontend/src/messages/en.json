@@ -1,0 +1,40 @@
+{
+  "common": {
+    "tagline": "Your companion for government services",
+    "disclaimer": "AI assistant · not an official government channel",
+    "language": "Language"
+  },
+  "home": {
+    "headline": "From confusion to action on government services",
+    "sub": "Tell me your situation in English, Hindi or Hinglish. I'll show what may apply, with official sources.",
+    "start": "Start a chat",
+    "scope": "Now covering Delhi: income certificate. Scholarship and old-age pension coming next."
+  },
+  "chat": {
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "stop": "Stop",
+    "empty": "Ask about the Delhi income certificate to get started.",
+    "suggestion": "How do I get an income certificate in Delhi?",
+    "error": "Something went wrong. Please try again.",
+    "stopped": "Stopped.",
+    "confirmed": "Confirmed"
+  },
+  "card": {
+    "verified": "Verified from official portal · {date}",
+    "verifyLocally": "Verify locally",
+    "notChecked": "Source not yet checked",
+    "eligibility": "Eligibility",
+    "met": "Met",
+    "notMet": "Not met",
+    "unknown": "Unknown",
+    "officialFee": "Official fee",
+    "cscMax": "At a CSC (max)",
+    "processing": "Processing time",
+    "days": "{n} {type, select, working {working days} other {days}}",
+    "openPortal": "Open official portal",
+    "source": "Source {n}",
+    "checkedOn": "Checked {date}",
+    "notApproval": "Based on what you told me. Not an approval."
+  }
+}

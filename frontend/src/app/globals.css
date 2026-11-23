@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@theme inline {
+  --color-teal-700: var(--teal-700);
+  --color-teal-100: var(--teal-100);
+  --color-teal-050: var(--teal-050);
+  --color-marigold-500: var(--marigold-500);
+  --color-marigold-100: var(--marigold-100);
+  --color-marigold-050: var(--marigold-050);
+  --color-bg: var(--bg);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-bg-panel: var(--bg-panel);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ok-700: var(--ok-700);
+  --color-ok-500: var(--ok-500);
+  --color-ok-100: var(--ok-100);
+  --color-warn-700: var(--warn-700);
+  --color-warn-text: var(--warn-text);
+  --color-warn-100: var(--warn-100);
+  --color-bad-700: var(--bad-700);
+  --color-bad-500: var(--bad-500);
+  --color-bad-100: var(--bad-100);
+  --font-sans: var(--font-figtree), var(--font-devanagari), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-devanagari), system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--teal-700) 40%, transparent);
+  outline-offset: 2px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise 250ms ease-out both; }
+.animate-spin-slow { animation: spin 900ms linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
