@@ -41,5 +41,23 @@
     "prerequisites": "Pehle yeh banwayein",
     "benefit": "Fayda",
     "excluded": "Eligible nahi kyunki"
+  },
+  "consent": {
+    "title": "Agli baar ke liye yeh details save karein?",
+    "body": "Main sirf wahi rakhunga jo aapne confirm kiya hai, ID numbers kabhi nahi. Aap kabhi bhi sab kuch delete kar sakte hain.",
+    "yes": "Meri details save karein",
+    "no": "Abhi nahi",
+    "saved": "Save ho gaya. Aap ise kabhi bhi delete kar sakte hain.",
+    "delete": "Mera saved data delete karein",
+    "deleted": "Aapka saved data delete ho gaya.",
+    "welcome": "Mujhe aapki pehle save ki hui jaankari yaad hai."
+  },
+  "report": {
+    "button": "Galat jaankari report karein",
+    "label": "Kya galat lagta hai?",
+    "send": "Report bhejein",
+    "cancel": "Cancel",
+    "thanks": "Thank you. Hum ise check karenge.",
+    "hint": "Please ID numbers na likhein."
   }
 }

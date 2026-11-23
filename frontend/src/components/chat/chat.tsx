@@ -7,6 +7,7 @@ import { ServiceCard } from "@/components/cards/service-card";
 import { CheckIcon, SendIcon, StopIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { API_URL, readSse } from "@/lib/sse";
+import { deleteMyData, loadFacts, saveFacts } from "@/lib/api";
 import { getAccessToken } from "@/lib/supabase";
 import type { Chip, Citation, ServiceCardData, StatusPill } from "@/lib/types";
 
@@ -34,13 +35,31 @@ export function Chat() {
   const [input, setInput] = useState("");
   const [facts, setFacts] = useState<Record<string, unknown>>({});
   const [busy, setBusy] = useState(false);
+  const [consent, setConsent] = useState<"unknown" | "asking" | "yes" | "no">("unknown");
+  const [info, setInfo] = useState<string | null>(null);
+  const tp = useTranslations("consent");
   const lastQuestion = useRef("");
   const streamId = useRef<string | null>(null);
   const abort = useRef<AbortController | null>(null);
   const bottom = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    void getAccessToken(); // sign in as a guest as soon as the chat opens
+    // Sign in as a guest on open, then restore details the user chose to save earlier.
+    void (async () => {
+      await getAccessToken();
+      let remembered = false;
+      try {
+        remembered = localStorage.getItem("sahaay_consent") === "yes";
+      } catch {}
+      if (remembered) setConsent("yes");
+      const saved = await loadFacts();
+      if (Object.keys(saved).length) {
+        setFacts(saved);
+        setConsent("yes");
+        setInfo(tp("welcome"));
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -128,9 +147,33 @@ export function Chat() {
     void ask(q, q, facts);
   }
 
+  async function answerConsent(yes: boolean) {
+    try {
+      localStorage.setItem("sahaay_consent", yes ? "yes" : "no");
+    } catch {}
+    setConsent(yes ? "yes" : "no");
+    if (yes) {
+      await saveFacts(facts);
+      setInfo(tp("saved"));
+    }
+  }
+
+  async function removeMyData() {
+    if (await deleteMyData()) {
+      try {
+        localStorage.removeItem("sahaay_consent");
+      } catch {}
+      setFacts({});
+      setConsent("unknown");
+      setInfo(tp("deleted"));
+    }
+  }
+
   function pickChip(chip: Chip) {
     const next = { ...facts, ...chip.confirm };
     setFacts(next);
+    if (consent === "yes") void saveFacts(chip.confirm);
+    else if (consent === "unknown") setConsent("asking");
     void ask(lastQuestion.current, chip.label, next);
   }
 
@@ -191,6 +234,23 @@ export function Chat() {
         )}
         <div ref={bottom} />
       </div>
+
+      {consent === "asking" && (
+        <section className="mb-2 rounded-2xl border border-line bg-marigold-050 p-3" aria-labelledby="consent-title">
+          <h2 id="consent-title" className="text-[15px] font-bold">{tp("title")}</h2>
+          <p className="text-[14px] text-ink-2">{tp("body")}</p>
+          <div className="mt-2 flex gap-2">
+            <Button variant="accent" onClick={() => void answerConsent(true)}>{tp("yes")}</Button>
+            <Button variant="secondary" onClick={() => void answerConsent(false)}>{tp("no")}</Button>
+          </div>
+        </section>
+      )}
+      {info && <p className="mb-2 text-center text-[13px] text-ok-700" role="status">{info}</p>}
+      {consent === "yes" && (
+        <button type="button" onClick={() => void removeMyData()} className="mx-auto mb-2 block min-h-11 text-[13px] font-semibold text-ink-3 underline">
+          {tp("delete")}
+        </button>
+      )}
 
       <form onSubmit={submit} className="sticky bottom-0 bg-bg pb-3 pt-2">
         <div className="flex items-center gap-2 rounded-full border border-line bg-surface p-1.5 pl-4">

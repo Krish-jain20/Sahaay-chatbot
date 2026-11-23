@@ -3,6 +3,7 @@
 import { useFormatter, useTranslations } from "next-intl";
 
 import { AlertIcon, CheckIcon, HelpIcon, LinkIcon, ShieldCheckIcon, XIcon } from "@/components/icons";
+import { ReportButton } from "@/components/cards/report-button";
 import type { Citation, RuleResult, ServiceCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -141,6 +142,10 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
           </dd>
         </div>
       </dl>
+
+      <div>
+        <ReportButton serviceId={service.id} />
+      </div>
 
       {service.official_url && (
         <a

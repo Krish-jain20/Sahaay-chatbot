@@ -3,9 +3,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, chat, services
+from app.api import auth, chat, me, services
 from app.config import get_settings
 from app.data.loader import load_catalog
+from app.db.store import MemoryStore, SupabaseStore
 from app.graph.graph import build_graph
 from app.llm.client import LLM
 
@@ -16,6 +17,11 @@ async def lifespan(app: FastAPI):
     app.state.catalog = load_catalog(settings.data_dir)
     app.state.llm = LLM()
     app.state.graph = build_graph()
+    app.state.store = (
+        SupabaseStore(settings.supabase_url, settings.supabase_secret_key)
+        if settings.supabase_url and settings.supabase_secret_key
+        else MemoryStore()
+    )
     app.state.verifier = auth.TokenVerifier(settings.supabase_url) if settings.supabase_url else None
     yield
 
@@ -29,6 +35,7 @@ app.add_middleware(
 )
 app.include_router(chat.router)
 app.include_router(services.router)
+app.include_router(me.router)
 
 
 @app.get("/health")

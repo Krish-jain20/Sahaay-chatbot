@@ -41,5 +41,23 @@
     "prerequisites": "Get these first",
     "benefit": "Benefit",
     "excluded": "Not eligible because"
+  },
+  "consent": {
+    "title": "Save these details for next time?",
+    "body": "I'll keep only what you confirmed, never ID numbers. You can delete everything any time.",
+    "yes": "Save my details",
+    "no": "Not now",
+    "saved": "Saved. You can delete it any time.",
+    "delete": "Delete my saved data",
+    "deleted": "Your saved data was deleted.",
+    "welcome": "I remembered the details you saved earlier."
+  },
+  "report": {
+    "button": "Report incorrect information",
+    "label": "What looks wrong?",
+    "send": "Send report",
+    "cancel": "Cancel",
+    "thanks": "Thank you. We'll check it.",
+    "hint": "Please don't write ID numbers."
   }
 }
