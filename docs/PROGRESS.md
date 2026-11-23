@@ -1,13 +1,13 @@
 # Sahaay: progress against the backlog
 
 Updated with each push. Status: **done** · **partly** · **todo** · **needs you** (human step).
-Branch: `claude/project-thread-x77ukp` (PR #1). Eval baseline: 17/17 (offline stub and live Gemini).
+PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17/17 (offline stub and live Gemini).
 
 ## Stage 0: Setup
 | ID | Status | Notes |
 |---|---|---|
 | S0-01 repo structure | done | |
-| S0-02 backend, /health, pytest, ruff | done | 86 tests |
+| S0-02 backend, /health, pytest, ruff | done | 92 tests |
 | S0-03 frontend, next-intl en/hi/hn | done | language switch works |
 | S0-04 design tokens + fonts | partly | tokens, fonts, Button done; no palette/type showcase page yet |
 | S0-05 Supabase + Gemini keys | done | keys are in a private `.env`; rotate them later |
@@ -24,7 +24,7 @@ Branch: `claude/project-thread-x77ukp` (PR #1). Eval baseline: 17/17 (offline st
 | S1-04 eligibility engine | done | includes conditional rules (`applies_if`) |
 | S1-05 prerequisite chain + readiness | partly | chain shown on the card; cycle check in loader; readiness function waits for Stage 3 |
 | S1-06 fee strip, freshness | done | |
-| S1-07 `/services`, `/compare` | partly | `/services` done; `/compare` todo |
+| S1-07 `/services`, `/compare` | done | |
 
 ## Stage 2: Chat core
 | ID | Status | Notes |
@@ -36,7 +36,7 @@ Branch: `claude/project-thread-x77ukp` (PR #1). Eval baseline: 17/17 (offline st
 | S2-05 `/chat` SSE, stop | done | |
 | S2-06 chat UI | done | |
 | S2-07 service card | partly | no alternatives list yet |
-| S2-08 comparison page | todo | |
+| S2-08 comparison page | done | 2 to 3 services, sources, EN/hi/hn, scrolls on phones |
 | S2-09 home + app shell | partly | simple Home; no three-column desktop shell |
 | S2-10 consent + save facts | done | tested in a browser |
 | S2-11 report incorrect info | done | |
@@ -49,5 +49,5 @@ email sign-in, privacy page, Postgres checkpointer, Docker and deploy, README po
 Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 
 ## How to see the work
-- Everything is on the PR branch: https://github.com/Krish-jain20/Sahaay-chatbot/tree/claude/project-thread-x77ukp
+- Everything merged is on `main`: https://github.com/Krish-jain20/Sahaay-chatbot
 - Run it: see README.md. Eval: `cd backend && uv run python -m tests.eval.run`.

@@ -40,7 +40,8 @@
     "notApproval": "Aapki di gayi jaankari par based. Yeh approval nahi hai.",
     "prerequisites": "Pehle yeh banwayein",
     "benefit": "Fayda",
-    "excluded": "Eligible nahi kyunki"
+    "excluded": "Eligible nahi kyunki",
+    "verifiedShort": "Verified"
   },
   "consent": {
     "title": "Agli baar ke liye yeh details save karein?",
@@ -59,5 +60,21 @@
     "cancel": "Cancel",
     "thanks": "Thank you. Hum ise check karenge.",
     "hint": "Please ID numbers na likhein."
+  },
+  "compare": {
+    "title": "Services ki tulna",
+    "pick": "Tulna ke liye 2 ya 3 services chunein",
+    "department": "Department",
+    "benefit": "Fayda",
+    "who": "Kaun apply kar sakta hai",
+    "exclusions": "In halaat mein nahi",
+    "first": "Pehle yeh karein",
+    "sources": "Sources",
+    "none": "Kuch nahi bataya",
+    "free": "Koi fees nahi",
+    "loading": "Load ho raha hai…",
+    "error": "Yeh load nahi ho saka. Please dobara try karein.",
+    "link": "Services ki tulna karein",
+    "askChat": "Chat mein poochhein"
   }
 }

@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, chat, me, services
+from app.api import auth, chat, compare, me, services
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
@@ -35,6 +35,7 @@ app.add_middleware(
 )
 app.include_router(chat.router)
 app.include_router(services.router)
+app.include_router(compare.router)
 app.include_router(me.router)
 
 
