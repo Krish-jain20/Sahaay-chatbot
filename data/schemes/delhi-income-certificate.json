@@ -1,0 +1,48 @@
+{
+  "id": "delhi-income-certificate",
+  "kind": "service",
+  "status": "partial",
+  "jurisdiction": { "level": "state", "state": "Delhi" },
+  "name": { "en": "Income Certificate", "hi": "आय प्रमाण पत्र", "hn": "Aay Praman Patra" },
+  "department": { "en": "Revenue Department, Delhi", "hi": "राजस्व विभाग, दिल्ली", "hn": "Revenue Department, Delhi" },
+  "category": ["certificate"],
+  "aliases": ["income certificate", "aay praman patra", "आय प्रमाण पत्र", "income proof"],
+  "summary": {
+    "en": "An official certificate that states your family's yearly income. Many scholarships and pensions ask for it.",
+    "hi": "एक सरकारी प्रमाण पत्र जिसमें आपके परिवार की सालाना आय लिखी होती है। कई छात्रवृत्ति और पेंशन के लिए यह ज़रूरी है।",
+    "hn": "Ek sarkari certificate jisme aapke parivaar ki saalana income likhi hoti hai. Kai scholarship aur pension ke liye yeh zaroori hai."
+  },
+  "benefit": { "amount_text": { "en": null }, "amount_inr": null, "frequency": null, "source_ref": "s1" },
+  "eligibility": {
+    "rules": [
+      {
+        "id": "r1", "field": "state_of_residence", "op": "eq", "value": "Delhi", "required": true,
+        "label": { "en": "Resident of Delhi", "hi": "दिल्ली का निवासी", "hn": "Delhi ka nivasi" },
+        "source_ref": "s1"
+      }
+    ]
+  },
+  "exclusions": [],
+  "documents": [],
+  "prerequisites": [],
+  "typical_duration_days": { "min": null, "max": null, "source_ref": "s1" },
+  "fees": { "official_online_inr": null, "csc_max_inr": null, "notes": { "en": null }, "source_ref": "s1" },
+  "timeline": { "sla_days": null, "day_type": "working", "source_ref": "s1" },
+  "apply": {
+    "official_url": "https://edistrict.delhi.gov.in/",
+    "mode": ["online", "csc", "office"],
+    "forms": [],
+    "steps": []
+  },
+  "grievance": { "channels": [], "appellate_authority": { "en": null, "source_ref": null } },
+  "sources": [
+    {
+      "id": "s1", "title": "e-District Delhi portal", "url": "https://edistrict.delhi.gov.in/",
+      "publisher": "Govt of NCT of Delhi", "date_checked": null, "effective_date": null
+    }
+  ],
+  "verification": {
+    "verified_by": null, "verified_on": null,
+    "notes": "Walking-skeleton record. Source not yet checked by a human; fees, timeline, documents and steps left null on purpose (S1-01, S1-03)."
+  }
+}
