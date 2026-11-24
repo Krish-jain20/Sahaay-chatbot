@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     llm_model_strong: str = "gemini-3.5-flash"
     llm_model_web: str = ""  # model used for web search; empty means llm_model_strong
     web_search_enabled: bool = True  # only has an effect when a Gemini key is set
+    web_search_provider: str = (
+        "tavily"  # "tavily" (search, then Gemini summarises) or "google" (Gemini grounding)
+    )
+    tavily_api_key: str = ""
     daily_token_budget: int = 200_000
     llm_requests_per_minute: int = 20
     supabase_url: str = ""

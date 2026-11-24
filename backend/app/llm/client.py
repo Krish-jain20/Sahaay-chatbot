@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 import threading
@@ -19,7 +20,9 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Any, Literal, Protocol, TypeVar
+from urllib.parse import urlparse
 
+import httpx
 from pydantic import BaseModel, ValidationError
 
 from app.config import Settings, get_settings
@@ -105,6 +108,63 @@ class LLMResponse:
     tokens_in: int = 0
     tokens_out: int = 0
     sources: list[dict[str, str]] = field(default_factory=list)  # [{"title", "url"}] from web grounding
+
+
+# ---------------------------------------------------------------- web search provider
+
+# Used only to bias the search toward government sites. Whether a link is shown as official is decided
+# later, by exact host against data/allowlist.json, never by this suffix list.
+GOV_DOMAINS = ["gov.in", "nic.in"]
+MAX_RESULTS = 6
+SNIPPET_CHARS = 900
+QUERY_CHARS = 380
+
+
+@dataclass
+class SearchHit:
+    title: str
+    url: str
+    content: str
+
+
+Searcher = Callable[[str, list[str] | None], list[SearchHit]]
+
+
+class TavilySearcher:
+    """Tavily search API. Only the (already masked) query is sent."""
+
+    def __init__(self, api_key: str, timeout_s: float = 20.0) -> None:
+        self._key = api_key
+        self._timeout = timeout_s
+
+    def __call__(self, query: str, include_domains: list[str] | None = None) -> list[SearchHit]:
+        body: dict[str, Any] = {
+            "query": query[:QUERY_CHARS],
+            "search_depth": "basic",
+            "max_results": MAX_RESULTS,
+            "include_answer": False,
+        }
+        if include_domains:
+            body["include_domains"] = include_domains
+        r = httpx.post(
+            "https://api.tavily.com/search",
+            headers={"Authorization": f"Bearer {self._key}"},
+            content=json.dumps(body),
+            timeout=self._timeout,
+        )
+        r.raise_for_status()
+        return [
+            SearchHit(h.get("title") or "", h["url"], h.get("content") or "")
+            for h in r.json().get("results", [])
+            if h.get("url")
+        ]
+
+
+def clean_snippet(text: str) -> str:
+    """Page text is data: mask identity numbers, drop control characters, cap the length."""
+    text = re.sub(r"[\x00-\x08\x0b-\x1f\x7f]", " ", mask(text))
+    text = text.replace("</results>", "").replace("<results>", "")
+    return re.sub(r"\s+", " ", text).strip()[:SNIPPET_CHARS]
 
 
 @dataclass
@@ -271,6 +331,7 @@ class LLM:
         self,
         provider: Provider | None = None,
         settings: Settings | None = None,
+        searcher: Searcher | None = None,
         retries: int = 2,
         backoff_s: float = 0.5,
     ) -> None:
@@ -279,6 +340,9 @@ class LLM:
             key = self.settings.gemini_api_key
             provider = GeminiProvider(key) if key else StubProvider()
         self.provider = provider
+        self.searcher = searcher or (
+            TavilySearcher(self.settings.tavily_api_key) if self.settings.tavily_api_key else None
+        )
         self.live = provider.name != "stub"
         self.retries = retries
         self.backoff_s = backoff_s
@@ -360,12 +424,20 @@ class LLM:
 
     @property
     def web_enabled(self) -> bool:
-        return self.live and self.settings.web_search_enabled
+        if not (self.live and self.settings.web_search_enabled):
+            return False
+        return self.settings.web_search_provider == "google" or self.searcher is not None
 
     def web_search(self, question: str, lang: str, *, user_id: str) -> WebAnswer | None:
-        """Answer from a live web search. `question` is masked in `_call`; returns None if unavailable."""
+        """Answer from a live web search. `question` is masked before it leaves; None if unavailable."""
         if not self.web_enabled:
             return None
+        question = mask(question)
+        if self.settings.web_search_provider == "google":
+            return self._web_google(question, lang, user_id)
+        return self._web_tavily(question, lang, user_id)
+
+    def _web_google(self, question: str, lang: str, user_id: str) -> WebAnswer | None:
         req = LLMRequest(
             model=self.settings.llm_model_web or self.settings.llm_model_strong,
             system=load_prompt("web_search") + f"\nLanguage: {lang}",
@@ -377,6 +449,35 @@ class LLM:
         if not text or text == "NO_SOURCE":
             return None
         return WebAnswer(text=text, sources=resp.sources)
+
+    def _web_tavily(self, question: str, lang: str, user_id: str) -> WebAnswer | None:
+        assert self.searcher is not None
+        try:
+            # Government sites first; open the search only if that finds too little.
+            hits = self.searcher(question, GOV_DOMAINS)
+            if len(hits) < 2:
+                hits = self.searcher(question, None)
+        except Exception as e:  # noqa: BLE001 - network and API errors vary
+            log.warning("web search failed: %s", type(e).__name__)
+            raise LLMError("web search failed") from e
+        hits = [h for h in hits if clean_snippet(h.content)]
+        if not hits:
+            return None
+        results = "\n".join(
+            f'<result n="{i + 1}" site="{urlparse(h.url).hostname or ""}">\n'
+            f"{clean_snippet(h.content)}\n</result>"
+            for i, h in enumerate(hits)
+        )
+        req = LLMRequest(
+            model=self.settings.llm_model_web or self.settings.llm_model_strong,
+            system=load_prompt("web_summary") + f"\nLanguage: {lang}",
+            text=f"<question>\n{question}\n</question>\n<results>\n{results}\n</results>",
+        )
+        text = self._call(user_id, req).text.strip()
+        if not text or text == "NO_SOURCE":
+            return None
+        sources = [{"title": urlparse(h.url).hostname or "", "url": h.url} for h in hits]
+        return WebAnswer(text=text, sources=sources)
 
     def draft(self, kind: str, facts: dict[str, Any], lang: str, *, user_id: str) -> str:
         req = LLMRequest(
