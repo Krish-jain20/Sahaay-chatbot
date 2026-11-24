@@ -54,6 +54,7 @@ async def chat(body: ChatRequest, request: Request, user: CurrentUser) -> EventS
             date.today(),
             settings.freshness_days,
             user.id,
+            guidance_set=request.app.state.guidance,
         ):
             if stream_id in _cancelled or await request.is_disconnected():
                 _cancelled.discard(stream_id)

@@ -27,6 +27,7 @@ from app.graph.templates import t
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
 from app.rules.eligibility import Fact, check
 from app.rules.fees import fee_strip, is_stale
+from app.safety.claims import find_violations
 from app.safety.pii import mask_pii
 
 Event = tuple[str, dict[str, Any]]
@@ -158,6 +159,12 @@ def compose(state: CaseState, config: RunnableConfig) -> CaseState:
     if rec.fees.official_online_inr is None or rec.timeline.sla_days is None:
         text += " " + t("verify_locally_note", lang)
     text += f" [{card['service']['source_n']}]"
+    if find_violations(text):
+        # A forbidden claim (e.g. "approved") must never reach the user, even from our own data.
+        for ev in stream_words(t("guard.blocked", lang)):
+            _emit(*ev)
+        _emit("done", {"refused": True})
+        return {}
     for ev in stream_words(text):
         _emit(*ev)
     for c in citations:
@@ -168,6 +175,32 @@ def compose(state: CaseState, config: RunnableConfig) -> CaseState:
     return {}
 
 
+GUIDE_INTENTS = {"complaint": "complaints"}
+
+
+def guidance(state: CaseState, config: RunnableConfig) -> CaseState:
+    """General sourced guidance (not tied to one service): streams a short lead-in and a guide card."""
+    c = config["configurable"]
+    lang = state["language"]
+    topic = GUIDE_INTENTS[state["understanding"]["intent"]]
+    card = c["guidance"].render(topic, lang)
+    for ev in stream_words(t("guide.lead", lang)):
+        _emit(*ev)
+    _emit("card", card)
+    for cite in card["citations"]:
+        _emit("citation", cite)
+    _emit("done", {"refused": False})
+    return {}
+
+
+def _after_understand(s: CaseState) -> str:
+    if s.get("failed"):
+        return "compose"
+    if s["understanding"]["intent"] in GUIDE_INTENTS:
+        return "guidance"
+    return "search"
+
+
 def build_graph(checkpointer: Any | None = None):
     g = StateGraph(CaseState)
     g.add_node("understand", understand)
@@ -175,8 +208,10 @@ def build_graph(checkpointer: Any | None = None):
     g.add_node("eligibility", eligibility)
     g.add_node("ask_missing", ask_missing_node)
     g.add_node("compose", compose)
+    g.add_node("guidance", guidance)
     g.add_edge(START, "understand")
-    g.add_conditional_edges("understand", lambda s: "compose" if s.get("failed") else "search")
+    g.add_conditional_edges("understand", _after_understand)
+    g.add_edge("guidance", END)
     g.add_conditional_edges("search", lambda s: "eligibility" if s.get("service_id") else "compose")
     g.add_edge("eligibility", "ask_missing")
     g.add_edge("ask_missing", "compose")
@@ -195,10 +230,16 @@ def run_turn(
     freshness_days: int,
     user_id: str = "anonymous",
     thread_id: str | None = None,
+    guidance_set: Any = None,
 ) -> Iterator[Event]:
     """Run one turn and yield client events. `thread_id` keys the checkpoint (a case, later)."""
     config = {
-        "configurable": {"catalog": catalog, "llm": llm, "thread_id": thread_id or f"{user_id}"},
+        "configurable": {
+            "catalog": catalog,
+            "llm": llm,
+            "guidance": guidance_set,
+            "thread_id": thread_id or f"{user_id}",
+        },
     }
     state: CaseState = {
         # Masked before it enters the graph, so identity numbers are never checkpointed or stored.

@@ -3,8 +3,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cases, chat, compare, documents, drafts, forms, me, services
+from app.api import auth, cases, chat, compare, documents, drafts, forms, guidance, me, services
 from app.config import get_settings
+from app.data.guidance import load_guidance
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
 from app.graph.checkpoint import make_checkpointer
@@ -18,6 +19,7 @@ from app.pdf.forms import load_forms
 async def lifespan(app: FastAPI):
     settings = get_settings()
     app.state.catalog = load_catalog(settings.data_dir)
+    app.state.guidance = load_guidance(settings.data_dir, app.state.catalog.allowlist)
     app.state.llm = LLM()
     checkpointer = make_checkpointer(settings.database_url)
     app.state.checkpointer = checkpointer
@@ -49,6 +51,7 @@ app.include_router(me.router)
 app.include_router(cases.router)
 app.include_router(drafts.router)
 app.include_router(forms.router)
+app.include_router(guidance.router)
 
 
 @app.get("/health")
