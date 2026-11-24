@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 from app.data.models import Allowlist, InfoService, ServiceRecord
 from app.safety.allowlist import is_allowed
@@ -125,21 +126,47 @@ def validate_info(info: InfoService, filename: str, allowlist: Allowlist) -> Non
         raise DataError(f"{info.id}: every source needs a date_checked")
 
 
-def load_catalog(data_dir: Path) -> Catalog:
-    allowlist = Allowlist.model_validate_json((data_dir / "allowlist.json").read_text("utf-8"))
+Raw = list[tuple[str, dict[str, Any]]]
+
+
+def build_catalog(
+    allowlist: Allowlist,
+    records: Raw,
+    infos: Raw,
+) -> Catalog:
+    """Validate and assemble a catalog from raw JSON, whether it came from files or from the database."""
     services: dict[str, ServiceRecord] = {}
-    for path in sorted((data_dir / "schemes").glob("*.json")):
-        rec = ServiceRecord.model_validate(json.loads(path.read_text("utf-8")))
-        validate_record(rec, path.stem, allowlist)
+    for name, raw in records:
+        rec = ServiceRecord.model_validate(raw)
+        validate_record(rec, name, allowlist)
         if rec.id in services:
             raise DataError(f"duplicate id {rec.id}")
         services[rec.id] = rec
     _check_prerequisites(services)
     directory: dict[str, InfoService] = {}
-    for path in sorted((data_dir / "directory").glob("*.json")):
-        info = InfoService.model_validate(json.loads(path.read_text("utf-8")))
-        validate_info(info, path.stem, allowlist)
+    for name, raw in infos:
+        info = InfoService.model_validate(raw)
+        validate_info(info, name, allowlist)
         if info.id in services or info.id in directory:
             raise DataError(f"duplicate id {info.id}")
         directory[info.id] = info
     return Catalog(services=services, allowlist=allowlist, directory=directory)
+
+
+def load_allowlist(data_dir: Path) -> Allowlist:
+    return Allowlist.model_validate_json((data_dir / "allowlist.json").read_text("utf-8"))
+
+
+def read_files(data_dir: Path) -> tuple[Raw, Raw]:
+    def read(folder: str) -> Raw:
+        return [
+            (p.stem, json.loads(p.read_text("utf-8"))) for p in sorted((data_dir / folder).glob("*.json"))
+        ]
+
+    return read("schemes"), read("directory")
+
+
+def load_catalog(data_dir: Path) -> Catalog:
+    """The repo files: the source of truth for tests and the fallback when the database is not usable."""
+    records, infos = read_files(data_dir)
+    return build_catalog(load_allowlist(data_dir), records, infos)
