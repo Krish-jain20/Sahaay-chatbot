@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
-from app.data.models import Allowlist, ServiceRecord
+from app.data.models import Allowlist, InfoService, ServiceRecord
 from app.safety.allowlist import is_allowed
 
 PROFILE_KEYS = {
@@ -39,6 +39,7 @@ class DataError(ValueError):
 class Catalog:
     services: dict[str, ServiceRecord]
     allowlist: Allowlist
+    directory: dict[str, InfoService] = field(default_factory=dict)
 
     def served(self) -> list[ServiceRecord]:
         return [s for s in self.services.values() if s.status != "unverified"]
@@ -109,6 +110,21 @@ def _check_prerequisites(services: dict[str, ServiceRecord]) -> None:
         visit(sid)
 
 
+def validate_info(info: InfoService, filename: str, allowlist: Allowlist) -> None:
+    if info.id != filename:
+        raise DataError(f"{filename}: id '{info.id}' does not match filename")
+    source_ids = {s.id for s in info.sources}
+    facts = [info.benefit, info.fee, info.time, *info.who, *info.documents, *info.steps]
+    for f in facts:
+        if f is not None and f.source_ref not in source_ids:
+            raise DataError(f"{info.id}: source_ref '{f.source_ref}' not in sources")
+    for url in [s.url for s in info.sources] + ([info.apply_url] if info.apply_url else []):
+        if not is_allowed(url, allowlist):
+            raise DataError(f"{info.id}: host of {url} is not in allowlist.json")
+    if not info.sources or not all(s.date_checked for s in info.sources):
+        raise DataError(f"{info.id}: every source needs a date_checked")
+
+
 def load_catalog(data_dir: Path) -> Catalog:
     allowlist = Allowlist.model_validate_json((data_dir / "allowlist.json").read_text("utf-8"))
     services: dict[str, ServiceRecord] = {}
@@ -119,4 +135,11 @@ def load_catalog(data_dir: Path) -> Catalog:
             raise DataError(f"duplicate id {rec.id}")
         services[rec.id] = rec
     _check_prerequisites(services)
-    return Catalog(services=services, allowlist=allowlist)
+    directory: dict[str, InfoService] = {}
+    for path in sorted((data_dir / "directory").glob("*.json")):
+        info = InfoService.model_validate(json.loads(path.read_text("utf-8")))
+        validate_info(info, path.stem, allowlist)
+        if info.id in services or info.id in directory:
+            raise DataError(f"duplicate id {info.id}")
+        directory[info.id] = info
+    return Catalog(services=services, allowlist=allowlist, directory=directory)

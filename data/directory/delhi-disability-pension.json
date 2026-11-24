@@ -1,0 +1,186 @@
+{
+  "id": "delhi-disability-pension",
+  "category": [
+    "pension"
+  ],
+  "name": {
+    "en": "Disability pension (Financial Assistance to Persons with Special Needs)",
+    "hi": "दिव्यांग पेंशन (विशेष आवश्यकता वाले व्यक्तियों को वित्तीय सहायता)",
+    "hn": "Disability pension (Persons with Special Needs)"
+  },
+  "department": {
+    "en": "Social Welfare Department, Govt of NCT of Delhi",
+    "hi": "समाज कल्याण विभाग, दिल्ली सरकार",
+    "hn": "Social Welfare Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "disability pension",
+    "divyang pension",
+    "handicap pension",
+    "pension for disabled",
+    "दिव्यांग पेंशन"
+  ],
+  "summary": {
+    "en": "₹2,500 a month for Delhi residents aged 0 to 59 with a disability of 40% or more and low family income.",
+    "hi": "40% या अधिक दिव्यांगता वाले 0 से 59 वर्ष के दिल्ली निवासियों को, कम पारिवारिक आय पर, ₹2,500 प्रति माह।",
+    "hn": "40% ya zyada disability wale 0 se 59 saal ke Delhi residents ko, kam family income par, ₹2,500 per month."
+  },
+  "benefit": {
+    "text": {
+      "en": "₹2,500 a month, paid to your Aadhaar-linked bank account through PFMS, starting from the month after you apply.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "Age 0 to 59 years.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Disability of 40% or more: blindness, low vision, locomotor disability, hearing impairment, leprosy cured, cerebral palsy, autism, mental retardation or mental illness.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "At least 5 years of residence in Delhi before the date of application.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Annual family income below ₹1,00,000 from all sources. For a minor or an unmarried, unemployed disabled person, family means the parents or legal guardian. For a married person, it means the spouse and dependent children.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "An Aadhaar number, and a singly-operated bank account in the National Capital Territory of Delhi linked to Aadhaar (this can be relaxed for minors).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Not already getting a pension or financial assistance from the Centre, State, local bodies or any other source for this purpose.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Age proof, for example a birth certificate, school leaving or 10th certificate, driving licence, passport, PAN, ration card, voter card or Aadhaar.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Residence proof showing at least 5 years in Delhi, for example a ration card, voter card, Aadhaar, passport, driving licence, utility bill or bank passbook.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Bank account number (single account).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Disability certificate issued by a government hospital as per norms.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "One passport size photo, and an income self-declaration in the format on the portal.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Not stated on the official page: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Normally within 45 days of receiving the application, unless circumstances dictate otherwise.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Apply online on the e-District portal after registering through citizen login, or at your District Social Welfare Office. Aadhaar is mandatory: the portal does not work without it. Scan and upload the documents.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The District Social Welfare Office scrutinises the application and may call you with documents for verification.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "If sanctioned, payment starts from the month after your application and then arrives monthly.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Financial Assistance Schemes (Social Welfare Department)",
+      "url": "https://socialwelfare.delhi.gov.in/social/financials-assistance-schemes",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}

@@ -1,0 +1,146 @@
+{
+  "id": "delhi-driving-licence-renewal",
+  "category": [
+    "licence"
+  ],
+  "name": {
+    "en": "Driving licence renewal",
+    "hi": "ड्राइविंग लाइसेंस का नवीनीकरण",
+    "hn": "Driving licence renewal"
+  },
+  "department": {
+    "en": "Transport Department, Govt of NCT of Delhi",
+    "hi": "परिवहन विभाग, दिल्ली सरकार",
+    "hn": "Transport Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "driving licence renewal",
+    "renew driving licence",
+    "renew dl",
+    "dl renewal",
+    "ड्राइविंग लाइसेंस नवीनीकरण"
+  ],
+  "summary": {
+    "en": "Renew an existing Delhi driving licence.",
+    "hi": "मौजूदा दिल्ली ड्राइविंग लाइसेंस का नवीनीकरण।",
+    "hn": "Maujooda Delhi driving licence ka renewal."
+  },
+  "benefit": {
+    "text": {
+      "en": "A renewed driving licence.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You hold a driving licence issued in Delhi. Renewal within the grace period costs less than after it.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A commercial licence also needs a medical certificate and, for heavy motor vehicles, a driver refresher training certificate.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Application in Form 9.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Two recent passport size photos.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Your original driving licence.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Attested copies of valid proof of age and residence.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Form 1 self-declaration of physical fitness.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For a commercial licence: medical certificate in Form 1A, plus a driver refresher training certificate for HMV.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "₹400 (₹200 plus ₹200 for the smart card) within the grace period. After the grace period ₹1,500 (₹300 plus ₹1,000 for each year or part thereof, plus ₹200 for the smart card).",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "A private licence is renewed on the same day. A commercial licence is renewed after the issuing authority verifies the particulars.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Submit the documents and fee to the licensing authority. The Transport Department has an online appointment and payment service.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Renewal of Driving Licence (Transport Department)",
+      "url": "https://transport.delhi.gov.in/transport/renewal-driving-licence",
+      "publisher": "Transport Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://transport.delhi.gov.in/"
+}

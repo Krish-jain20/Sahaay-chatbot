@@ -1,0 +1,143 @@
+{
+  "id": "delhi-high-support-needs-allowance",
+  "category": [
+    "pension"
+  ],
+  "name": {
+    "en": "Allowance for persons with benchmark disabilities having high support needs",
+    "hi": "उच्च सहायता आवश्यकता वाले बेंचमार्क दिव्यांगजन के लिए भत्ता",
+    "hn": "Allowance for high support needs (benchmark disability)"
+  },
+  "department": {
+    "en": "Social Welfare Department, Govt of NCT of Delhi",
+    "hi": "समाज कल्याण विभाग, दिल्ली सरकार",
+    "hn": "Social Welfare Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "high support needs allowance",
+    "benchmark disability allowance",
+    "disability allowance delhi"
+  ],
+  "summary": {
+    "en": "₹6,000 a month for Delhi residents with a benchmark disability who have high support needs and low family income.",
+    "hi": "उच्च सहायता आवश्यकता वाले बेंचमार्क दिव्यांगजन को, कम पारिवारिक आय पर, ₹6,000 प्रति माह।",
+    "hn": "High support needs wale benchmark disability waale Delhi residents ko, kam family income par, ₹6,000 per month."
+  },
+  "benefit": {
+    "text": {
+      "en": "₹6,000 a month from the month of sanction, in addition to any monthly amount under the Persons with Special Needs (disability pension) scheme. It is meant for caregiver support or services such as medical treatment, therapy and assistive aids.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "A permanent certificate of disability from a notified authority, as a Person with Benchmark Disability under the Rights of Persons with Disabilities Act, 2016.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A resident of Delhi for at least five years, with an Aadhaar card showing Delhi residence.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A score of 60 to 100 as assessed by the Assessment Board.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Annual family income not more than ₹1 lakh.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Not a government employee.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Proof of residence showing at least 5 years in Delhi, for example a ration card, voter card, passport, driving licence, utility bill, bank passbook or property document. If you have none, statements of a gazetted officer about your length of stay.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A self-declaration of annual family income.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A bank account (single or joint) in a bank operating in Delhi, for payment through PFMS.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "One passport size photo.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Not stated on the official page: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Not stated on the official page: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Financial Assistance Schemes (Social Welfare Department)",
+      "url": "https://socialwelfare.delhi.gov.in/social/financials-assistance-schemes",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The official page does not say how to apply for this allowance, so no steps are shown. Ask the District Social Welfare Office.",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "apply_url": "https://socialwelfare.delhi.gov.in/"
+}

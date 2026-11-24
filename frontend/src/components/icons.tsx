@@ -20,3 +20,4 @@ export const StopIcon = ({ className }: P) => <svg {...base} className={classNam
 export const LinkIcon = ({ className }: P) => (
   <svg {...base} className={className}><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" /></svg>
 );
+export const ChevronDownIcon = ({ className }: P) => <svg {...base} className={className}><path d="M6 9l6 6 6-6" /></svg>;

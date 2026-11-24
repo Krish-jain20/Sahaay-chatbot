@@ -1,0 +1,156 @@
+{
+  "id": "delhi-learner-licence",
+  "category": [
+    "licence"
+  ],
+  "name": {
+    "en": "Learner's driving licence",
+    "hi": "लर्नर ड्राइविंग लाइसेंस",
+    "hn": "Learner's driving licence"
+  },
+  "department": {
+    "en": "Transport Department, Govt of NCT of Delhi",
+    "hi": "परिवहन विभाग, दिल्ली सरकार",
+    "hn": "Transport Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "learner licence",
+    "learning licence",
+    "learner's licence",
+    "ll",
+    "driving licence",
+    "driving license",
+    "लर्नर लाइसेंस"
+  ],
+  "summary": {
+    "en": "A temporary licence, valid for 6 months, to learn to drive.",
+    "hi": "सीखने के लिए 6 महीने की अस्थायी लाइसेंस।",
+    "hn": "Driving seekhne ke liye 6 mahine ka temporary licence."
+  },
+  "benefit": {
+    "text": {
+      "en": "A learner's licence, valid up to 6 months and valid throughout India. It lets you learn with an experienced licensed driver. No driving test is needed at this stage.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s2"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You must have completed 18 years of age to drive a motor vehicle other than a transport vehicle. At 16 you can get a licence for a motorcycle without gear of up to 50 cc, with a parent or guardian's consent.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For a transport vehicle licence: age 20, an effective light motor vehicle licence held for at least one year, and 8th standard pass.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Form 1 (declaration of physical fitness) and Form 2 (application for a learner's licence).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Two recent passport size photos.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Self-attested copies of proof of residence and proof of age.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A medical certificate in Form 1A is required for transport vehicle licences and, as the pages state, for applicants above 40 years in other categories (one page says above 50).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For a transport vehicle: self-attested proof of 8th standard pass and a copy of the light motor vehicle licence held.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "₹500 for one category of vehicle, ₹950 for two, ₹1,400 for three. A retest costs ₹50.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Not stated on the official pages: verify locally. The licence is valid for 6 months.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Apply to the licensing authority where you live, with the forms, photos, proofs and fee. The Transport Department has an online appointment and payment service.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Apply for the permanent licence after 30 days and within 6 months of the learner's licence being issued.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Learner Licence (Transport Department)",
+      "url": "https://transport.delhi.gov.in/transport/learner-licence-0",
+      "publisher": "Transport Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Driving Licence FAQ (Transport Department)",
+      "url": "https://transport.delhi.gov.in/transport/driving-license",
+      "publisher": "Transport Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The two official pages differ on the medical certificate age (above 40 or above 50), so check with the licensing office.",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "apply_url": "https://transport.delhi.gov.in/"
+}

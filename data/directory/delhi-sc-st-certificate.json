@@ -1,0 +1,162 @@
+{
+  "id": "delhi-sc-st-certificate",
+  "category": [
+    "certificate"
+  ],
+  "name": {
+    "en": "SC/ST caste certificate",
+    "hi": "SC/ST जाति प्रमाण पत्र",
+    "hn": "SC/ST caste certificate"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "caste certificate",
+    "sc certificate",
+    "st certificate",
+    "scheduled caste certificate",
+    "जाति प्रमाण पत्र"
+  ],
+  "summary": {
+    "en": "A Revenue Department certificate that you belong to a Scheduled Caste or Scheduled Tribe.",
+    "hi": "राजस्व विभाग का प्रमाण पत्र कि आप अनुसूचित जाति या जनजाति से हैं।",
+    "hn": "Revenue Department ka certificate ki aap Scheduled Caste ya Tribe se hain."
+  },
+  "benefit": {
+    "text": {
+      "en": "An SC/ST certificate issued in Delhi. It is also asked for by other services, for example the SC/ST/OBC merit scholarship.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You belong to a Scheduled Caste or Scheduled Tribe. A copy of an SC/ST certificate of your father, brother, sister or another paternal blood relative is the main proof.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "If nobody in your family has a certificate, two government servants must certify that they know you permanently and that you belong to the named caste, with attested copies of their ID cards.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For married women, a local enquiry is held at the place of residence before marriage and after marriage.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Completed application form, self-attested.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Aadhaar. It is not compulsory: if you have none, give any one identity proof from PAN, passport, driving licence or voter card.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A copy of the SC/ST certificate of your father, brother, sister or paternal blood relative. No affidavit is needed if you attach a father's-side SC certificate issued in Delhi.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A self-declaration in the prescribed format if the relative's certificate was issued outside Delhi.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Present residence proof such as a voter card, electricity, water or telephone bill, and proof of date of birth (birth certificate, school certificate or passport).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For an SC/ST certificate from another state: self-attested application, birth or school certificate, ration card or other residence proof, and a copy of the father's certificate (show the original for examination).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "No fee.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "14 days for an SC Delhi State certificate (service level agreement). If your certificate needs verification from the authority that issued the relative's certificate, you get it after that authority replies.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Go to the SDM of your area, or the Deputy Commissioner's office, between 10:00 AM and 1:00 PM on any working day. You can also apply online on e-District.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A local enquiry is conducted in all cases to verify your residence and caste. All documents can be self-attested.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "SC/ST Certificates (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/scst-certificates-0",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}
