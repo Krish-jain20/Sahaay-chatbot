@@ -460,10 +460,10 @@ class LLM:
             return None
         return WebAnswer(text=text, sources=resp.sources)
 
-    def _web_tavily(self, question: str, lang: str, user_id: str) -> WebAnswer | None:
+    def _hits(self, question: str) -> list[SearchHit]:
+        """Tavily hits for an already masked query: government sites first, open search if too few."""
         assert self.searcher is not None
         try:
-            # Government sites first; open the search only if that finds too little.
             hits = self.searcher(question, GOV_DOMAINS)
             if len(hits) < 2:
                 hits = self.searcher(question, None)
@@ -473,23 +473,76 @@ class LLM:
         hits = [h for h in hits if clean_snippet(h.content)]
         # Random commercial pages (directories, review sites) add noise next to government pages.
         gov = [h for h in hits if (urlparse(h.url).hostname or "").endswith((".gov.in", ".nic.in"))]
-        hits = gov or hits
-        if not hits:
-            return None
-        results = "\n".join(
+        return gov or hits
+
+    @staticmethod
+    def _results_block(hits: list[SearchHit]) -> str:
+        return "\n".join(
             f'<result n="{i + 1}" site="{urlparse(h.url).hostname or ""}">\n'
             f"{clean_snippet(h.content)}\n</result>"
             for i, h in enumerate(hits)
         )
+
+    def _web_tavily(self, question: str, lang: str, user_id: str) -> WebAnswer | None:
+        hits = self._hits(question)
+        if not hits:
+            return None
         req = LLMRequest(
             model=self.settings.llm_model_web or self.settings.llm_model_strong,
             system=load_prompt("web_summary") + f"\nLanguage: {lang}",
-            text=f"<question>\n{question}\n</question>\n<results>\n{results}\n</results>",
+            text=(
+                f"<question>\n{question}\n</question>\n"
+                f"<results>\n{self._results_block(hits)}\n</results>"
+            ),
         )
         text = self._call(user_id, req).text.strip()
         if not text or text == "NO_SOURCE":
             return None
         sources = [{"title": urlparse(h.url).hostname or "", "url": h.url} for h in hits]
+        return WebAnswer(text=text, sources=sources)
+
+    def help_answer(self, question: str, cards: str, lang: str, *, user_id: str) -> str | None:
+        """Answer from matching help cards plus labelled general guidance, when the web gave nothing."""
+        req = LLMRequest(
+            model=self.settings.llm_model_fast,
+            system=load_prompt("help_answer") + f"\nLanguage: {lang}",
+            text=f"<question>\n{mask(question)}\n</question>\n<cards>\n{cards}\n</cards>",
+        )
+        out = self._call(user_id, req).text.strip()
+        return None if out == "NO_SOURCE" or not out else out
+
+    def situation_answer(
+        self, card_text: str, situation: str, lang: str, *, user_id: str
+    ) -> WebAnswer | None:
+        """Practical answer to a person's situation: the card plus a web lookup on the situation.
+
+        A failed or empty web lookup is not an error here: the answer then rests on the card and labelled
+        general guidance. Raises LLMError only if the model itself is unavailable.
+        """
+        situation = mask(situation)
+        hits: list[SearchHit] = []
+        google = self.settings.web_search_provider == "google"
+        if self.web_enabled and not google:
+            try:
+                hits = self._hits(f"{situation} (Delhi, India)")
+            except LLMError:
+                hits = []
+        results = f"<results>\n{self._results_block(hits)}\n</results>\n" if hits else ""
+        req = LLMRequest(
+            model=self.settings.llm_model_web or self.settings.llm_model_strong,
+            system=load_prompt("help_situation") + f"\nLanguage: {lang}",
+            text=f"<card>\n{card_text}\n</card>\n<situation>\n{situation}\n</situation>\n{results}",
+            web=self.web_enabled and google,
+        )
+        resp = self._call(user_id, req)
+        text = resp.text.strip()
+        if not text or text == "NO_SOURCE":
+            return None
+        sources = (
+            [{"title": urlparse(h.url).hostname or "", "url": h.url} for h in hits]
+            if hits
+            else resp.sources
+        )
         return WebAnswer(text=text, sources=sources)
 
     def draft(self, kind: str, facts: dict[str, Any], lang: str, *, user_id: str) -> str:

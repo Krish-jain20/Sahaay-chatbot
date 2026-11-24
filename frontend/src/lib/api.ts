@@ -249,7 +249,8 @@ export interface HelpAnswer {
   answer: string | null;
   web: WebCardData | null;
   matches: string[];
-  state: "ok" | "none" | "blocked" | "unavailable";
+  /** web: live search; cards: matching cards plus general guidance; card_text: the best card's own text. */
+  basis: "web" | "cards" | "card_text" | "none";
 }
 
 /** Ask the help page a free question: a guarded web answer plus the ids of matching verified cards. */
@@ -258,10 +259,16 @@ export async function askHelp(question: string, language: string): Promise<HelpA
   return res.ok ? ((await res.json()) as HelpAnswer) : null;
 }
 
-/** Plain-language explanation of one help card. Null when the model is off or has no source. */
-export async function explainHelpCard(cardId: string, language: string, situation: string): Promise<string | null> {
+export interface HelpExplanation {
+  text: string;
+  web: WebCardData | null;
+  basis: "web" | "card";
+}
+
+/** Explain a card, or with a situation, answer it from the card plus a web lookup. Null if unavailable. */
+export async function explainHelpCard(cardId: string, language: string, situation: string): Promise<HelpExplanation | null> {
   const res = await authed("/help/explain", { method: "POST", body: JSON.stringify({ card_id: cardId, language, situation }) });
-  return res.ok ? ((await res.json()) as { text: string }).text : null;
+  return res.ok ? ((await res.json()) as HelpExplanation) : null;
 }
 
 export interface WebColumn {

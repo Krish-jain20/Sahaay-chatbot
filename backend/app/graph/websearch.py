@@ -39,21 +39,11 @@ def _host(source: dict[str, str]) -> str:
     return (urlparse(source.get("url", "")).hostname or "").lower()
 
 
-def run_web_search(
-    llm: LLM, catalog: Catalog, question: str, lang: Lang, user_id: str, today: str
-) -> WebResult:
-    try:
-        ans = llm.web_search(question, lang, user_id=user_id)
-    except (RateLimited, BudgetExceeded, LLMError):
-        ans = None
-    text = _URL.sub("", mask_pii(ans.text)[0]).strip() if ans else ""
-    if not text:
-        return WebResult()
-    if find_violations(text):
-        return WebResult(blocked=True)
+def web_card(raw_sources: list[dict[str, str]], catalog: Catalog, today: str) -> dict[str, Any]:
+    """Sources deduplicated by host, each marked official only on an exact allowlist host."""
     seen: set[str] = set()
     sources: list[dict[str, Any]] = []
-    for src in ans.sources:
+    for src in raw_sources:
         host = _host(src)
         if not host or host in seen:
             continue
@@ -70,9 +60,20 @@ def run_web_search(
                 else ("gov_unchecked" if host.endswith(GOV_SUFFIXES) else "other"),
             }
         )
-    card = {
-        "type": "web",
-        "retrieved_on": today,
-        "sources": sources[:MAX_SOURCES],
-    }
-    return WebResult(text=text, card=card)
+    return {"type": "web", "retrieved_on": today, "sources": sources[:MAX_SOURCES]}
+
+
+def run_web_search(
+    llm: LLM, catalog: Catalog, question: str, lang: Lang, user_id: str, today: str
+) -> WebResult:
+    try:
+        ans = llm.web_search(question, lang, user_id=user_id)
+    except (RateLimited, BudgetExceeded, LLMError):
+        ans = None
+    text = _URL.sub("", mask_pii(ans.text)[0]).strip() if ans else ""
+    if not text:
+        return WebResult()
+    if find_violations(text):
+        return WebResult(blocked=True)
+    return WebResult(text=text, card=web_card(ans.sources, catalog, today))
+

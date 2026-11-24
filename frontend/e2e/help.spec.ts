@@ -67,7 +67,7 @@ test("help: asking shows a sourced AI answer, and opens and highlights the match
         answer: "File it on the RTI portal. Verify locally.",
         web: { type: "web", retrieved_on: "2026-11-24", sources: [{ n: 1, title: "rtionline.gov.in", url: "https://example.test/r", official: true, kind: "official" }] },
         matches: ["complaints.rti"],
-        state: "ok",
+        basis: "web",
       },
     });
   });
@@ -84,29 +84,38 @@ test("help: asking shows a sourced AI answer, and opens and highlights the match
   await expect(card).toContainText("Matches your question");
 });
 
-test("help: with AI off, asking still points to matching cards and says so", async ({ page }) => {
-  await page.route("**/help/ask", (route) => route.fulfill({ json: { answer: null, web: null, matches: ["scams.income_fee"], state: "unavailable" } }));
+test("help: when the AI cannot answer, the best matching card's own text is shown, never a bare no-answer", async ({ page }) => {
+  await page.route("**/help/ask", (route) => route.fulfill({ json: { answer: "The card text.", web: null, matches: ["scams.income_fee"], basis: "card_text" } }));
   await page.goto("/help");
   await page.waitForLoadState("networkidle");
   await page.getByLabel("Ask a question").fill("agent wants a fee");
   await page.getByRole("button", { name: "Ask", exact: true }).click();
-  await expect(page.getByTestId("help-answer-none")).toContainText("not available");
+  await expect(page.getByTestId("help-answer-text")).toContainText("The card text.");
+  await expect(page.getByTestId("help-answer")).toContainText("text of the best matching card");
   await expect(page.getByTestId("help-card-scams.income_fee").getByRole("region")).toBeVisible();
 });
 
-test("help: 'Explain in plain words' shows an AI explanation labelled as based on the card", async ({ page }) => {
+test("help: 'Explain in plain words' answers the person's situation with next steps, sources and the search date", async ({ page }) => {
   let sent: { card_id: string; situation: string } | null = null;
   await page.route("**/help/explain", async (route) => {
     sent = route.request().postDataJSON();
-    await route.fulfill({ json: { text: "An RTI asks a department for records." } });
+    await route.fulfill({
+      json: {
+        text: "1. Ask the office for the reason in writing.\n2. File a grievance if it does not reply.",
+        web: { type: "web", retrieved_on: "2026-11-24", sources: [{ n: 1, title: "pgportal.gov.in", url: "https://example.test/p", official: true, kind: "official" }] },
+        basis: "web",
+      },
+    });
   });
   await page.goto("/help");
   await page.waitForLoadState("networkidle");
   const card = await openCard(page, "complaints.rti");
-  await card.getByLabel(/Want this explained/).fill("my file is stuck");
+  await card.getByLabel(/Describe your situation/).fill("my file is stuck");
   await card.getByRole("button", { name: "Explain in plain words" }).click();
-  await expect(card.getByTestId("help-explanation")).toContainText("asks a department for records");
-  await expect(card.getByTestId("help-explanation")).toContainText("based only on this card");
+  const out = card.getByTestId("help-explanation");
+  await expect(out).toContainText("Ask the office for the reason in writing");
+  await expect(out).toContainText("based on this card and a web search");
+  await expect(out).toContainText("Searched on 2026-11-24");
   expect(sent).toEqual(expect.objectContaining({ card_id: "complaints.rti", situation: "my file is stuck" }));
 });
 
