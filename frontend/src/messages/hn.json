@@ -14,13 +14,16 @@
     "placeholder": "Apna sawaal likhein…",
     "send": "Bhejein",
     "stop": "Rokein",
-    "empty": "Delhi income certificate, SC/ST/OBC merit scholarship ya old-age pension ke baare mein poochhein.",
+    "empty": "Delhi income certificate, scholarship ya old-age pension (verified) ke baare mein poochhein, ya kisi bhi aur sarkari service ke baare mein, jaise ration card, birth certificate ya driving licence.",
     "suggestion": "Delhi mein income certificate kaise banwayein?",
     "error": "Kuch gadbad hui. Please dobara try karein.",
     "stopped": "Rok diya.",
     "confirmed": "Confirm kiya",
     "suggestion2": "Main Delhi mein student hoon, family income lagbhag 3 lakh hai",
-    "suggestion3": "Meri maa 67 saal ki hain, kya unhe pension mil sakti hai?"
+    "suggestion3": "Meri maa 67 saal ki hain, kya unhe pension mil sakti hai?",
+    "suggestion4": "Delhi mein ration card ke liye apply kaise karein?",
+    "suggestion5": "Delhi mein birth certificate ke liye kaun se documents chahiye?",
+    "suggestion6": "Driving licence renew kaise karein?"
   },
   "card": {
     "verified": "Official portal se verified · {date}",
@@ -82,7 +85,7 @@
     "error": "Yeh load nahi ho saka. Please dobara try karein.",
     "link": "Services ki tulna karein",
     "askChat": "Chat mein poochhein",
-    "webBadge": "Web se, unverified",
+    "webBadge": "Web se",
     "webRemove": "Web column hatayein",
     "notVerified": "Verified nahi",
     "webSummary": "Web se",
@@ -356,7 +359,7 @@
     "error": "Load nahi ho paya. Dobara try kijiye.",
     "deleteError": "Delete nahi ho paya. Dobara try kijiye.",
     "reports": "Har jawab ke saath official sources aur check ki date dikhti hai. Kuch galat lage to service card par “Galat information report karein” use kijiye.",
-    "webNote": "Agar aapke sawaal ka Sahaay ke paas verified record nahi hai, to woh web par search kar sakta hai. Sirf aapka sawaal, jismein identity numbers pehle hi chhupa diye jaate hain, AI model aur uske search provider (Tavily, ek web search service) ko jaata hai. Web ke jawaab unverified ke roop mein mark hote hain."
+    "webNote": "Agar aapke sawaal ka Sahaay ke paas verified record nahi hai, to woh web par search kar sakta hai. Sirf aapka sawaal, jismein identity numbers pehle hi chhupa diye jaate hain, AI model aur uske search provider (Tavily, ek web search service) ko jaata hai. Web ke jawaab apne sources aur search ki date dikhate hain, taaki aap check kar sakein."
   },
   "account": {
     "title": "Aapka account",

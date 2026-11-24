@@ -46,9 +46,9 @@ T: dict[str, dict[Lang, str]] = {
         "hn": "Kuch fees ya time official pages par nahi hain, please locally verify karein.",
     },
     "refusal.no_source": {
-        "en": "I don't have verified information on that yet. Right now I can help with three Delhi services: income certificate, the SC/ST/OBC merit scholarship and old-age pension.",
-        "hi": "इसकी सत्यापित जानकारी अभी मेरे पास नहीं है। अभी मैं दिल्ली की तीन सेवाओं में मदद कर सकता हूँ: आय प्रमाण पत्र, SC/ST/OBC मेरिट छात्रवृत्ति और वृद्धावस्था पेंशन।",
-        "hn": "Iski verified jaankari abhi mere paas nahi hai. Abhi main Delhi ki teen services mein madad kar sakta hoon: income certificate, SC/ST/OBC merit scholarship aur old-age pension.",
+        "en": "I don't have verified information on that yet, and I couldn't find a reliable answer online. For any government service, the National Portal of India lists official services and links at www.india.gov.in/services. I can give step-by-step help with the Delhi income certificate, the SC/ST/OBC merit scholarship and old-age pension.",
+        "hi": "इसकी सत्यापित जानकारी अभी मेरे पास नहीं है और ऑनलाइन भी कोई भरोसेमंद जवाब नहीं मिला। किसी भी सरकारी सेवा के लिए भारत का राष्ट्रीय पोर्टल www.india.gov.in/services पर आधिकारिक सेवाएँ और लिंक देता है। मैं दिल्ली के आय प्रमाण पत्र, SC/ST/OBC मेरिट छात्रवृत्ति और वृद्धावस्था पेंशन में चरण-दर-चरण मदद कर सकता हूँ।",
+        "hn": "Iski verified jaankari abhi mere paas nahi hai aur online bhi koi bharosemand jawaab nahi mila. Kisi bhi sarkari service ke liye National Portal of India www.india.gov.in/services par official services aur links deta hai. Main Delhi income certificate, SC/ST/OBC merit scholarship aur old-age pension mein step-by-step madad kar sakta hoon.",
     },
     "guide.lead": {
         "en": "These are three different tools. Here is how to tell them apart, from the official portals.",
@@ -64,11 +64,6 @@ T: dict[str, dict[Lang, str]] = {
         "en": "Searching the web",
         "hi": "वेब पर खोज रहे हैं",
         "hn": "Web par search kar rahe hain",
-    },
-    "web.label": {
-        "en": "From the web, not a verified Sahaay record. Verify locally.",
-        "hi": "वेब से, Sahaay का सत्यापित रिकॉर्ड नहीं। स्थानीय रूप से पुष्टि करें।",
-        "hn": "Web se, Sahaay ka verified record nahi. Locally verify karein.",
     },
     "guard.blocked": {
         "en": "I can't give that answer safely. Please check the official page for this service.",

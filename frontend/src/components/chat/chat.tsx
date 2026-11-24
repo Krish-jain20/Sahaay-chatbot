@@ -188,7 +188,7 @@ export function Chat() {
           <div className="space-y-3 text-center text-ink-2">
             <p>{t("empty")}</p>
             <div className="flex flex-col items-center gap-2">
-              {(["suggestion", "suggestion2", "suggestion3"] as const).map((k) => (
+              {(["suggestion", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"] as const).map((k) => (
                 <Button key={k} variant="chip" className="whitespace-normal text-left" onClick={() => void ask(t(k), t(k), facts)}>
                   {t(k)}
                 </Button>

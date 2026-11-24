@@ -52,7 +52,7 @@ def test_unknown_service_gets_labelled_web_answer_with_official_flags(client):
     assert len(p.web_requests) == 1
     assert "proof of stay" in said and "http" not in said
     card = cards[0]
-    assert card["type"] == "web" and "not a verified Sahaay record" in card["label"]
+    assert card["type"] == "web" and "label" not in card
     assert card["retrieved_on"]
     flags = {s["title"]: s["official"] for s in card["sources"]}
     assert flags == {"revenue.delhi.gov.in": True, "somefakeblog.com": False}  # allowlist host only, deduped
@@ -114,7 +114,7 @@ def test_compare_web_column_is_labelled_and_sourced(client):
     assert r.status_code == 200
     body = r.json()
     assert "instalments" in body["summary"] and "http" not in body["summary"]
-    assert "not a verified Sahaay record" in body["web"]["label"]
+    assert "label" not in body["web"]
     assert {s["title"]: s["official"] for s in body["web"]["sources"]}["somefakeblog.com"] is False
 
 
@@ -240,3 +240,15 @@ def test_tavily_provider_needs_a_search_key():
     )
     assert LLM(provider=FakeWeb("x"), settings=s).web_enabled is False
     assert LLM(provider=FakeWeb("x"), settings=s, searcher=FakeSearch()).web_enabled is True
+
+
+def test_tavily_drops_commercial_pages_when_government_pages_are_found(client):
+    search = FakeSearch(
+        official=[GOV_ROWS[0]],
+        open_=[
+            ("Dept", "https://revenue.delhi.gov.in/x", "Apply at the SDM office."),
+            ("Directory", "https://rocketreach.example/p", "Company directory page."),
+        ],
+    )
+    _, cards = _tavily(client, FakeSummary("Apply at the SDM office."), search)
+    assert [s["title"] for s in cards[0]["sources"]] == ["revenue.delhi.gov.in"]

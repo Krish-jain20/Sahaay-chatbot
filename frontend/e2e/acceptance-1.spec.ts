@@ -54,7 +54,7 @@ test("an out-of-scope question is refused, not answered from memory", async ({ p
   await page.goto("/chat");
   await page.getByLabel("Type your question…").fill("how do I renew my passport?");
   await page.getByRole("button", { name: "Send" }).click();
-  await expect(page.getByText("I don't have verified information on that yet", { exact: false })).toBeVisible();
+  await expect(page.getByText("www.india.gov.in/services", { exact: false })).toBeVisible();
   await expect(page.locator("article")).toHaveCount(0);
 });
 
