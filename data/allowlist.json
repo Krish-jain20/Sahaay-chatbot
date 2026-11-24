@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_on": "2026-11-23",
+  "updated_on": "2026-11-24",
   "domains": [
     {
       "host": "edistrict.delhigovt.nic.in",
@@ -31,6 +31,16 @@
       "host": "scstwelfare.delhi.gov.in",
       "owner": "Department for Welfare of SC/ST/OBC, GNCTD",
       "verified_on": "2026-11-23"
+    },
+    {
+      "host": "pgportal.gov.in",
+      "owner": "CPGRAMS, Department of Administrative Reforms and Public Grievances, Government of India",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "rtionline.gov.in",
+      "owner": "RTI Online, Department of Personnel and Training, Government of India",
+      "verified_on": "2026-11-24"
     }
   ]
 }

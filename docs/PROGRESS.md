@@ -91,6 +91,8 @@ Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip whe
 | S6-05 | done, automated only | axe-core (WCAG 2.1 A/AA) over all 8 pages at phone and desktop width plus chat with a card and the draft review screen: no violations. Also tested: 44px tap targets, reduced motion (no animation), visible focus ring while tabbing, streaming announced politely. Fixed: language buttons were 36px high. Not done: a manual keyboard and screen-reader pass with real assistive tech |
 | S6-03 | done, local Postgres only | `app/graph/checkpoint.py`: Postgres checkpointer when `DATABASE_URL` is set, in-memory otherwise. Chat messages are PII-masked before they enter checkpointed state. Verified against a local Postgres (state survives a restart, no raw identity numbers stored). Not yet run against the real Supabase database: needs `DATABASE_URL` |
 | S6-01 | done, not tried with a real inbox | Account panel on /privacy: a guest enters an email and `updateUser` upgrades the same user in place (saved details and cases stay); a signed-out visitor gets a normal magic link; sign out. Shows an honest note when Supabase is not configured. Needs Supabase Auth: email provider on, `http://localhost:3000/privacy` (and the deployed URL) in Redirect URLs |
+| S2-04 guard | done | `app/safety/claims.py` forbidden-claim scan (approved, guaranteed, genuine, live status, fee placeholders; en/hi/hn) runs on every answer in `compose` before streaming; a hit is replaced by a safe fallback. Tests plant an "approved" and scan all service data |
+| S4-07 | done | `data/guidance.json` + `GET /guidance/complaints`: complaint (CPGRAMS) vs appeal vs RTI, every point cited to pgportal.gov.in or rtionline.gov.in (checked 2026-11-24). Shown in chat for complaint/RTI questions (guide card), on `/help/complaints`, and linked from Home, nav and the case folder. Key fact: the central RTI portal says it does not take Delhi government applications, so the card says to verify locally how a Delhi department takes RTI. Hindi and Hinglish text is mine: needs native review (S6-07) |
 | S6-07 | todo | human Hindi/Hinglish copy review |
 
 ## Stage 6 and the rest
@@ -102,4 +104,3 @@ Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 - Everything merged is on `main`: https://github.com/Krish-jain20/Sahaay-chatbot
 - Run it: see README.md. Eval: `cd backend && uv run python -m tests.eval.run`.
 
-| S2-04 guard | done | `app/safety/claims.py` forbidden-claim scan (approved, guaranteed, genuine, live status, fee placeholders; en/hi/hn) runs on every answer in `compose` before streaming; a hit is replaced by a safe fallback. Tests plant an "approved" and scan all service data |

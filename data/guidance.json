@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "updated_on": "2026-11-24",
+  "sources": [
+    {
+      "id": "cpgrams",
+      "title": "CPGRAMS home page: about, issues not taken up, appeals",
+      "url": "https://pgportal.gov.in/",
+      "publisher": "Department of Administrative Reforms and Public Grievances (DARPG), Government of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "rtionline",
+      "title": "RTI Online portal home page",
+      "url": "https://rtionline.gov.in/",
+      "publisher": "Department of Personnel and Training (DoPT), Government of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "topics": [
+    {
+      "id": "complaints",
+      "title": {
+        "en": "Complaint, RTI or appeal: which one?",
+        "hi": "शिकायत, RTI या अपील: कौन सा?",
+        "hn": "Shikayat, RTI ya appeal: kaun sa?"
+      },
+      "intro": {
+        "en": "Three different tools for three different problems. Pick by what you need.",
+        "hi": "तीन अलग समस्याओं के लिए तीन अलग तरीक़े। अपनी ज़रूरत के हिसाब से चुनें।",
+        "hn": "Teen alag problems ke liye teen alag tareeke. Apni zaroorat ke hisaab se chunein."
+      },
+      "points": [
+        {
+          "id": "grievance",
+          "heading": {
+            "en": "A complaint (grievance): something went wrong with a service",
+            "hi": "शिकायत: किसी सेवा में कुछ गड़बड़ हुई",
+            "hn": "Shikayat (grievance): kisi service mein kuch gadbad hui"
+          },
+          "body": {
+            "en": "Use this when a service was delayed, refused without a clear reason, or handled badly. CPGRAMS is the central online portal for grievances about service delivery. It is open 24x7 and every complaint gets a registration ID you can use to track it. The portal says the Government charges no fee for filing a grievance.",
+            "hi": "जब कोई सेवा देर से मिले, बिना साफ़ कारण के मना हो जाए या ठीक से न संभाली जाए, तब शिकायत करें। CPGRAMS सेवा-वितरण से जुड़ी शिकायतों का केंद्रीय ऑनलाइन पोर्टल है। यह 24x7 खुला रहता है और हर शिकायत को एक पंजीकरण आईडी मिलती है जिससे आप उसे ट्रैक कर सकते हैं। पोर्टल के अनुसार सरकार शिकायत दर्ज करने का कोई शुल्क नहीं लेती।",
+            "hn": "Jab koi service der se mile, bina saaf kaaran ke mana ho jaaye ya theek se na sambhali jaaye, tab shikayat karein. CPGRAMS service delivery se judi shikayaton ka central online portal hai. Yeh 24x7 khula rehta hai aur har shikayat ko ek registration ID milti hai jisse aap use track kar sakte hain. Portal ke mutabik sarkar shikayat darj karne ka koi fee nahi leti."
+          },
+          "source_ref": "cpgrams"
+        },
+        {
+          "id": "appeal",
+          "heading": {
+            "en": "An appeal: you are not satisfied with the answer",
+            "hi": "अपील: आप जवाब से संतुष्ट नहीं हैं",
+            "hn": "Appeal: aap jawaab se santusht nahi hain"
+          },
+          "body": {
+            "en": "After a grievance is closed you can give feedback. On CPGRAMS, if you rate the resolution 'Poor', the option to file an appeal opens, and you can track the appeal with your grievance registration number. For an RTI request there is a separate path: a first appeal, and then a second appeal to the Central Information Commission.",
+            "hi": "शिकायत बंद होने के बाद आप फ़ीडबैक दे सकते हैं। CPGRAMS पर अगर आप समाधान को 'Poor' रेट करते हैं तो अपील दर्ज करने का विकल्प खुल जाता है, और आप शिकायत पंजीकरण संख्या से अपील को ट्रैक कर सकते हैं। RTI अनुरोध के लिए अलग रास्ता है: पहली अपील, फिर केंद्रीय सूचना आयोग में दूसरी अपील।",
+            "hn": "Shikayat band hone ke baad aap feedback de sakte hain. CPGRAMS par agar aap resolution ko 'Poor' rate karte hain to appeal file karne ka option khul jaata hai, aur aap grievance registration number se appeal track kar sakte hain. RTI request ke liye alag raasta hai: pehli appeal, phir Central Information Commission mein doosri appeal."
+          },
+          "source_ref": "cpgrams"
+        },
+        {
+          "id": "rti",
+          "heading": {
+            "en": "An RTI: you want information, not a fix",
+            "hi": "RTI: आपको जानकारी चाहिए, समाधान नहीं",
+            "hn": "RTI: aapko jaankari chahiye, fix nahi"
+          },
+          "body": {
+            "en": "RTI is for asking a public office for records or information, such as the status and reasons on your file. CPGRAMS does not take up RTI matters. The central RTI Online portal is only for central government bodies. Its own notice says not to file for state government bodies, including the Government of NCT Delhi, and that such applications are returned without refund. For a Delhi department, verify locally how that department accepts RTI applications.",
+            "hi": "RTI किसी सरकारी दफ़्तर से रिकॉर्ड या जानकारी माँगने के लिए है, जैसे आपकी फ़ाइल की स्थिति और कारण। CPGRAMS RTI मामले नहीं लेता। केंद्रीय RTI Online पोर्टल केवल केंद्र सरकार के निकायों के लिए है। उसकी अपनी सूचना कहती है कि दिल्ली सरकार (GNCTD) समेत राज्य सरकार के निकायों के लिए आवेदन न करें, और ऐसे आवेदन बिना रिफ़ंड वापस कर दिए जाते हैं। दिल्ली के किसी विभाग के लिए स्थानीय रूप से पुष्टि करें कि वह RTI आवेदन कैसे लेता है।",
+            "hn": "RTI kisi sarkari daftar se record ya jaankari maangne ke liye hai, jaise aapki file ki status aur reasons. CPGRAMS RTI matters nahi leta. Central RTI Online portal sirf central government bodies ke liye hai. Uski apni notice kehti hai ki Delhi sarkar (GNCTD) samet state government bodies ke liye application na dein, aur aisi applications bina refund wapas kar di jaati hain. Delhi ke kisi department ke liye locally verify karein ki woh RTI application kaise leta hai."
+          },
+          "source_ref": "rtionline"
+        },
+        {
+          "id": "not_covered",
+          "heading": {
+            "en": "What CPGRAMS does not take up",
+            "hi": "CPGRAMS क्या नहीं लेता",
+            "hn": "CPGRAMS kya nahi leta"
+          },
+          "body": {
+            "en": "RTI matters, court-related (sub judice) matters, religious matters, and service matters of government employees unless they have already used the prescribed channels. A complaint sent by email is not attended to; lodge it on the portal.",
+            "hi": "RTI मामले, अदालत से जुड़े (विचाराधीन) मामले, धार्मिक मामले, और सरकारी कर्मचारियों के सेवा संबंधी मामले (जब तक वे तय रास्ते पहले न अपना चुके हों)। ईमेल से भेजी शिकायत पर कार्रवाई नहीं होती; पोर्टल पर दर्ज करें।",
+            "hn": "RTI matters, court se jude (sub judice) matters, religious matters, aur sarkari karmchariyon ke service matters (jab tak woh tay raaste pehle na apna chuke hon). Email se bheji shikayat par action nahi hota; portal par darj karein."
+          },
+          "source_ref": "cpgrams"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { API_URL } from "@/lib/sse";
 import { getAccessToken } from "@/lib/supabase";
+import type { GuideCardData } from "@/lib/types";
 
 async function authed(path: string, init: RequestInit = {}): Promise<Response> {
   const token = await getAccessToken();
@@ -242,4 +243,9 @@ export interface MyData {
 export async function loadMyData(): Promise<MyData | null> {
   const res = await authed("/me/data");
   return res.ok ? ((await res.json()) as MyData) : null;
+}
+
+export async function loadGuidance(topic: string, lang: string): Promise<GuideCardData | null> {
+  const res = await fetch(`${API_URL}/guidance/${topic}?lang=${encodeURIComponent(lang)}`);
+  return res.ok ? ((await res.json()) as GuideCardData) : null;
 }

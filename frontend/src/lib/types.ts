@@ -47,3 +47,12 @@ export interface StatusPill {
   label: string;
   state: "running" | "done";
 }
+
+export interface GuideCardData {
+  type: "guide";
+  id: string;
+  title: string;
+  intro: string;
+  points: { id: string; heading: string; body: string; source_n: number }[];
+  citations: Citation[];
+}

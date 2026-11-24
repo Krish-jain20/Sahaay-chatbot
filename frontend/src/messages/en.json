@@ -86,7 +86,8 @@
     "drafts": "Drafts",
     "forms": "Official form",
     "case": "My case",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "help": "Complaint or RTI?"
   },
   "panel": {
     "title": "Your details",
@@ -305,7 +306,8 @@
     "error": "Could not load. Please try again.",
     "saveError": "Could not save. Please try again.",
     "tooShort": "Please enter at least 4 letters or digits.",
-    "futureDate": "The date cannot be in the future."
+    "futureDate": "The date cannot be in the future.",
+    "openHelp": "Complaint or RTI?"
   },
   "privacy": {
     "title": "Privacy and my data",
@@ -346,5 +348,14 @@
     "error": "We could not send the link. Check the address and try again.",
     "signedIn": "Signed in as {email}.",
     "signOut": "Sign out"
+  },
+  "help": {
+    "source": "Source {n}",
+    "sources": "Sources",
+    "checkedOn": "checked {date}",
+    "notChecked": "not yet checked",
+    "loading": "Loading...",
+    "error": "Could not load this guide. Please try again.",
+    "note": "General guidance from official portals, not legal advice. Sahaay is an AI assistant, not an official government channel."
   }
 }

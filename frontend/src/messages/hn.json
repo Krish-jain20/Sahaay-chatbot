@@ -86,7 +86,8 @@
     "drafts": "Drafts",
     "forms": "Official form",
     "case": "Mera case",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "help": "Shikayat ya RTI?"
   },
   "panel": {
     "title": "Aapki details",
@@ -305,7 +306,8 @@
     "error": "Load nahi ho paya. Dobara try kijiye.",
     "saveError": "Save nahi ho paya. Dobara try kijiye.",
     "tooShort": "Kam se kam 4 letters ya digits likhiye.",
-    "futureDate": "Date future ki nahi ho sakti."
+    "futureDate": "Date future ki nahi ho sakti.",
+    "openHelp": "Shikayat ya RTI?"
   },
   "privacy": {
     "title": "Privacy aur mera data",
@@ -346,5 +348,14 @@
     "error": "Hum link nahi bhej paye. Address check karke dobara try karein.",
     "signedIn": "{email} ke roop mein sign-in.",
     "signOut": "Sign out"
+  },
+  "help": {
+    "source": "Source {n}",
+    "sources": "Sources",
+    "checkedOn": "checked {date}",
+    "notChecked": "abhi check nahi hua",
+    "loading": "Load ho raha hai...",
+    "error": "Yeh guide load nahi ho saki. Please dobara try karein.",
+    "note": "Official portals se general jaankari, legal advice nahi. Sahaay ek AI assistant hai, official government channel nahi."
   }
 }
