@@ -1,19 +1,7 @@
-import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
-import { AppShell } from "@/components/app-shell";
-import { GuidePage } from "@/components/help/guide-page";
-import { Disclaimer } from "@/components/top-bar";
-
-export default async function HelpPage({ params }: { params: Promise<{ topic: string }> }) {
+// The three old pages (complaints, scams, terms) are now sections of one Help and rights page.
+export default async function OldHelpTopic({ params }: { params: Promise<{ topic: string }> }) {
   const { topic } = await params;
-  const t = await getTranslations();
-  return (
-    <AppShell wide>
-      <main className="mx-auto max-w-3xl space-y-4 px-4 py-8">
-        <h1 className="sr-only">{t("nav.help")}</h1>
-        <GuidePage topic={topic} />
-        <Disclaimer text={t("common.disclaimer")} />
-      </main>
-    </AppShell>
-  );
+  redirect(["complaints", "scams", "terms"].includes(topic) ? `/help#${topic}` : "/help");
 }

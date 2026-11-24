@@ -34,13 +34,7 @@ export default function Home() {
             <Link href="/forms">{t("nav.forms")}</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link href="/help/complaints">{t("nav.help")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/help/scams">{t("nav.safe")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/help/terms">{t("nav.terms")}</Link>
+            <Link href="/help">{t("nav.help")}</Link>
           </Button>
         </div>
         <ScopeBanner />

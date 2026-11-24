@@ -1,6 +1,6 @@
 import { API_URL } from "@/lib/sse";
 import { getAccessToken } from "@/lib/supabase";
-import type { GuideCardData, WebCardData } from "@/lib/types";
+import type { WebCardData } from "@/lib/types";
 
 async function authed(path: string, init: RequestInit = {}): Promise<Response> {
   const token = await getAccessToken();
@@ -245,9 +245,23 @@ export async function loadMyData(): Promise<MyData | null> {
   return res.ok ? ((await res.json()) as MyData) : null;
 }
 
-export async function loadGuidance(topic: string, lang: string): Promise<GuideCardData | null> {
-  const res = await fetch(`${API_URL}/guidance/${topic}?lang=${encodeURIComponent(lang)}`);
-  return res.ok ? ((await res.json()) as GuideCardData) : null;
+export interface HelpAnswer {
+  answer: string | null;
+  web: WebCardData | null;
+  matches: string[];
+  state: "ok" | "none" | "blocked" | "unavailable";
+}
+
+/** Ask the help page a free question: a guarded web answer plus the ids of matching verified cards. */
+export async function askHelp(question: string, language: string): Promise<HelpAnswer | null> {
+  const res = await authed("/help/ask", { method: "POST", body: JSON.stringify({ question, language }) });
+  return res.ok ? ((await res.json()) as HelpAnswer) : null;
+}
+
+/** Plain-language explanation of one help card. Null when the model is off or has no source. */
+export async function explainHelpCard(cardId: string, language: string, situation: string): Promise<string | null> {
+  const res = await authed("/help/explain", { method: "POST", body: JSON.stringify({ card_id: cardId, language, situation }) });
+  return res.ok ? ((await res.json()) as { text: string }).text : null;
 }
 
 export interface WebColumn {

@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 // Automated accessibility scan (WCAG 2.1 A/AA) of the main screens, phone and desktop widths.
 // This catches contrast, labels, names and roles. It does not replace a manual keyboard and
 // screen-reader pass.
-const PAGES = ["/", "/chat", "/compare", "/case", "/documents", "/forms", "/drafts", "/privacy", "/help/complaints", "/help/scams", "/help/terms"];
+const PAGES = ["/", "/chat", "/compare", "/case", "/documents", "/forms", "/drafts", "/privacy", "/help"];
 const SIZES = [
   { name: "phone", width: 390, height: 844 },
   { name: "desktop", width: 1440, height: 900 },
@@ -55,7 +55,7 @@ test("axe: chat with an answer card, and the review screens", async ({ page }) =
 
 test("tap targets are at least 44px on a phone (buttons, links, form controls)", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of ["/", "/chat", "/compare", "/case", "/documents", "/forms", "/drafts", "/privacy", "/help/complaints", "/help/scams", "/help/terms"]) {
+  for (const path of ["/", "/chat", "/compare", "/case", "/documents", "/forms", "/drafts", "/privacy", "/help"]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     const small = await page.evaluate(() => {

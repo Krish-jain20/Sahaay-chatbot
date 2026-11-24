@@ -409,6 +409,16 @@ class LLM:
         out = self._call(user_id, req).text.strip()
         return None if out == "NO_SOURCE" or not out else out
 
+    def explain_card(self, card_text: str, situation: str, lang: str, *, user_id: str) -> str | None:
+        """Plain-language explanation of one help card, grounded only in that card. None if no source."""
+        req = LLMRequest(
+            model=self.settings.llm_model_fast,
+            system=load_prompt("help_explain") + f"\nLanguage: {lang}",
+            text=f"<card>\n{card_text}\n</card>\n<situation>\n{situation}\n</situation>",
+        )
+        out = self._call(user_id, req).text.strip()
+        return None if out == "NO_SOURCE" or not out else out
+
     def vision(
         self, image: bytes, question: str, lang: str, *, user_id: str, mime: str = "image/png"
     ) -> VisionResult:

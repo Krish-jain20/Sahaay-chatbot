@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cards, cases, chat, compare, documents, drafts, forms, guidance, me, services
+from app.api import auth, cards, cases, chat, compare, documents, drafts, forms, guidance, help, me, services
 from app.config import get_settings
 from app.data.guidance import load_guidance
 from app.data.remote import CatalogSource, keep_fresh
@@ -64,6 +64,7 @@ app.include_router(cases.router)
 app.include_router(drafts.router)
 app.include_router(forms.router)
 app.include_router(guidance.router)
+app.include_router(help.router)
 
 
 @app.get("/health")

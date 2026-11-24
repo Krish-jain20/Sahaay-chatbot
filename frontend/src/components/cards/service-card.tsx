@@ -190,7 +190,7 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
 
       <div className="flex flex-wrap items-center gap-x-4">
         <ReportButton serviceId={service.id} />
-        <Link href="/help/scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">
+        <Link href="/help#scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">
           {t("fraudLink")}
         </Link>
       </div>
