@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "forms": [
+    {
+      "id": "delhi-income-certificate-application",
+      "service_id": "delhi-income-certificate",
+      "title": "Application form: Income Certificate (Revenue Department, GNCTD)",
+      "source_url": "https://revenue.delhi.gov.in/sites/default/files/revenue/cc/input_9055.pdf",
+      "linked_from": "https://revenue.delhi.gov.in/revenue/income-certificate",
+      "date_checked": "2026-11-24",
+      "file": "delhi-income-certificate-application.pdf",
+      "sha256": "57420d9fa61702bc2f9d9d65a973432c70c069686f0949b7a92a1841e635e9ca",
+      "pages": 3,
+      "kind": "flat",
+      "notes": "Flat printed form (no fillable fields). Values are overlaid in English letters and digits only, one character per box where the form has boxes (the date-of-birth boxes are blanked first so their DD/MM/YYYY hints do not clash). Page 1 'Beneficiary details' and 'Present address' are covered; the family income, assets, expenditure and declaration pages are left for the applicant. The PDF header says both 'Surviving Member Certificate' and 'Income Certificate'; the body is the income certificate application. A person has not yet checked the form against the live e-District process.",
+      "fields": [
+        {
+          "key": "uid",
+          "page": 0,
+          "x": 264.5,
+          "y": 193,
+          "max_chars": 12,
+          "sensitive": true,
+          "type": "cells",
+          "edges": [
+            264.5,
+            280.7,
+            298.1,
+            314.2,
+            330.6,
+            347.0,
+            363.2,
+            379.7,
+            395.2,
+            411.5,
+            430.2,
+            447.2,
+            466.3,
+            483.5,
+            499.7,
+            516.1,
+            534.7
+          ]
+        },
+        {
+          "key": "name",
+          "page": 0,
+          "x": 206,
+          "y": 214,
+          "max_chars": 40,
+          "type": "line"
+        },
+        {
+          "key": "father",
+          "page": 0,
+          "x": 208,
+          "y": 230,
+          "max_chars": 40,
+          "type": "line"
+        },
+        {
+          "key": "mother",
+          "page": 0,
+          "x": 208,
+          "y": 245,
+          "max_chars": 40,
+          "type": "line"
+        },
+        {
+          "key": "spouse",
+          "page": 0,
+          "x": 208,
+          "y": 261,
+          "max_chars": 40,
+          "type": "line"
+        },
+        {
+          "key": "dob_dd",
+          "page": 0,
+          "x": 216.0,
+          "y": 294,
+          "max_chars": 2,
+          "type": "box",
+          "x1": 241.7,
+          "clear_y0": 283,
+          "clear_y1": 298
+        },
+        {
+          "key": "dob_mm",
+          "page": 0,
+          "x": 241.7,
+          "y": 294,
+          "max_chars": 2,
+          "type": "box",
+          "x1": 268.7,
+          "clear_y0": 283,
+          "clear_y1": 298
+        },
+        {
+          "key": "dob_yyyy",
+          "page": 0,
+          "x": 268.7,
+          "y": 294,
+          "max_chars": 4,
+          "type": "box",
+          "x1": 313.7,
+          "clear_y0": 283,
+          "clear_y1": 298
+        },
+        {
+          "key": "mobile",
+          "page": 0,
+          "x": 141.8,
+          "y": 327,
+          "max_chars": 10,
+          "type": "cells",
+          "edges": [
+            141.8,
+            156.2,
+            171.7,
+            186.1,
+            200.6,
+            215.3,
+            229.7,
+            244.2,
+            258.0,
+            272.5,
+            289.2,
+            304.3,
+            321.0
+          ]
+        },
+        {
+          "key": "email_user",
+          "page": 0,
+          "x": 389,
+          "y": 326,
+          "max_chars": 18,
+          "type": "line"
+        },
+        {
+          "key": "email_domain",
+          "page": 0,
+          "x": 494,
+          "y": 326,
+          "max_chars": 11,
+          "type": "line"
+        },
+        {
+          "key": "house",
+          "page": 0,
+          "x": 163,
+          "y": 362,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "locality",
+          "page": 0,
+          "x": 163,
+          "y": 375,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "subdivision",
+          "page": 0,
+          "x": 163,
+          "y": 389,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "state",
+          "page": 0,
+          "x": 162,
+          "y": 402,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "pin",
+          "page": 0,
+          "x": 159.7,
+          "y": 416,
+          "max_chars": 6,
+          "type": "cells",
+          "edges": [
+            159.7,
+            174.5,
+            189.4,
+            202.9,
+            216.8,
+            232.2,
+            247.8
+          ]
+        },
+        {
+          "key": "sub_locality",
+          "page": 0,
+          "x": 437,
+          "y": 362,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "village_town",
+          "page": 0,
+          "x": 437,
+          "y": 375,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "district",
+          "page": 0,
+          "x": 437,
+          "y": 389,
+          "max_chars": 20,
+          "type": "line"
+        },
+        {
+          "key": "country",
+          "page": 0,
+          "x": 438,
+          "y": 402,
+          "max_chars": 20,
+          "type": "line"
+        }
+      ]
+    }
+  ]
+}

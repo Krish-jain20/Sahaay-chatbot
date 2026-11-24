@@ -21,6 +21,7 @@ export async function AppShell({ children, wide = false }: { children: React.Rea
           <NavLink href="/compare">{t("nav.compare")}</NavLink>
           <NavLink href="/documents">{t("nav.documents")}</NavLink>
           <NavLink href="/drafts">{t("nav.drafts")}</NavLink>
+          <NavLink href="/forms">{t("nav.forms")}</NavLink>
         </nav>
         <div className="mt-auto space-y-3">
           <LanguageSwitch />

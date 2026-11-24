@@ -83,7 +83,8 @@
     "compare": "Tulna",
     "menu": "Main menu",
     "documents": "Documents",
-    "drafts": "Drafts"
+    "drafts": "Drafts",
+    "forms": "Official form"
   },
   "panel": {
     "title": "Aapki details",
@@ -218,5 +219,50 @@
     "changed": "Review ke baad aapne kuch badla. Dobara check kijiye.",
     "failed": "PDF ready nahi ho paya. Dobara try kijiye.",
     "notice": "Fees, address aur deadlines hum nahi bharte. Bhejne se pehle official source se confirm kijiye."
+  },
+  "forms": {
+    "title": "Official form",
+    "sub": "Delhi income certificate ka official application apni details se bhariye. Hum sirf page 1 par, English letters aur digits mein likhte hain. Baaki aap bhariye aur khud sign kijiye.",
+    "source": "Official source",
+    "checked": "Check ki date",
+    "open": "Official page kholiye",
+    "latin": "Sirf English letters aur digits use kijiye (printed form ke liye zaroori).",
+    "aadhaar": "Aapka Aadhaar number sirf PDF par likha jaata hai. Hum use kabhi save nahi karte, aur yeh screen sirf aakhri 4 digits dikhati hai.",
+    "review": "Bhara hua form check karein",
+    "reviewHelp": "Form par yahi values likhi jayengi. Jo galat ho sudhaariye, phir box tick kijiye.",
+    "tick": "Maine har field check kar li hai",
+    "download": "Bhara form download karein",
+    "preview": "Check karein",
+    "notice": "Sahaay ek AI assistant hai, official channel nahi. Yeh official form hai jis par aapki details likhi hain. Ise official source se milaiye, maange gaye documents lagaiye aur khud sign kijiye.",
+    "err_invalid_aadhaar": "Yeh Aadhaar number sahi nahi lagta. Please check kijiye.",
+    "err_ascii_only": "Sirf English letters aur digits: {field}",
+    "err_too_long": "Form ke liye bahut lamba: {field} (max {max} characters)",
+    "err_missing_required": "Please bhariye: {field}",
+    "err_changed": "Review ke baad aapne kuch badla. Dobara check kijiye.",
+    "err_failed": "Form ready nahi ho paya. Dobara try kijiye.",
+    "group_you": "Aapke baare mein",
+    "group_address": "Present address",
+    "fields": {
+      "uid": "Aadhaar number (12 digits)",
+      "name": "Beneficiary ka naam",
+      "father": "Pita ka naam",
+      "mother": "Mata ka naam",
+      "spouse": "Pati/patni ka naam",
+      "dob_dd": "Janm ka din (DD)",
+      "dob_mm": "Janm ka mahina (MM)",
+      "dob_yyyy": "Janm ka saal (YYYY)",
+      "mobile": "Mobile number",
+      "email_user": "Email: @ se pehle ka hissa",
+      "email_domain": "Email: @ ke baad ka hissa",
+      "house": "Makaan ka naam ya number",
+      "locality": "Ilaaka",
+      "subdivision": "Sub-division",
+      "state": "State",
+      "pin": "PIN code",
+      "sub_locality": "Sub-locality",
+      "village_town": "Gaon ya shehar",
+      "district": "Zila",
+      "country": "Desh"
+    }
   }
 }

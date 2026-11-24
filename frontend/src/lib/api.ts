@@ -150,3 +150,40 @@ export async function downloadDraft(
   const body = (await res.json().catch(() => ({}))) as { detail?: string };
   return { error: typeof body.detail === "string" ? body.detail : "failed" };
 }
+
+// ---- Official forms --------------------------------------------------------------------
+
+export interface FormInfo {
+  id: string;
+  title: string;
+  source_url: string;
+  date_checked: string;
+  fields: { key: string; max_chars: number; sensitive: boolean }[];
+}
+export interface FormPreview {
+  values: Record<string, string>;
+  hash: string;
+}
+
+export async function loadForms(): Promise<FormInfo[]> {
+  const res = await authed("/forms");
+  return res.ok ? ((await res.json()) as FormInfo[]) : [];
+}
+
+async function formError(res: Response): Promise<{ error: string }> {
+  const body = (await res.json().catch(() => ({}))) as { detail?: string };
+  return { error: typeof body.detail === "string" ? body.detail : "failed" };
+}
+
+export async function previewForm(id: string, values: Record<string, string>): Promise<FormPreview | { error: string }> {
+  const res = await authed(`/forms/${id}/preview`, { method: "POST", body: JSON.stringify({ values }) });
+  return res.ok ? ((await res.json()) as FormPreview) : formError(res);
+}
+
+export async function downloadForm(id: string, values: Record<string, string>, hash: string): Promise<Blob | { error: string }> {
+  const res = await authed(`/forms/${id}/pdf`, {
+    method: "POST",
+    body: JSON.stringify({ values, confirmed_hash: hash, checked_all_fields: true }),
+  });
+  return res.ok ? await res.blob() : formError(res);
+}

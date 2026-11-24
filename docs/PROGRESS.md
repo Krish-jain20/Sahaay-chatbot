@@ -58,10 +58,11 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 ## Stage 4: Forms, complaints, summary
 | ID | Status | Notes |
 |---|---|---|
-| S4-01 | needs you | pick one official form (fillable PDF) and its source URL; I will not guess a form |
-| S4-02, S4-03 | todo | form engine and field-map snapshot wait for S4-01 |
-| S4-04 | done for drafts | `/drafts/preview` then `/drafts/pdf`: download needs the "I checked every field" tick and the hash of what was reviewed; any edit resets it. The pre-filled official form is still waiting on S4-01 |
-| S4-05 | done for drafts | identity numbers are masked before preview and render; nothing is stored; tests check the PDF text |
+| S4-01 | done, needs a human look | official income certificate application, source https://revenue.delhi.gov.in/sites/default/files/revenue/cc/input_9055.pdf (linked from the Revenue Department income-certificate page, checked 2026-11-24), saved as `data/forms/delhi-income-certificate-application.pdf` with a checksum. It is a flat printed form, not fillable. The PDF header says both "Surviving Member Certificate" and "Income Certificate"; a person should confirm it is the form the e-District office wants. The old-age pension has no form PDF (online only), so it is not covered |
+| S4-02 | done | PyMuPDF overlay fills the flat form (one digit per box for Aadhaar, mobile, PIN and date of birth); original PDF checksum is checked at startup; English letters and digits only |
+| S4-03 | partly | field positions tested by reading the filled PDF back; a person should look at page 1 once. Page 1 only (beneficiary details and present address); income, assets, expenses and declaration are left for the applicant |
+| S4-04 | done | `/drafts` and `/forms` pages: preview, then download only with the "I checked every field" tick and the hash of what was reviewed; any edit resets it |
+| S4-05 | done | drafts mask identity numbers before preview and render; the form writes the Aadhaar number only onto the PDF in memory, previews show the last 4, and logs never hold it (tested); nothing is stored |
 | S4-06 | needs you | grievance data per service (department, CPGRAMS, helpline) with sources; drafts leave office names to the user |
 | S4-07 | todo | grievance vs RTI vs appeal explainer |
 | S4-08 | done | complaint, RTI and CPGRAMS drafts as PDFs (WeasyPrint), English and Hindi; Hindi PDF embeds Noto Sans Devanagari; `/drafts` page in 3 languages |

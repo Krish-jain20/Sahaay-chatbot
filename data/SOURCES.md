@@ -20,3 +20,11 @@ out (null) and the conflict is described in `verification.notes`.
 - The full 2025-26 scholarship guidelines PDF (only partly read).
 - Application window and portal for the merit scholarship.
 - Grievance channels for all three services (not stated on the pages read).
+
+## Forms (S4-01)
+
+| Form | Saved as | Source | Linked from | Checked |
+|---|---|---|---|---|
+| Income certificate application, Revenue Department GNCTD (flat 3-page PDF) | `forms/delhi-income-certificate-application.pdf` | https://revenue.delhi.gov.in/sites/default/files/revenue/cc/input_9055.pdf | https://revenue.delhi.gov.in/revenue/income-certificate ("Complete Application form") | 2026-11-24 |
+
+Not verified: whether the e-District office still accepts exactly this version; the header mixes "Surviving Member Certificate" and "Income Certificate". No old-age pension form PDF exists on the pages read (application is online on e-District).
