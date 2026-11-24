@@ -1,8 +1,13 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
-test("official form: review shows only the last 4 Aadhaar digits and download needs the tick", async ({ page }) => {
+async function openPreset(page: Page) {
   await page.goto("/forms");
   await page.waitForLoadState("networkidle");
+  await page.getByRole("button", { name: "Delhi income certificate form" }).click();
+}
+
+test("official form: review shows only the last 4 Aadhaar digits and download needs the tick", async ({ page }) => {
+  await openPreset(page);
   await expect(page.getByText("revenue.delhi.gov.in")).toBeVisible();
   await page.getByLabel("Aadhaar number (12 digits)").fill("2345 6789 0124");
   await page.getByLabel("Name of beneficiary").fill("ASHA VERMA");
@@ -26,8 +31,7 @@ test("official form: review shows only the last 4 Aadhaar digits and download ne
 });
 
 test("official form: a bad Aadhaar number and non-English letters are explained", async ({ page }) => {
-  await page.goto("/forms");
-  await page.waitForLoadState("networkidle");
+  await openPreset(page);
   await page.getByLabel("Name of beneficiary").fill("ASHA");
   await page.getByLabel("Aadhaar number (12 digits)").fill("2345 6789 0125");
   await page.getByRole("button", { name: "Review", exact: true }).click();
