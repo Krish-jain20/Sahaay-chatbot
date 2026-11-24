@@ -335,5 +335,16 @@
     "error": "Could not load. Please try again.",
     "deleteError": "Could not delete. Please try again.",
     "reports": "Official sources and the date they were checked are shown with each answer. If something looks wrong, use “Report incorrect information” on a service card."
+  },
+  "account": {
+    "title": "Your account",
+    "unavailable": "Sign-in is not set up in this copy of Sahaay. You are using it as a guest.",
+    "guestHelp": "You are using Sahaay as a guest. Add your email to keep your saved details and cases on another device. We send a link; no password.",
+    "emailLabel": "Email address",
+    "send": "Email me a sign-in link",
+    "sent": "Check your inbox and open the link to finish.",
+    "error": "We could not send the link. Check the address and try again.",
+    "signedIn": "Signed in as {email}.",
+    "signOut": "Sign out"
   }
 }

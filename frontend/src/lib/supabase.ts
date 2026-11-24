@@ -21,3 +21,38 @@ export async function getAccessToken(): Promise<string | null> {
   if (error) return null;
   return anon.session?.access_token ?? null;
 }
+
+export interface AccountState {
+  configured: boolean;
+  email: string | null;
+  guest: boolean;
+}
+
+export async function accountState(): Promise<AccountState> {
+  const sb = supabase();
+  if (!sb) return { configured: false, email: null, guest: true };
+  const { data } = await sb.auth.getUser();
+  const user = data.user;
+  return { configured: true, email: user?.email ?? null, guest: !user || user.is_anonymous === true || !user.email };
+}
+
+/**
+ * Emails a sign-in link. A guest is upgraded in place (same user id, so their saved details and
+ * cases stay); someone with no session at all gets a normal magic link.
+ */
+export async function sendSignInLink(email: string): Promise<boolean> {
+  const sb = supabase();
+  if (!sb) return false;
+  const redirect = typeof window === "undefined" ? undefined : `${window.location.origin}/privacy`;
+  const { data } = await sb.auth.getSession();
+  if (data.session?.user.is_anonymous) {
+    const { error } = await sb.auth.updateUser({ email }, { emailRedirectTo: redirect });
+    return !error;
+  }
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: redirect } });
+  return !error;
+}
+
+export async function signOut(): Promise<void> {
+  await supabase()?.auth.signOut();
+}

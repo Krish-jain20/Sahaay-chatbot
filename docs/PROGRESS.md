@@ -90,7 +90,8 @@ Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip whe
 | S6-04 | done | `tests/test_safety.py`: full numbers never reach the model, logs, responses or stored reports; injection in chat and in uploaded documents is inert (document text never reaches the model); allowlist is exact-host and every shown link is on it; no forbidden claims (guarantee, authenticity verified, live status, fee placeholders) in any language; no emblem assets |
 | S6-05 | done, automated only | axe-core (WCAG 2.1 A/AA) over all 8 pages at phone and desktop width plus chat with a card and the draft review screen: no violations. Also tested: 44px tap targets, reduced motion (no animation), visible focus ring while tabbing, streaming announced politely. Fixed: language buttons were 36px high. Not done: a manual keyboard and screen-reader pass with real assistive tech |
 | S6-03 | done, local Postgres only | `app/graph/checkpoint.py`: Postgres checkpointer when `DATABASE_URL` is set, in-memory otherwise. Chat messages are PII-masked before they enter checkpointed state. Verified against a local Postgres (state survives a restart, no raw identity numbers stored). Not yet run against the real Supabase database: needs `DATABASE_URL` |
-| S6-01, S6-07 | todo | email sign-in, human copy review |
+| S6-01 | done, not tried with a real inbox | Account panel on /privacy: a guest enters an email and `updateUser` upgrades the same user in place (saved details and cases stay); a signed-out visitor gets a normal magic link; sign out. Shows an honest note when Supabase is not configured. Needs Supabase Auth: email provider on, `http://localhost:3000/privacy` (and the deployed URL) in Redirect URLs |
+| S6-07 | todo | human Hindi/Hinglish copy review |
 
 ## Stage 6 and the rest
 Not started: glossary and screenshots (5),
