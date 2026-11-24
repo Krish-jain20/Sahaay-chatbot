@@ -29,7 +29,7 @@ export function LanguageSwitch() {
           onClick={() => choose(l)}
           aria-pressed={l === current}
           className={cn(
-            "min-h-9 rounded-full px-3 text-sm font-semibold",
+            "min-h-11 min-w-11 rounded-full px-3 text-sm font-semibold",
             l === current ? "bg-teal-700 text-white" : "text-ink-2 hover:bg-bg-sunken",
           )}
         >
