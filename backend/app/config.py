@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     database_url: str = ""  # Postgres connection string; empty keeps conversation state in memory
     auth_required: bool = True
     freshness_days: int = 90
+    catalog_refresh_seconds: int = 60  # how often service cards are re-read from Supabase
     data_dir: Path = REPO_ROOT / "data"
     cors_origins: list[str] = ["http://localhost:3000"]
 

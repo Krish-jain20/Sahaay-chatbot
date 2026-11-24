@@ -98,3 +98,10 @@ These Dockerfiles have not been built in CI yet; check the first build on your h
 See [docs/PROGRESS.md](docs/PROGRESS.md). Main ones: the three service records are `partial` and still need a person to check
 every field against the official pages; the glossary, screenshot assistant and email sign-in are not built; the
 Postgres checkpointer, deploy and the native Hindi/Hinglish copy review are still to do.
+
+
+## Editing service cards without code (Supabase)
+
+1. In the Supabase dashboard open **SQL Editor**, paste `supabase/migrations/0003_services.sql`, run it. It only creates the `services` table and its read-only policy; it deletes nothing.
+2. On your PC, with `SUPABASE_URL` and `SUPABASE_SECRET_KEY` in `.env`: `cd backend && uv run python -m app.data.seed` (dry run), then `uv run python -m app.data.seed --apply`.
+3. Edit a service in **Table Editor > services > data** (JSON). The app picks the change up within a minute (`CATALOG_REFRESH_SECONDS`). A row that fails validation (missing source, host not in `data/allowlist.json`) sends the app back to the repo files; check `GET /health` for `"services": "database"` or `"files"`.
