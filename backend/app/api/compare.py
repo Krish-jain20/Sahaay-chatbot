@@ -4,9 +4,13 @@ from datetime import date
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query, Request
+from pydantic import BaseModel, Field
 
+from app.api.auth import CurrentUser
 from app.data.models import Lang, ServiceRecord
+from app.graph.websearch import run_web_search
 from app.rules.fees import fee_strip, is_stale
+from app.safety.pii import mask
 
 router = APIRouter()
 
@@ -62,3 +66,27 @@ def compare(
     days = get_settings().freshness_days
     today = date.today()
     return {"services": [_row(served[i], lang, is_stale(served[i], today, days)) for i in wanted]}
+
+
+class WebCompareRequest(BaseModel):
+    query: str = Field(min_length=2, max_length=80)
+    language: Lang = "en"
+
+
+@router.post("/compare/web")
+def compare_web(body: WebCompareRequest, request: Request, user: CurrentUser) -> dict[str, Any]:
+    """One unverified, web-found column for the Compare page. Never mixed into verified data."""
+    llm = request.app.state.llm
+    if not llm.web_enabled:
+        raise HTTPException(503, "web_unavailable")
+    name = mask(body.query).strip()
+    question = (
+        f"Summarise the Indian government service or scheme named '{name}': who can apply, "
+        "the benefit, the main documents, and the fee, only if the results state them."
+    )
+    res = run_web_search(
+        llm, request.app.state.catalog, question, body.language, user.id, date.today().isoformat()
+    )
+    if res.card is None:
+        raise HTTPException(404, "no_answer")
+    return {"name": name, "summary": res.text, "web": res.card}

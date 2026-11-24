@@ -4,6 +4,7 @@ import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { AlertIcon, ShieldCheckIcon } from "@/components/icons";
+import { compareWeb, type WebColumn } from "@/lib/api";
 import { API_URL } from "@/lib/sse";
 import { cn } from "@/lib/utils";
 
@@ -28,12 +29,16 @@ interface Row {
 export function CompareTable() {
   const t = useTranslations("compare");
   const tc = useTranslations("card");
+  const tw = useTranslations("web");
   const locale = useLocale() as "en" | "hi" | "hn";
   const format = useFormatter();
   const [all, setAll] = useState<ServiceLite[]>([]);
   const [picked, setPicked] = useState<string[]>([]);
   const [rows, setRows] = useState<Row[] | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  const [webQuery, setWebQuery] = useState("");
+  const [webCol, setWebCol] = useState<WebColumn | null>(null);
+  const [webState, setWebState] = useState<"idle" | "busy" | "none" | "unavailable">("idle");
 
   useEffect(() => {
     fetch(`${API_URL}/services`)
@@ -62,6 +67,20 @@ export function CompareTable() {
 
   function toggle(id: string) {
     setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < 3 ? [...p, id] : p));
+  }
+
+  async function addWeb(e: React.FormEvent) {
+    e.preventDefault();
+    if (!webQuery.trim()) return;
+    setWebState("busy");
+    const r = await compareWeb(webQuery.trim(), locale);
+    if (typeof r === "string") {
+      setWebState(r);
+    } else {
+      setWebCol(r);
+      setWebState("idle");
+      setWebQuery("");
+    }
   }
 
   const inr = (v: number | null) =>
@@ -129,6 +148,27 @@ export function CompareTable() {
         </div>
       </fieldset>
 
+      {rows && picked.length >= 2 && !webCol && (
+        <form onSubmit={addWeb} className="space-y-2" data-testid="web-add">
+          <label htmlFor="web-q" className="block text-[15px] font-semibold">{t("webAdd")}</label>
+          <p className="text-[13.5px] text-ink-3">{t("webAddHelp")}</p>
+          <div className="flex flex-wrap gap-2">
+            <input
+              id="web-q"
+              value={webQuery}
+              maxLength={80}
+              onChange={(e) => setWebQuery(e.target.value)}
+              className="min-h-11 min-w-0 flex-1 rounded-xl border border-line bg-bg px-3 text-[16px]"
+            />
+            <button type="submit" disabled={webState === "busy"} className="min-h-11 rounded-full bg-teal-700 px-5 text-[15px] font-semibold text-white disabled:opacity-60">
+              {webState === "busy" ? t("webBusy") : t("webSearch")}
+            </button>
+          </div>
+          {webState === "none" && <p role="status" className="text-ink-2">{t("webNone")}</p>}
+          {webState === "unavailable" && <p role="status" className="text-ink-2">{t("webUnavailable")}</p>}
+        </form>
+      )}
+
       {state === "error" && <p role="alert" className="text-bad-700">{t("error")}</p>}
       {state === "loading" && picked.length >= 2 && <p role="status" className="text-ink-3">{t("loading")}</p>}
 
@@ -155,6 +195,18 @@ export function CompareTable() {
                     </th>
                   );
                 })}
+                {webCol && (
+                  <th scope="col" className="p-3 align-top font-display text-[17px] font-bold" data-testid="web-col-head">
+                    {webCol.name}
+                    <span className="mt-1 flex w-fit items-center gap-1.5 rounded-full bg-warn-100 px-2.5 py-0.5 font-sans text-[12.5px] font-semibold text-warn-700">
+                      <AlertIcon className="size-4" />
+                      {t("webBadge")}
+                    </span>
+                    <button type="button" onClick={() => setWebCol(null)} className="mt-1 block min-h-11 text-[13.5px] font-normal text-teal-700 underline">
+                      {t("webRemove")}
+                    </button>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -168,8 +220,44 @@ export function CompareTable() {
                       {l.cell(r)}
                     </td>
                   ))}
+                  {webCol && (
+                    <td className="p-3 align-top text-ink-3">
+                      {l.label === t("sources") ? (
+                        <ul className="space-y-1 text-ink">
+                          {webCol.web.sources.map((c) => (
+                            <li key={c.n}>
+                              <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 underline">
+                                [{c.n}] {c.title}
+                              </a>
+                              <span className="block text-[12.5px] text-ink-3">{c.official ? tw("official") : tw("unofficial")}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        t("notVerified")
+                      )}
+                    </td>
+                  )}
                 </tr>
               ))}
+              {webCol && (
+                <tr className="border-b border-line">
+                  <th scope="row" className="w-32 p-3 align-top text-[13px] font-semibold uppercase tracking-[0.05em] text-ink-3">
+                    {t("webSummary")}
+                  </th>
+                  {rows.map((r) => (
+                    <td key={r.id} className="p-3 align-top text-ink-3">
+                      {t("webSummaryNone")}
+                    </td>
+                  ))}
+                  <td className="p-3 align-top" data-testid="web-summary">
+                    <p>{webCol.summary}</p>
+                    <p className="mt-1 text-[12.5px] text-ink-3">
+                      {webCol.web.label} {tw("retrieved", { date: webCol.web.retrieved_on })}
+                    </p>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

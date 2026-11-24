@@ -1,6 +1,6 @@
 import { API_URL } from "@/lib/sse";
 import { getAccessToken } from "@/lib/supabase";
-import type { GuideCardData } from "@/lib/types";
+import type { GuideCardData, WebCardData } from "@/lib/types";
 
 async function authed(path: string, init: RequestInit = {}): Promise<Response> {
   const token = await getAccessToken();
@@ -248,4 +248,17 @@ export async function loadMyData(): Promise<MyData | null> {
 export async function loadGuidance(topic: string, lang: string): Promise<GuideCardData | null> {
   const res = await fetch(`${API_URL}/guidance/${topic}?lang=${encodeURIComponent(lang)}`);
   return res.ok ? ((await res.json()) as GuideCardData) : null;
+}
+
+export interface WebColumn {
+  name: string;
+  summary: string;
+  web: WebCardData;
+}
+
+/** One unverified, web-found column for Compare. Resolves to a reason string when there is none. */
+export async function compareWeb(query: string, language: string): Promise<WebColumn | "unavailable" | "none"> {
+  const res = await authed("/compare/web", { method: "POST", body: JSON.stringify({ query, language }) });
+  if (res.ok) return (await res.json()) as WebColumn;
+  return res.status === 404 ? "none" : "unavailable";
 }
