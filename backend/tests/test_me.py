@@ -47,3 +47,26 @@ def test_delete_my_data_removes_everything(client):
 
     assert client.get("/me/facts").json() == []
     assert app.state.store.corrections == []
+
+
+def test_export_and_delete_cover_every_kind_of_data(client):
+    client.put("/me/facts", json={"key": "age", "value": 65, "consent": True})
+    cid = client.post("/cases", json={"service_id": "delhi-old-age-pension"}).json()["id"]
+    client.post(
+        f"/cases/{cid}/documents",
+        json={"doc_type": "aadhaar", "fields": {"aadhaar_masked": "2345 6789 0124"}},
+    )
+    client.post(f"/cases/{cid}/steps", json={"step": 4, "submitted_on": "2026-11-20"})
+    client.post(f"/cases/{cid}/steps", json={"step": 5, "reference": "DL/998877"})
+
+    data = client.get("/me/data").json()
+    assert [f["key"] for f in data["facts"]] == ["age"]
+    (case,) = data["cases"]
+    assert [d["doc_type"] for d in case["documents"]] == ["aadhaar"]
+    assert sorted(s["step"] for s in case["steps"]) == [4, 5]
+    assert case["submission"]["reference_no_masked"] == "XXXX8877"
+    text = str(data)
+    assert "2345 6789 0124" not in text and "998877" not in text
+
+    assert client.delete("/me/data").status_code == 200
+    assert client.get("/me/data").json() == {"facts": [], "cases": []}

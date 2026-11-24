@@ -81,6 +81,12 @@ Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip whe
 | S5-06 | partly | `/case` is the case page (tracker, readiness, shortcuts, summary PDF); a multi-case dashboard is not built yet |
 | S5-07 | done | submission date and reference number; only `XXXX` + last 4 characters are stored or shown |
 
+## Stage 6: Accounts, privacy, polish
+| ID | Status | Notes |
+|---|---|---|
+| S6-02 | done | `/privacy` page: what is kept and never kept, the user's saved data (`GET /me/data`), delete-everything with a tick (`DELETE /me/data` removes facts, cases, documents, steps, submission); tested end to end |
+| S6-01, S6-03 to S6-08 | todo | email sign-in, Postgres checkpointer, safety tests, accessibility pass, Dockerfile and deploy, README, human copy review |
+
 ## Stage 6 and the rest
 Not started: glossary and screenshots (5),
 email sign-in, privacy page, Postgres checkpointer, Docker and deploy, README polish (6).

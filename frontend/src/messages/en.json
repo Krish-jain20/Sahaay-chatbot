@@ -85,7 +85,8 @@
     "documents": "Documents",
     "drafts": "Drafts",
     "forms": "Official form",
-    "case": "My case"
+    "case": "My case",
+    "privacy": "Privacy"
   },
   "panel": {
     "title": "Your details",
@@ -305,5 +306,34 @@
     "saveError": "Could not save. Please try again.",
     "tooShort": "Please enter at least 4 letters or digits.",
     "futureDate": "The date cannot be in the future."
+  },
+  "privacy": {
+    "title": "Privacy and my data",
+    "sub": "What Sahaay keeps about you, what it never keeps, and how to delete everything.",
+    "keepTitle": "What we keep",
+    "keep1": "Details you chose to save, such as age or category, after you agreed.",
+    "keep2": "Your case: the service, the steps you marked, your submission date, and a reference number cut to its last 4 characters.",
+    "keep3": "Documents you confirmed: only the checked fields, with identity numbers cut to the last 4 digits.",
+    "neverTitle": "What we never keep",
+    "never1": "The photos or PDFs you upload. They are read in memory and discarded.",
+    "never2": "Full Aadhaar, PAN, phone or bank numbers.",
+    "never3": "PDFs we make for you. They go to you and are not stored.",
+    "modelNote": "The AI model only sees text with identity numbers already hidden. Free-tier model providers may use what they receive, so never type real identity numbers into the chat.",
+    "yourData": "Your saved data",
+    "none": "Nothing is saved yet.",
+    "facts": "Details",
+    "cases": "Cases",
+    "docs": "Documents",
+    "steps": "Steps recorded",
+    "submission": "Submission",
+    "deleteTitle": "Delete everything",
+    "deleteHelp": "This removes your saved details, cases, documents, steps and submission details. It cannot be undone.",
+    "deleteConfirm": "I understand this cannot be undone",
+    "deleteButton": "Delete my data",
+    "deleted": "All your saved data was deleted.",
+    "loading": "Loading…",
+    "error": "Could not load. Please try again.",
+    "deleteError": "Could not delete. Please try again.",
+    "reports": "Official sources and the date they were checked are shown with each answer. If something looks wrong, use “Report incorrect information” on a service card."
   }
 }

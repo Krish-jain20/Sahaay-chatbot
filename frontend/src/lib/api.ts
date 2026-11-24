@@ -225,3 +225,21 @@ export async function downloadSummary(caseId: string, lang: string): Promise<Blo
   const res = await authed(`/cases/${caseId}/summary.pdf?lang=${lang === "hi" ? "hi" : "en"}`);
   return res.ok ? await res.blob() : null;
 }
+
+// ---- Privacy: what is stored ------------------------------------------------------------
+
+export interface MyData {
+  facts: { key: string; value: unknown; confirmed: boolean }[];
+  cases: {
+    id: string;
+    service_id: string;
+    documents: { doc_type: string; issue_date: string | null }[];
+    steps: { step: number }[];
+    submission: { reference_no_masked: string | null; submitted_on: string | null } | null;
+  }[];
+}
+
+export async function loadMyData(): Promise<MyData | null> {
+  const res = await authed("/me/data");
+  return res.ok ? ((await res.json()) as MyData) : null;
+}
