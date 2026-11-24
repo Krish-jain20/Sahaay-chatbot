@@ -32,3 +32,20 @@ test("chat: a fraud question answers with the fraud guide", async ({ page }) => 
   await page.keyboard.press("Enter");
   await expect(page.getByTestId("guide-income_fee")).toBeVisible();
 });
+
+test("help: Delhi RTI route and cyber helpline come from the Revenue Department pages", async ({ page }) => {
+  await page.goto("/help/complaints");
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByTestId("guide-delhi_rti")).toContainText("rtionline.delhi.gov.in");
+  await page.goto("/help/scams");
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByTestId("guide-cyber_helpline")).toContainText("1930");
+  await expect(page.getByTestId("guide-cyber_helpline")).toContainText("did not open");
+});
+
+test("help: terms page lists sourced terms", async ({ page }) => {
+  await page.goto("/help/terms");
+  await page.waitForLoadState("networkidle");
+  await expect(page.getByTestId("guide-cpgrams")).toBeVisible();
+  await expect(page.getByTestId("guide-appeal")).toContainText("Poor");
+});

@@ -25,6 +25,22 @@
       "publisher": "Revenue Department, GNCTD",
       "date_checked": "2026-11-24",
       "effective_date": null
+    },
+    {
+      "id": "revenue_rti",
+      "title": "Revenue Department: Right To Information (RTI website link, PIO list, first appellate orders)",
+      "url": "https://revenue.delhi.gov.in/rti/right-information",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "revenue_home",
+      "title": "Revenue Department home page (lists 'Cyber Crime Helpline No 1930')",
+      "url": "https://revenue.delhi.gov.in/",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
     }
   ],
   "topics": [
@@ -79,9 +95,9 @@
             "hn": "RTI: aapko jaankari chahiye, fix nahi"
           },
           "body": {
-            "en": "RTI is for asking a public office for records or information, such as the status and reasons on your file. CPGRAMS does not take up RTI matters. The central RTI Online portal is only for central government bodies. Its own notice says not to file for state government bodies, including the Government of NCT Delhi, and that such applications are returned without refund. For a Delhi department, verify locally how that department accepts RTI applications.",
-            "hi": "RTI किसी सरकारी दफ़्तर से रिकॉर्ड या जानकारी माँगने के लिए है, जैसे आपकी फ़ाइल की स्थिति और कारण। CPGRAMS RTI मामले नहीं लेता। केंद्रीय RTI Online पोर्टल केवल केंद्र सरकार के निकायों के लिए है। उसकी अपनी सूचना कहती है कि दिल्ली सरकार (GNCTD) समेत राज्य सरकार के निकायों के लिए आवेदन न करें, और ऐसे आवेदन बिना रिफ़ंड वापस कर दिए जाते हैं। दिल्ली के किसी विभाग के लिए स्थानीय रूप से पुष्टि करें कि वह RTI आवेदन कैसे लेता है।",
-            "hn": "RTI kisi sarkari daftar se record ya jaankari maangne ke liye hai, jaise aapki file ki status aur reasons. CPGRAMS RTI matters nahi leta. Central RTI Online portal sirf central government bodies ke liye hai. Uski apni notice kehti hai ki Delhi sarkar (GNCTD) samet state government bodies ke liye application na dein, aur aisi applications bina refund wapas kar di jaati hain. Delhi ke kisi department ke liye locally verify karein ki woh RTI application kaise leta hai."
+            "en": "RTI is for asking a public office for records or information, such as the status and reasons on your file. CPGRAMS does not take up RTI matters. The central RTI Online portal is only for central government bodies. Its own notice says not to file for state government bodies, including the Government of NCT Delhi, and that such applications are returned without refund. For Delhi bodies, see the next point.",
+            "hi": "RTI किसी सरकारी दफ़्तर से रिकॉर्ड या जानकारी माँगने के लिए है, जैसे आपकी फ़ाइल की स्थिति और कारण। CPGRAMS RTI मामले नहीं लेता। केंद्रीय RTI Online पोर्टल केवल केंद्र सरकार के निकायों के लिए है। उसकी अपनी सूचना कहती है कि दिल्ली सरकार (GNCTD) समेत राज्य सरकार के निकायों के लिए आवेदन न करें, और ऐसे आवेदन बिना रिफ़ंड वापस कर दिए जाते हैं। दिल्ली के निकायों के लिए अगला बिंदु देखें।",
+            "hn": "RTI kisi sarkari daftar se record ya jaankari maangne ke liye hai, jaise aapki file ki status aur reasons. CPGRAMS RTI matters nahi leta. Central RTI Online portal sirf central government bodies ke liye hai. Uski apni notice kehti hai ki Delhi sarkar (GNCTD) samet state government bodies ke liye application na dein, aur aisi applications bina refund wapas kar di jaati hain. Delhi ke bodies ke liye agla point dekhein."
           },
           "source_ref": "rtionline",
           "about_sahaay": false
@@ -99,6 +115,21 @@
             "hn": "RTI matters, court se jude (sub judice) matters, religious matters, aur sarkari karmchariyon ke service matters (jab tak woh tay raaste pehle na apna chuke hon). Email se bheji shikayat par action nahi hota; portal par darj karein."
           },
           "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "delhi_rti",
+          "heading": {
+            "en": "RTI for a Delhi department",
+            "hi": "दिल्ली के विभाग के लिए RTI",
+            "hn": "Delhi department ke liye RTI"
+          },
+          "body": {
+            "en": "The Delhi Revenue Department's website links a Delhi government RTI website (rtionline.delhi.gov.in) and has pages for 'Particulars of PIOs' and for orders passed by the First Appellate Authority under RTI. For any other Delhi department, verify locally how it accepts RTI applications.",
+            "hi": "दिल्ली राजस्व विभाग की वेबसाइट दिल्ली सरकार की RTI वेबसाइट (rtionline.delhi.gov.in) से जुड़ी है और उसमें 'PIO का विवरण' और RTI के तहत प्रथम अपीलीय प्राधिकारी के आदेशों के पेज हैं। दिल्ली के किसी अन्य विभाग के लिए स्थानीय रूप से पुष्टि करें कि वह RTI आवेदन कैसे लेता है।",
+            "hn": "Delhi Revenue Department ki website Delhi sarkar ki RTI website (rtionline.delhi.gov.in) se judi hai aur usmein 'PIO ka vivaran' aur RTI ke tahat First Appellate Authority ke orders ke pages hain. Delhi ke kisi aur department ke liye locally verify karein ki woh RTI application kaise leta hai."
+          },
+          "source_ref": "revenue_rti",
           "about_sahaay": false
         }
       ]
@@ -147,6 +178,21 @@
           "about_sahaay": false
         },
         {
+          "id": "cyber_helpline",
+          "heading": {
+            "en": "If you think you were cheated online: Cyber Crime Helpline 1930",
+            "hi": "ऑनलाइन ठगी का शक हो: साइबर क्राइम हेल्पलाइन 1930",
+            "hn": "Online thagi ka shak ho: Cyber Crime Helpline 1930"
+          },
+          "body": {
+            "en": "The Delhi Revenue Department's home page lists 'Cyber Crime Helpline No 1930' and links the national portal cybercrime.gov.in. Sahaay did not open that portal, so check its address yourself against the one on the department's page before entering any details.",
+            "hi": "दिल्ली राजस्व विभाग के होम पेज पर 'Cyber Crime Helpline No 1930' लिखा है और राष्ट्रीय पोर्टल cybercrime.gov.in का लिंक है। Sahaay ने वह पोर्टल खोलकर नहीं जाँचा है, इसलिए कोई जानकारी भरने से पहले उसका पता विभाग के पेज वाले पते से खुद मिला लें।",
+            "hn": "Delhi Revenue Department ke home page par 'Cyber Crime Helpline No 1930' likha hai aur national portal cybercrime.gov.in ka link hai. Sahaay ne woh portal khol kar check nahi kiya hai, isliye koi details bharne se pehle uska address department ke page wale address se khud match kar lein."
+          },
+          "source_ref": "revenue_home",
+          "about_sahaay": false
+        },
+        {
           "id": "sahaay_fees",
           "heading": {
             "en": "Scholarship and pension: Sahaay has no confirmed fee",
@@ -175,6 +221,111 @@
           },
           "source_ref": null,
           "about_sahaay": true
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "title": {
+        "en": "Terms explained",
+        "hi": "शब्दों का मतलब",
+        "hn": "Shabdon ka matlab"
+      },
+      "intro": {
+        "en": "A short list of terms taken from the official portals. More will be added only when an official page defines them.",
+        "hi": "आधिकारिक पोर्टलों से लिए गए शब्दों की छोटी सूची। और शब्द तभी जुड़ेंगे जब कोई आधिकारिक पेज उन्हें परिभाषित करे।",
+        "hn": "Official portals se liye gaye shabdon ki chhoti list. Aur shabd tabhi judenge jab koi official page unhe define kare."
+      },
+      "points": [
+        {
+          "id": "grievance",
+          "heading": {
+            "en": "Grievance",
+            "hi": "शिकायत (Grievance)",
+            "hn": "Grievance (shikayat)"
+          },
+          "body": {
+            "en": "A complaint to a public authority about any subject related to service delivery, which CPGRAMS lets citizens lodge online 24x7.",
+            "hi": "सेवा-वितरण से जुड़े किसी भी विषय पर सार्वजनिक प्राधिकरण से की गई शिकायत, जिसे CPGRAMS पर नागरिक 24x7 ऑनलाइन दर्ज कर सकते हैं।",
+            "hn": "Service delivery se jude kisi bhi vishay par public authority se ki gayi shikayat, jise CPGRAMS par citizens 24x7 online darj kar sakte hain."
+          },
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "cpgrams",
+          "heading": {
+            "en": "CPGRAMS",
+            "hi": "CPGRAMS",
+            "hn": "CPGRAMS"
+          },
+          "body": {
+            "en": "Centralised Public Grievance Redress and Monitoring System: a single online portal connected to the Ministries and Departments of the Government of India and to States, where citizens lodge grievances.",
+            "hi": "केंद्रीकृत लोक शिकायत निवारण और निगरानी प्रणाली: एक ऑनलाइन पोर्टल जो भारत सरकार के मंत्रालयों/विभागों और राज्यों से जुड़ा है, जहाँ नागरिक शिकायत दर्ज करते हैं।",
+            "hn": "Centralised Public Grievance Redress and Monitoring System: ek online portal jo Government of India ke Ministries/Departments aur States se juda hai, jahan citizens shikayat darj karte hain."
+          },
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "registration_id",
+          "heading": {
+            "en": "Registration ID",
+            "hi": "पंजीकरण आईडी (Registration ID)",
+            "hn": "Registration ID"
+          },
+          "body": {
+            "en": "The unique ID given when your grievance is registered on CPGRAMS. You use it to track the grievance status.",
+            "hi": "आपकी शिकायत CPGRAMS पर दर्ज होने पर मिलने वाली अनूठी आईडी। इससे आप शिकायत की स्थिति ट्रैक करते हैं।",
+            "hn": "Aapki shikayat CPGRAMS par darj hone par milne wali unique ID. Isse aap shikayat ki status track karte hain."
+          },
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "appeal",
+          "heading": {
+            "en": "Appeal (CPGRAMS)",
+            "hi": "अपील (CPGRAMS)",
+            "hn": "Appeal (CPGRAMS)"
+          },
+          "body": {
+            "en": "A facility on CPGRAMS if you are not satisfied with the resolution. After closure you can give feedback, and a 'Poor' rating enables the option to file an appeal.",
+            "hi": "CPGRAMS पर समाधान से संतुष्ट न होने पर उपलब्ध सुविधा। बंद होने के बाद आप फ़ीडबैक दे सकते हैं, और 'Poor' रेटिंग पर अपील दर्ज करने का विकल्प खुलता है।",
+            "hn": "CPGRAMS par resolution se santusht na hone par available suvidha. Band hone ke baad aap feedback de sakte hain, aur 'Poor' rating par appeal file karne ka option khulta hai."
+          },
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "rti_online",
+          "heading": {
+            "en": "RTI Online",
+            "hi": "RTI Online",
+            "hn": "RTI Online"
+          },
+          "body": {
+            "en": "A portal run by the Department of Personnel and Training to file RTI applications and first appeals online, with payment, for central government public authorities.",
+            "hi": "कार्मिक एवं प्रशिक्षण विभाग का पोर्टल, जिस पर केंद्र सरकार के सार्वजनिक प्राधिकरणों के लिए RTI आवेदन और प्रथम अपील भुगतान सहित ऑनलाइन दर्ज होती है।",
+            "hn": "Department of Personnel and Training ka portal, jis par central government public authorities ke liye RTI application aur first appeal payment ke saath online file hoti hai."
+          },
+          "source_ref": "rtionline",
+          "about_sahaay": false
+        },
+        {
+          "id": "cic",
+          "heading": {
+            "en": "Central Information Commission (CIC)",
+            "hi": "केंद्रीय सूचना आयोग (CIC)",
+            "hn": "Central Information Commission (CIC)"
+          },
+          "body": {
+            "en": "Where a second appeal is filed. Its second appeal portal is linked to RTI Online, so details of the RTI application and first appeal can be retrieved from the first appeal registration number.",
+            "hi": "जहाँ दूसरी अपील दर्ज होती है। इसका दूसरी अपील पोर्टल RTI Online से जुड़ा है, इसलिए पहली अपील की पंजीकरण संख्या से RTI आवेदन और पहली अपील का विवरण निकल आता है।",
+            "hn": "Jahan doosri appeal file hoti hai. Iska second appeal portal RTI Online se juda hai, isliye first appeal ke registration number se RTI application aur first appeal ki details mil jaati hain."
+          },
+          "source_ref": "rtionline",
+          "about_sahaay": false
         }
       ]
     }

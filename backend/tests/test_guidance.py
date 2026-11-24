@@ -21,10 +21,31 @@ def test_unknown_topic_404(client):
     assert client.get("/guidance/nope").status_code == 404
 
 
-def test_rti_point_warns_delhi_is_not_on_the_central_portal(client):
+def test_rti_points_say_central_portal_excludes_delhi_and_name_the_delhi_route(client):
     body = client.get("/guidance/complaints").json()
-    rti = next(p for p in body["points"] if p["id"] == "rti")
-    assert "Delhi" in rti["body"] and "verify locally" in rti["body"].lower()
+    pts = {p["id"]: p for p in body["points"]}
+    assert "Delhi" in pts["rti"]["body"]
+    assert "rtionline.delhi.gov.in" in pts["delhi_rti"]["body"]
+    assert "verify locally" in pts["delhi_rti"]["body"].lower()  # other departments are not sourced
+
+
+def test_cyber_helpline_is_cited_and_not_claimed_as_opened(client):
+    p = next(p for p in client.get("/guidance/scams").json()["points"] if p["id"] == "cyber_helpline")
+    assert "1930" in p["body"] and "did not open" in p["body"] and p["source_n"]
+
+
+def test_terms_each_have_a_source_and_all_languages(client):
+    for lang in ("en", "hi", "hn"):
+        card = client.get("/guidance/terms", params={"lang": lang}).json()
+        assert {p["id"] for p in card["points"]} >= {"cpgrams", "grievance", "appeal", "rti_online"}
+        assert all(p["source_n"] and p["heading"] and p["body"] for p in card["points"])
+
+
+def test_each_service_lists_cpgrams_as_a_sourced_grievance_channel(catalog):
+    for rec in catalog.services.values():
+        ch = [c for c in rec.grievance.channels if c.type == "cpgrams"]
+        assert ch and ch[0].url == "https://pgportal.gov.in/"
+        assert rec.source(ch[0].source_ref).date_checked
 
 
 def test_loader_rejects_unallowlisted_source(tmp_path, catalog):

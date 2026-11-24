@@ -36,3 +36,6 @@ Not verified: whether the e-District office still accepts exactly this version; 
 - Not sourced yet: how a Delhi department accepts RTI applications, Delhi appellate authorities. The card says verify locally.
 - https://revenue.delhi.gov.in/revenue/income-certificate, checked 2026-11-24: FAQ "What is the application fee? NO FEE Required."
 - Not sourced: cyber-crime reporting portal and helpline number (cybercrime.gov.in could not be fetched from this environment).
+- https://revenue.delhi.gov.in/rti/right-information, checked 2026-11-24: page links 'RTI Website, GNCTD' (https://rtionline.delhi.gov.in/), 'Particulars of PIOs', orders of the First Appellate Authority under RTI.
+- https://revenue.delhi.gov.in/, checked 2026-11-24: lists 'Cyber Crime Helpline No 1930' linking https://cybercrime.gov.in. The linked site was not opened (connection refused from the build environment).
+- Grievance channel for each service: CPGRAMS only (pgportal.gov.in). Department contacts, helplines and appellate authorities are not sourced yet.

@@ -174,7 +174,15 @@
     ]
   },
   "grievance": {
-    "channels": [],
+    "channels": [
+      {
+        "type": "cpgrams",
+        "name": "CPGRAMS",
+        "url": "https://pgportal.gov.in/",
+        "phone": null,
+        "source_ref": "cpgrams"
+      }
+    ],
     "appellate_authority": {
       "en": null,
       "source_ref": null
@@ -211,6 +219,14 @@
       "url": "https://edistrict.delhi.gov.in/Public/Services",
       "publisher": "e-District Delhi",
       "date_checked": "2026-11-23",
+      "effective_date": null
+    },
+    {
+      "id": "cpgrams",
+      "title": "CPGRAMS home page: about, issues not taken up, appeals",
+      "url": "https://pgportal.gov.in/",
+      "publisher": "Department of Administrative Reforms and Public Grievances (DARPG), Government of India",
+      "date_checked": "2026-11-24",
       "effective_date": null
     }
   ],
