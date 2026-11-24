@@ -42,7 +42,11 @@
     "benefit": "Benefit",
     "excluded": "Not eligible because",
     "verifiedShort": "Verified",
-    "fraudLink": "Be careful with anyone asking for money. See fraud warnings"
+    "fraudLink": "Be careful with anyone asking for money. See fraud warnings",
+    "alternatives": "Other services that may fit",
+    "altLikely": "You meet the listed conditions",
+    "altIncomplete": "Needs more details",
+    "altHint": "Ask about one in the chat."
   },
   "consent": {
     "title": "Save these details for next time?",

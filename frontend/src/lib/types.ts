@@ -28,6 +28,7 @@ export interface ServiceCardData {
     exclusions_hit: { id: string; label: string }[];
   };
   prerequisites: { id: string; name: string }[];
+  alternatives: { id: string; name: string; verdict: "likely" | "incomplete" }[];
   fee_strip: {
     official_fee_inr: number | null;
     csc_max_inr: number | null;

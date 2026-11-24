@@ -42,7 +42,11 @@
     "benefit": "Fayda",
     "excluded": "Eligible nahi kyunki",
     "verifiedShort": "Verified",
-    "fraudLink": "Paise maangne walon se savdhaan rahein. Fraud warnings dekhein"
+    "fraudLink": "Paise maangne walon se savdhaan rahein. Fraud warnings dekhein",
+    "alternatives": "Doosri services jo aapke liye ho sakti hain",
+    "altLikely": "Aap listed conditions poori karte hain",
+    "altIncomplete": "Aur details chahiye",
+    "altHint": "Chat mein kisi ke baare mein poochhein."
   },
   "consent": {
     "title": "Agli baar ke liye yeh details save karein?",

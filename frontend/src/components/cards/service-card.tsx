@@ -127,6 +127,22 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         </>
       )}
 
+      {card.alternatives.length > 0 && (
+        <section aria-labelledby={`alt-${service.id}`}>
+          <h4 id={`alt-${service.id}`} className="mt-3 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">
+            {t("alternatives")}
+          </h4>
+          <ul className="mt-1 space-y-1 text-[14px]" data-testid="alternatives">
+            {card.alternatives.map((a) => (
+              <li key={a.id} className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">{a.name}</span>
+                <span className="text-ink-3">{a.verdict === "likely" ? t("altLikely") : t("altIncomplete")}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[12.5px] text-ink-3">{t("altHint")}</p>
+        </section>
+      )}
       <dl className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-teal-100 p-3 text-[14px]">
         <div>
           <dt className="text-ink-3">{t("officialFee")}</dt>
