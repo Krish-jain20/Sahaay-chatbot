@@ -72,9 +72,9 @@ class VisionResult(BaseModel):
 class VisionFormField(BaseModel):
     label: str
     mapped_profile_key: str | None = None
-    x_norm: float
-    y_norm: float
-    w_norm: float | None = None
+    x: float  # 0..1000 across the page image (models also answer in pixels or fractions: see from_vision)
+    y: float  # 0..1000 down the page image, middle of the blank
+    w: float | None = None
     required: bool = False
 
 

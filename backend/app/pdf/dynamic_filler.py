@@ -154,11 +154,33 @@ def clean_label(raw: str, fallback: str) -> str:
     return text or fallback
 
 
+# A label that is about money, other people or an office is not the applicant's own fact, even if it
+# contains a word like "name", "mobile" or "income".
+_NOT_APPLICANT = re.compile(
+    r"bill|expenditure|expense|installment|rental|tax\b|total|floors?|area of|monthly|employer|company|"
+    r"firm|utility|discom|nominee|witness|office|school|bank name|spouse|wife|registration|नियोक्ता|पत्नी",
+    re.I,
+)
+
+
 def guess_key(label: str) -> str | None:
+    if _NOT_APPLICANT.search(label):
+        return None
     for key, pattern in _GUESS:
         if pattern.search(label):
             return key
     return None
+
+
+def final_key(label: str, proposed: str | None) -> str | None:
+    """The model's suggested key, kept only if it is on the list and the label is about the applicant."""
+    if proposed in PROFILE_KEYS and not _NOT_APPLICANT.search(label):
+        # "Name of father" asked for "name" would copy the applicant's name into the wrong blank.
+        guessed = guess_key(label)
+        if proposed == "name" and guessed not in (None, "name"):
+            return guessed
+        return proposed
+    return guess_key(label)
 
 
 def acro_fields(doc: pymupdf.Document) -> list[DetectedField]:
@@ -189,37 +211,58 @@ def acro_fields(doc: pymupdf.Document) -> list[DetectedField]:
     return out
 
 
-def render_pages(doc: pymupdf.Document, limit: int = MAX_VISION_PAGES) -> list[bytes]:
-    for page in list(doc)[:limit]:
-        if page.rotation:
-            raise FormError("rotated_page")
-    return [page.get_pixmap(dpi=RENDER_DPI).tobytes("png") for page in list(doc)[:limit]]
+def render_pages(
+    doc: pymupdf.Document, limit: int = MAX_VISION_PAGES
+) -> list[tuple[bytes, tuple[int, int]]]:
+    """(PNG, (width, height) in pixels) for the first pages."""
+    pages = list(doc)[:limit]
+    if any(page.rotation for page in pages):
+        raise FormError("rotated_page")
+    out = []
+    for page in pages:
+        pix = page.get_pixmap(dpi=RENDER_DPI)
+        out.append((pix.tobytes("png"), (pix.width, pix.height)))
+    return out
 
 
 def finite01(v: float | None) -> float | None:
     return None if v is None or not math.isfinite(v) else min(max(float(v), 0.0), 1.0)
 
 
-def from_vision(pages: list[list[Any]]) -> list[DetectedField]:
+def _norm_scale(items: list[Any], size: tuple[int, int]) -> tuple[float, float]:
+    """Divisors that bring a page's positions to 0..1. The model is asked for a 0..1000 grid, its native
+    way of pointing at an image, but models drift: if every number is at most 1 they are fractions, and
+    if any number is beyond the grid they are pixels of the rendered image."""
+    vals = [v for it in items for v in (it.x, it.y, it.w) if v is not None and math.isfinite(v)]
+    top = max(vals, default=0.0)
+    if top <= 1.0:
+        return 1.0, 1.0
+    if top > 1020:
+        return float(size[0]), float(size[1])
+    return 1000.0, 1000.0
+
+
+def from_vision(pages: list[tuple[list[Any], tuple[int, int]]]) -> list[DetectedField]:
     """Turn per-page model output into safe, id-stamped fields. Ids are ours, never the model's."""
     out: list[DetectedField] = []
-    for pno, items in enumerate(pages):
-        for item in items[:40]:
-            x, y = finite01(item.x_norm), finite01(item.y_norm)
+    for pno, (items, size) in enumerate(pages):
+        items = items[:40]
+        sx, sy = _norm_scale(items, size)
+        for item in items:
+            x, y = finite01(item.x / sx), finite01(item.y / sy)
             if x is None or y is None or len(out) >= MAX_FIELDS:
                 continue
             label = clean_label(item.label, f"Field {len(out) + 1}")
-            key = item.mapped_profile_key if item.mapped_profile_key in PROFILE_KEYS else None
             out.append(
                 DetectedField(
                     id=f"p{pno}f{len(out)}",
                     label=label,
-                    mapped_profile_key=key or guess_key(label),
+                    mapped_profile_key=final_key(label, item.mapped_profile_key),
                     page=pno,
                     x_norm=x,
                     y_norm=y,
                     required=bool(item.required),
-                    w_norm=finite01(item.w_norm),
+                    w_norm=finite01(item.w / sx) if item.w is not None else None,
                 )
             )
     return out

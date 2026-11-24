@@ -112,3 +112,28 @@ test("keyboard: Tab reaches the main controls on the chat page with a visible fo
   }
   expect(seen.size).toBeGreaterThan(4);
 });
+
+test("axe: upload-any-form screens (fill and review) and phone tap targets", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/forms");
+  await page.waitForLoadState("networkidle");
+  await page.getByLabel(/Form file/).setInputFiles("e2e/fixtures/fillable-form.pdf");
+  await page.getByRole("button", { name: "Find the fields" }).click();
+  await expect(page.getByTestId("any-form-fill")).toBeVisible();
+  await page.getByLabel("Full name").fill("Asha");
+  await page.getByRole("button", { name: "Review", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Review the filled form" })).toBeVisible();
+  await page.waitForTimeout(500);
+  const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
+  expect(r.violations.map((v) => `${v.id}: ${v.nodes[0].target.join(" ")}`)).toEqual([]);
+  await page.screenshot({ path: "/tmp/any-form-phone.png", fullPage: true });
+  const small = await page.evaluate(() => {
+    const out: string[] = [];
+    document.querySelectorAll("main button, main a[href], main select, main input:not([type=hidden]):not([type=checkbox]), main textarea, main summary").forEach((el) => {
+      const b = (el as HTMLElement).getBoundingClientRect();
+      if (b.width && b.height && (b.height < 43.5 || b.width < 43.5)) out.push(`${el.tagName} ${Math.round(b.width)}x${Math.round(b.height)}`);
+    });
+    return out;
+  });
+  expect(small).toEqual([]);
+});

@@ -283,3 +283,68 @@ export async function compareWeb(query: string, language: string): Promise<WebCo
   if (res.ok) return (await res.json()) as WebColumn;
   return res.status === 404 ? "none" : "unavailable";
 }
+
+// ---- Any uploaded form -----------------------------------------------------------------
+
+export interface AnyFormField {
+  id: string;
+  label: string;
+  mapped_profile_key: string | null;
+  page: number;
+  required: boolean;
+  kind: "text" | "checkbox";
+  sensitive: boolean;
+  value?: string;
+  label_i18n?: { en: string; hi: string; hn: string };
+}
+
+export interface AnyFormAnalysis {
+  kind: "fillable" | "flat";
+  pages: number;
+  fields: Record<string, unknown>[];
+  prefilled_fields: AnyFormField[];
+  missing_fields: AnyFormField[];
+  questions: { id: string; en: string; hi: string; hn: string }[];
+  sensitive_keys: string[];
+}
+
+async function tokenHeader(): Promise<Record<string, string>> {
+  const token = await getAccessToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+/** Upload a blank form. The browser sets the multipart boundary, so no Content-Type here. */
+export async function analyzeForm(
+  file: File,
+  known: Record<string, string>,
+  language: string,
+): Promise<AnyFormAnalysis | { error: string }> {
+  const body = new FormData();
+  body.append("file", file);
+  body.append("known", JSON.stringify(known));
+  body.append("language", language);
+  try {
+    const res = await fetch(`${API_URL}/forms/analyze`, { method: "POST", body, headers: await tokenHeader() });
+    return res.ok ? ((await res.json()) as AnyFormAnalysis) : formError(res);
+  } catch {
+    return { error: "failed" };
+  }
+}
+
+export async function renderForm(
+  file: File,
+  analysis: AnyFormAnalysis,
+  values: Record<string, string>,
+): Promise<Blob | { error: string }> {
+  const body = new FormData();
+  body.append("file", file);
+  body.append("fields", JSON.stringify(analysis.fields));
+  body.append("values", JSON.stringify(values));
+  body.append("checked_all_fields", "true");
+  try {
+    const res = await fetch(`${API_URL}/forms/render`, { method: "POST", body, headers: await tokenHeader() });
+    return res.ok ? await res.blob() : formError(res);
+  } catch {
+    return { error: "failed" };
+  }
+}

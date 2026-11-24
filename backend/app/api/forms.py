@@ -84,7 +84,10 @@ async def analyze(
                 kind = "flat"
                 pages = dyn.render_pages(doc)
                 try:
-                    per_page = [llm.detect_form_fields(png, lang, user_id=user.id).fields for png in pages]
+                    per_page = [
+                        (llm.detect_form_fields(png, lang, user_id=user.id).fields, size)
+                        for png, size in pages
+                    ]
                 except RateLimited as e:
                     raise dyn.FormError("rate_limited", 429) from e
                 except (BudgetExceeded, LLMError) as e:
