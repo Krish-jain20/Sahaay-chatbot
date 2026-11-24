@@ -335,5 +335,16 @@
     "error": "Load nahi ho paya. Dobara try kijiye.",
     "deleteError": "Delete nahi ho paya. Dobara try kijiye.",
     "reports": "Har jawab ke saath official sources aur check ki date dikhti hai. Kuch galat lage to service card par “Galat information report karein” use kijiye."
+  },
+  "account": {
+    "title": "Aapka account",
+    "unavailable": "Sahaay ki is copy mein sign-in set nahi hai. Aap guest ki tarah use kar rahe hain.",
+    "guestHelp": "Aap Sahaay ko guest ki tarah use kar rahe hain. Apna email jodein taaki saved details aur cases doosre device par bhi milein. Hum ek link bhejte hain; password nahi chahiye.",
+    "emailLabel": "Email address",
+    "send": "Mujhe sign-in link email karein",
+    "sent": "Apna inbox dekhein aur link kholkar poora karein.",
+    "error": "Hum link nahi bhej paye. Address check karke dobara try karein.",
+    "signedIn": "{email} ke roop mein sign-in.",
+    "signOut": "Sign out"
   }
 }

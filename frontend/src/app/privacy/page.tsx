@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { AppShell } from "@/components/app-shell";
+import { AccountPanel } from "@/components/privacy/account-panel";
 import { MyDataPanel } from "@/components/privacy/privacy-page";
 import { Disclaimer } from "@/components/top-bar";
 
@@ -28,6 +29,7 @@ export default async function PrivacyPage() {
         </section>
         <p className="rounded-xl bg-marigold-050 px-4 py-3 text-[14px] text-ink-2">{t("privacy.modelNote")}</p>
         <p className="text-[14px] text-ink-3">{t("privacy.reports")}</p>
+        <AccountPanel />
         <MyDataPanel />
         <Disclaimer text={t("common.disclaimer")} />
       </main>

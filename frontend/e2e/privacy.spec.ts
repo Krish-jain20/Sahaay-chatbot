@@ -17,3 +17,8 @@ test("privacy: shows what is saved and deletes it only after the tick", async ({
   await expect(page.getByText("All your saved data was deleted.")).toBeVisible();
   await expect(page.getByTestId("no-data")).toBeVisible();
 });
+
+test("account panel says sign-in is unavailable when Supabase is not configured", async ({ page }) => {
+  await page.goto("/privacy");
+  await expect(page.getByTestId("signin-unavailable")).toBeVisible();
+});
