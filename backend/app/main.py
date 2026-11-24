@@ -3,13 +3,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cases, chat, compare, documents, me, services
+from app.api import auth, cases, chat, compare, documents, drafts, forms, me, services
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
 from app.graph.graph import build_graph
 from app.llm.client import LLM
 from app.ocr.pipeline import load_doc_types
+from app.pdf.forms import load_forms
 
 
 @asynccontextmanager
@@ -19,6 +20,7 @@ async def lifespan(app: FastAPI):
     app.state.llm = LLM()
     app.state.graph = build_graph()
     app.state.doc_types = load_doc_types(settings.data_dir)
+    app.state.forms = load_forms(settings.data_dir, app.state.catalog.allowlist)
     app.state.store = (
         SupabaseStore(settings.supabase_url, settings.supabase_secret_key)
         if settings.supabase_url and settings.supabase_secret_key
@@ -41,6 +43,8 @@ app.include_router(compare.router)
 app.include_router(documents.router)
 app.include_router(me.router)
 app.include_router(cases.router)
+app.include_router(drafts.router)
+app.include_router(forms.router)
 
 
 @app.get("/health")

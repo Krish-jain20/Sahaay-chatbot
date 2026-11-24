@@ -115,3 +115,75 @@ export async function saveDocument(
   });
   return res.ok ? ((await res.json()) as { readiness: Readiness }).readiness : null;
 }
+
+// ---- Drafts (complaint / RTI / CPGRAMS) -------------------------------------------------
+
+export type DraftKind = "complaint" | "rti" | "cpgrams";
+export type DraftFields = Record<string, string | boolean>;
+export interface DraftPreview {
+  rows: { key: string; label: string; value: string }[];
+  hash: string;
+}
+
+export async function previewDraft(
+  kind: DraftKind,
+  lang: string,
+  fields: DraftFields,
+): Promise<DraftPreview | { error: string }> {
+  const res = await authed("/drafts/preview", { method: "POST", body: JSON.stringify({ kind, lang, fields }) });
+  if (res.ok) return (await res.json()) as DraftPreview;
+  const body = (await res.json().catch(() => ({}))) as { detail?: string };
+  return { error: typeof body.detail === "string" ? body.detail : "failed" };
+}
+
+export async function downloadDraft(
+  kind: DraftKind,
+  lang: string,
+  fields: DraftFields,
+  hash: string,
+): Promise<Blob | { error: string }> {
+  const res = await authed("/drafts/pdf", {
+    method: "POST",
+    body: JSON.stringify({ kind, lang, fields, confirmed_hash: hash, checked_all_fields: true }),
+  });
+  if (res.ok) return await res.blob();
+  const body = (await res.json().catch(() => ({}))) as { detail?: string };
+  return { error: typeof body.detail === "string" ? body.detail : "failed" };
+}
+
+// ---- Official forms --------------------------------------------------------------------
+
+export interface FormInfo {
+  id: string;
+  title: string;
+  source_url: string;
+  date_checked: string;
+  fields: { key: string; max_chars: number; sensitive: boolean }[];
+}
+export interface FormPreview {
+  values: Record<string, string>;
+  hash: string;
+}
+
+export async function loadForms(): Promise<FormInfo[]> {
+  const res = await authed("/forms");
+  return res.ok ? ((await res.json()) as FormInfo[]) : [];
+}
+
+async function formError(res: Response): Promise<{ error: string }> {
+  const body = (await res.json().catch(() => ({}))) as { detail?: string };
+  return { error: typeof body.detail === "string" ? body.detail : "failed" };
+}
+
+export async function previewForm(id: string, values: Record<string, string>): Promise<FormPreview | { error: string }> {
+  const res = await authed(`/forms/${id}/preview`, { method: "POST", body: JSON.stringify({ values }) });
+  return res.ok ? ((await res.json()) as FormPreview) : formError(res);
+}
+
+export async function downloadForm(id: string, values: Record<string, string>, hash: string): Promise<Blob | { error: string }> {
+  const res = await authed(`/forms/${id}/pdf`, {
+    method: "POST",
+    body: JSON.stringify({ values, confirmed_hash: hash, checked_all_fields: true }),
+  });
+  return res.ok ? await res.blob() : formError(res);
+}
