@@ -19,9 +19,9 @@ def data_copy(tmp_path):
 
 def _edit(data_dir, fn):
     path = data_dir / "schemes" / "delhi-income-certificate.json"
-    rec = json.loads(path.read_text())
+    rec = json.loads(path.read_text("utf-8"))
     fn(rec)
-    path.write_text(json.dumps(rec))
+    path.write_text(json.dumps(rec), "utf-8")
 
 
 @pytest.mark.parametrize(

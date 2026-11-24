@@ -58,6 +58,11 @@ def match_cards(g: GuidanceSet, question: str, limit: int = 3) -> list[str]:
     return [cid for _, cid in scored[:limit]]
 
 
+def help_query(question: str) -> str:
+    """Search query for a help question: the user's words first, plus a short place hint."""
+    return f"{question} (Delhi, India)"
+
+
 @router.get("/help")
 def help_sections(request: Request, lang: Lang = "en") -> dict[str, Any]:
     g: GuidanceSet = request.app.state.guidance
@@ -79,11 +84,12 @@ def ask(body: AskRequest, request: Request, user: CurrentUser) -> dict[str, Any]
     state = "unavailable"
     llm = request.app.state.llm
     if llm.web_enabled:
+        # The question doubles as the search query: a long preamble drowns it and the search returns
+        # unrelated government pages, so add only a short place hint.
         res = run_web_search(
             llm,
             request.app.state.catalog,
-            "In India (Delhi where relevant), about complaints, RTI, appeals, scams or government "
-            f"terms: {question}",
+            help_query(question),
             body.language,
             user.id,
             date.today().isoformat(),

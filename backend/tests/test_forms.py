@@ -127,4 +127,4 @@ def test_checksum_mismatch_stops_startup(tmp_path, catalog):
     (tmp_path / "forms" / "delhi-income-certificate-application.pdf").write_bytes(b"%PDF-1.4 tampered")
     with pytest.raises(Exception):  # noqa: B017 - checksum or unreadable PDF, both must stop startup
         engine.load_forms(tmp_path, catalog.allowlist)
-    assert json.loads((tmp_path / "forms" / "forms.json").read_text())["forms"]
+    assert json.loads((tmp_path / "forms" / "forms.json").read_text("utf-8"))["forms"]

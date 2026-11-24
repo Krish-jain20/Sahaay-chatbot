@@ -58,6 +58,14 @@ def test_ask_answers_from_web_with_sources_and_guards(client):
     assert "2345 6789 0124" not in p.requests[0].text
 
 
+def test_ask_sends_the_question_first_with_only_a_short_place_hint(client):
+    p = Fake("Use the Delhi RTI portal. Verify locally.")
+    _use(client, p)
+    client.post("/help/ask", json={"question": "How do I file an RTI in Delhi?", "language": "en"})
+    sent = p.requests[0].text
+    assert "<question>\nHow do I file an RTI in Delhi? (Delhi, India)\n</question>" in sent
+
+
 def test_ask_blocks_forbidden_claims(client):
     _use(client, Fake("Your complaint will be approved."))
     body = client.post("/help/ask", json={"question": "complaint status", "language": "en"}).json()
