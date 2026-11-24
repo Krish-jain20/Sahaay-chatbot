@@ -22,6 +22,7 @@ from app.safety.pii import mask_pii
 
 _URL = re.compile(r"https?://\S+|www\.\S+")
 MAX_SOURCES = 6
+GOV_SUFFIXES = (".gov.in", ".nic.in")
 
 
 @dataclass
@@ -63,7 +64,11 @@ def run_web_search(
                 "n": len(sources) + 1,
                 "title": host,
                 "url": src["url"],
-                "official": is_allowed(f"https://{host}/", catalog.allowlist),
+                "official": (official := is_allowed(f"https://{host}/", catalog.allowlist)),
+                # A .gov.in suffix alone is not proof (CLAUDE.md), so it is only ever "not yet checked".
+                "kind": "official"
+                if official
+                else ("gov_unchecked" if host.endswith(GOV_SUFFIXES) else "other"),
             }
         )
     card = {

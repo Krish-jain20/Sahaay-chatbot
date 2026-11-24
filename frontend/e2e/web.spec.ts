@@ -21,8 +21,8 @@ test("chat: a web answer is labelled unverified and every source says whether it
             label: "From the web, not a verified Sahaay record. Verify locally.",
             retrieved_on: "2026-11-24",
             sources: [
-              { n: 1, title: "revenue.delhi.gov.in", url: "https://example.test/r1", official: true },
-              { n: 2, title: "someblog.example", url: "https://example.test/r2", official: false },
+              { n: 1, title: "revenue.delhi.gov.in", url: "https://example.test/r1", official: true, kind: "official" },
+              { n: 2, title: "someblog.example", url: "https://example.test/r2", official: false, kind: "gov_unchecked" },
             ],
           },
         ],
@@ -40,7 +40,7 @@ test("chat: a web answer is labelled unverified and every source says whether it
   await expect(card).toBeVisible();
   await expect(card).toContainText("not a verified Sahaay record");
   await expect(card.getByRole("listitem").nth(0)).toContainText("on Sahaay's checked official list");
-  await expect(card.getByRole("listitem").nth(1)).toContainText("not on Sahaay's official list");
+  await expect(card.getByRole("listitem").nth(1)).toContainText("Government web address, not yet checked by Sahaay");
   await expect(card).toContainText("Searched on 2026-11-24");
   await expect(page.getByText("The page lists proof of stay.")).toBeVisible();
 });

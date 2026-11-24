@@ -63,5 +63,5 @@ export interface WebCardData {
   type: "web";
   label: string;
   retrieved_on: string;
-  sources: { n: number; title: string; url: string; official: boolean }[];
+  sources: { n: number; title: string; url: string; official: boolean; kind?: "official" | "gov_unchecked" | "other" }[];
 }

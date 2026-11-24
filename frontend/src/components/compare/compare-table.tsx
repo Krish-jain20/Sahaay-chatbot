@@ -229,7 +229,7 @@ export function CompareTable() {
                               <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 underline">
                                 [{c.n}] {c.title}
                               </a>
-                              <span className="block text-[12.5px] text-ink-3">{c.official ? tw("official") : tw("unofficial")}</span>
+                              <span className="block text-[12.5px] text-ink-3">{c.kind === "gov_unchecked" ? tw("govUnchecked") : c.official ? tw("official") : tw("unofficial")}</span>
                             </li>
                           ))}
                         </ul>

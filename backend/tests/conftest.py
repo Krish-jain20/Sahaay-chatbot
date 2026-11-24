@@ -1,6 +1,7 @@
 import os
 
 os.environ["GEMINI_API_KEY"] = ""  # tests stay offline (stub LLM)
+os.environ["TAVILY_API_KEY"] = ""  # and never reach the real search API
 os.environ["SUPABASE_URL"] = ""  # no real auth in tests; test_auth.py injects a verifier
 os.environ["AUTH_REQUIRED"] = "false"
 

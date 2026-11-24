@@ -24,7 +24,7 @@ export function WebCard({ card }: { card: WebCardData }) {
                 <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 underline">
                   {s.title}
                 </a>{" "}
-                <span className="text-ink-3">{s.official ? t("official") : t("unofficial")}</span>
+                <span className="text-ink-3">{s.kind === "gov_unchecked" ? t("govUnchecked") : s.official ? t("official") : t("unofficial")}</span>
               </li>
             ))}
           </ul>
