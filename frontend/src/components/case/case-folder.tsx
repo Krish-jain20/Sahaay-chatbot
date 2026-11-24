@@ -227,7 +227,7 @@ export function CaseFolder() {
             <Button asChild variant="secondary"><Link href="/documents">{t("openDocs")}</Link></Button>
             <Button asChild variant="secondary"><Link href="/forms">{t("openForm")}</Link></Button>
             <Button asChild variant="secondary"><Link href="/drafts">{t("openDrafts")}</Link></Button>
-            <Button asChild variant="secondary"><Link href="/help/complaints">{t("openHelp")}</Link></Button>
+            <Button asChild variant="secondary"><Link href="/help">{t("openHelp")}</Link></Button>
             <Button onClick={onSummary}>{t("summary")}</Button>
           </div>
         </>
