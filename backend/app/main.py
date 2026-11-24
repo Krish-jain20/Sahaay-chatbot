@@ -7,6 +7,7 @@ from app.api import auth, cases, chat, compare, documents, drafts, forms, me, se
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
+from app.graph.checkpoint import make_checkpointer
 from app.graph.graph import build_graph
 from app.llm.client import LLM
 from app.ocr.pipeline import load_doc_types
@@ -18,7 +19,9 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     app.state.catalog = load_catalog(settings.data_dir)
     app.state.llm = LLM()
-    app.state.graph = build_graph()
+    checkpointer = make_checkpointer(settings.database_url)
+    app.state.checkpointer = checkpointer
+    app.state.graph = build_graph(checkpointer.saver)
     app.state.doc_types = load_doc_types(settings.data_dir)
     app.state.forms = load_forms(settings.data_dir, app.state.catalog.allowlist)
     app.state.store = (
@@ -28,6 +31,7 @@ async def lifespan(app: FastAPI):
     )
     app.state.verifier = auth.TokenVerifier(settings.supabase_url) if settings.supabase_url else None
     yield
+    checkpointer.close()
 
 
 app = FastAPI(title="Sahaay API", lifespan=lifespan)

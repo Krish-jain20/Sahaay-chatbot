@@ -27,6 +27,7 @@ from app.graph.templates import t
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
 from app.rules.eligibility import Fact, check
 from app.rules.fees import fee_strip, is_stale
+from app.safety.pii import mask_pii
 
 Event = tuple[str, dict[str, Any]]
 
@@ -200,7 +201,8 @@ def run_turn(
         "configurable": {"catalog": catalog, "llm": llm, "thread_id": thread_id or f"{user_id}"},
     }
     state: CaseState = {
-        "message": message,
+        # Masked before it enters the graph, so identity numbers are never checkpointed or stored.
+        "message": mask_pii(message)[0],
         "language": lang,
         "user_id": user_id,
         "confirmed_facts": confirmed_facts,
