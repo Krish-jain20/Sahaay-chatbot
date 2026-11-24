@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cases, chat, compare, documents, me, services
+from app.api import auth, cases, chat, compare, documents, drafts, me, services
 from app.config import get_settings
 from app.data.loader import load_catalog
 from app.db.store import MemoryStore, SupabaseStore
@@ -41,6 +41,7 @@ app.include_router(compare.router)
 app.include_router(documents.router)
 app.include_router(me.router)
 app.include_router(cases.router)
+app.include_router(drafts.router)
 
 
 @app.get("/health")

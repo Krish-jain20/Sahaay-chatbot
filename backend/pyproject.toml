@@ -17,6 +17,7 @@ dependencies = [
     "pymupdf>=2.1",
     "pytesseract>=0.3.13",
     "sse-starlette>=3.7.1",
+    "weasyprint>=70.0",
 ]
 
 [dependency-groups]

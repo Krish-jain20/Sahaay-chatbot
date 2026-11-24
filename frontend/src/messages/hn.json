@@ -82,7 +82,8 @@
     "chat": "Chat",
     "compare": "Tulna",
     "menu": "Main menu",
-    "documents": "Documents"
+    "documents": "Documents",
+    "drafts": "Drafts"
   },
   "panel": {
     "title": "Aapki details",
@@ -179,5 +180,43 @@
       "ifsc": "IFSC",
       "percentage": "Percentage"
     }
+  },
+  "drafts": {
+    "title": "Drafts",
+    "sub": "Complaint, RTI application ya grievance ka draft banaiye. Kuch bhi kahin bheja nahi jaata. Aap har field check karte hain, phir PDF download karte hain.",
+    "kind": "Aapko kya chahiye?",
+    "complaint": "Service mein deri ya inkaar ki complaint",
+    "rti": "RTI application",
+    "cpgrams": "Grievance draft (CPGRAMS)",
+    "draftLang": "Draft ki bhasha",
+    "langEn": "English",
+    "langHi": "Hindi",
+    "f_full_name": "Aapka naam",
+    "f_address": "Aapka pata",
+    "f_addressed_to": "Kisko (officer ya office)",
+    "f_service_name": "Service",
+    "f_application_ref": "Application reference number",
+    "f_applied_on": "Apply karne ki date",
+    "f_issue": "Kya hua",
+    "f_requested_action": "Aapka request",
+    "f_authority": "Public authority (jis office se pooch rahe hain)",
+    "f_info_sought": "Jo information chahiye",
+    "f_period": "Period (optional)",
+    "f_bpl": "Main BPL (Below Poverty Line) applicant hoon",
+    "f_contact": "Phone ya email (optional)",
+    "f_department": "Ministry ya department",
+    "f_grievance": "Aapki grievance",
+    "optional": "optional",
+    "hide": "Poora Aadhaar, PAN, phone ya bank number mat likhiye. Likhenge to sirf aakhri 4 digits rakhe jayenge.",
+    "review": "Draft check karein",
+    "reviewHelp": "PDF mein bilkul yahi hoga. Jo galat ho sudhaariye, phir box tick kijiye.",
+    "checked": "Maine har field check kar li hai",
+    "download": "PDF download karein",
+    "edit": "Badlein",
+    "preview": "Check karein",
+    "missing": "Please bhariye: {fields}",
+    "changed": "Review ke baad aapne kuch badla. Dobara check kijiye.",
+    "failed": "PDF ready nahi ho paya. Dobara try kijiye.",
+    "notice": "Fees, address aur deadlines hum nahi bharte. Bhejne se pehle official source se confirm kijiye."
   }
 }

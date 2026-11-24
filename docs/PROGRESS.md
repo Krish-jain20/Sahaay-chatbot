@@ -55,8 +55,23 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 | S3-07 | done | document text is parsed by fixed patterns only and never reaches a model; injection fixture is inert |
 | S3-08 | done | `/documents` page: pick service, upload or "I have this", review and edit fields, confirm, readiness bar. English, Hindi, Hinglish |
 
-## Stages 4 to 6
-Not started: forms and complaints (4), glossary, screenshots, journey, dashboard (5),
+## Stage 4: Forms, complaints, summary
+| ID | Status | Notes |
+|---|---|---|
+| S4-01 | needs you | pick one official form (fillable PDF) and its source URL; I will not guess a form |
+| S4-02, S4-03 | todo | form engine and field-map snapshot wait for S4-01 |
+| S4-04 | done for drafts | `/drafts/preview` then `/drafts/pdf`: download needs the "I checked every field" tick and the hash of what was reviewed; any edit resets it. The pre-filled official form is still waiting on S4-01 |
+| S4-05 | done for drafts | identity numbers are masked before preview and render; nothing is stored; tests check the PDF text |
+| S4-06 | needs you | grievance data per service (department, CPGRAMS, helpline) with sources; drafts leave office names to the user |
+| S4-07 | todo | grievance vs RTI vs appeal explainer |
+| S4-08 | done | complaint, RTI and CPGRAMS drafts as PDFs (WeasyPrint), English and Hindi; Hindi PDF embeds Noto Sans Devanagari; `/drafts` page in 3 languages |
+| S4-09 | todo | case summary PDF |
+| S4-10 | partly | draft e2e tests added; flows 2 and 3 not written yet |
+
+Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip where those are missing. The Dockerfile in S6-06 must include them.
+
+## Stages 5 to 6
+Not started: glossary, screenshots, journey, dashboard (5),
 email sign-in, privacy page, Postgres checkpointer, Docker and deploy, README polish (6).
 Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 
