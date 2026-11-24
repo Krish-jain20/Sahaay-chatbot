@@ -81,6 +81,61 @@ export interface CaseView {
   journey: Journey;
   submission: Submission | null;
 }
+export type NextAction =
+  | "check_eligibility"
+  | "add_documents"
+  | "confirm_documents"
+  | "fill_form"
+  | "submit"
+  | "save_reference"
+  | "follow_up"
+  | "wait"
+  | "done";
+export interface FollowUp {
+  days: number | null;
+  user_set: boolean;
+  due_on: string | null;
+  due: boolean;
+  days_since_submitted: number | null;
+  reply_received: boolean;
+}
+export interface CaseLinks {
+  official_url: string | null;
+  sources: { title: string; url: string; publisher: string; date_checked: string | null }[];
+  forms: { id: string; title: string; source_url: string; date_checked: string }[];
+  draft_kind: string;
+  grievance: { type: string; name: string | null; url: string | null; phone: string | null }[];
+}
+export interface CaseNote {
+  id: string;
+  at: string;
+  text: string;
+}
+/** One case as the My cases page shows it. Progress is the user's own record, never government status. */
+export interface CaseCard {
+  id: string;
+  service_id: string;
+  service_name: string | null;
+  department: string | null;
+  created_at: string | null;
+  readiness: Readiness;
+  journey: Journey;
+  submission: Submission | null;
+  overview: {
+    next_action: NextAction;
+    missing: string[];
+    docs_ready: number;
+    docs_total: number;
+    steps_done: number;
+    steps_total: number;
+    follow_up: FollowUp;
+  };
+  notes: CaseNote[];
+  steps_text: { n: number; text: string | null }[];
+  prerequisites: { id: string; name: string | null }[];
+  links: CaseLinks;
+}
+
 export interface DocTypeInfo {
   id: string;
   extract_fields: string[];
@@ -98,6 +153,45 @@ export async function openCase(serviceId: string): Promise<CaseView | null> {
   const { id } = (await created.json()) as { id: string };
   const res = await authed(`/cases/${id}`);
   return res.ok ? ((await res.json()) as CaseView) : null;
+}
+
+export async function loadCases(lang: string): Promise<CaseCard[] | null> {
+  const res = await authed(`/cases/overview?lang=${lang}`);
+  return res.ok ? ((await res.json()) as CaseCard[]) : null;
+}
+
+export async function loadCase(id: string, lang: string): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}?lang=${lang}`);
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+/** Start tracking a service. Safe to call twice: the backend returns the existing case. */
+export async function startCase(serviceId: string): Promise<string | null> {
+  const res = await authed("/cases", { method: "POST", body: JSON.stringify({ service_id: serviceId }) });
+  return res.ok ? ((await res.json()) as { id: string }).id : null;
+}
+
+export async function patchCase(
+  id: string,
+  lang: string,
+  body: { follow_up_days?: number; clear_follow_up?: boolean; reply_received?: boolean },
+): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}?lang=${lang}`, { method: "PATCH", body: JSON.stringify(body) });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export async function addNote(id: string, lang: string, text: string): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/notes?lang=${lang}`, { method: "POST", body: JSON.stringify({ text }) });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export async function deleteNote(id: string, lang: string, noteId: string): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/notes/${noteId}?lang=${lang}`, { method: "DELETE" });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export async function deleteCase(id: string): Promise<boolean> {
+  return (await authed(`/cases/${id}`, { method: "DELETE" })).ok;
 }
 
 export async function loadDocTypes(): Promise<DocTypeInfo[]> {

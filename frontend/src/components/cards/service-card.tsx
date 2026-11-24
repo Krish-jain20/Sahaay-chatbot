@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { AlertIcon, CheckIcon, HelpIcon, LinkIcon, ShieldCheckIcon, XIcon } from "@/components/icons";
 import { ReportButton } from "@/components/cards/report-button";
+import { startCase } from "@/lib/api";
 import type { Citation, RuleResult, ServiceCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +49,39 @@ function RuleRow({ label, result }: { label: string; result: RuleResult }) {
       </span>
       <span className={cn("rounded-full px-2.5 py-0.5 text-[12.5px] font-semibold", style.chip)}>{style.text}</span>
     </li>
+  );
+}
+
+/** One tap: start tracking this service. The case opens prefilled with its documents and steps. */
+function TrackButton({ serviceId }: { serviceId: string }) {
+  const t = useTranslations("card");
+  const [state, setState] = useState<"idle" | "busy" | "done" | "error">("idle");
+  const [caseId, setCaseId] = useState<string | null>(null);
+  async function track() {
+    setState("busy");
+    const id = await startCase(serviceId);
+    setCaseId(id);
+    setState(id ? "done" : "error");
+  }
+  if (state === "done" && caseId) {
+    return (
+      <Link href={`/case?case=${caseId}`} className="inline-flex min-h-11 items-center font-semibold text-teal-700 underline">
+        {t("tracking")}
+      </Link>
+    );
+  }
+  return (
+    <span className="inline-flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        onClick={track}
+        disabled={state === "busy"}
+        className="inline-flex min-h-11 items-center rounded-full border border-teal-700 bg-surface px-4 text-[14.5px] font-semibold text-teal-700 hover:bg-teal-700 hover:text-white disabled:opacity-60"
+      >
+        {t("trackThis")}
+      </button>
+      {state === "error" && <span role="alert" className="text-[13px] text-bad-700">{t("trackError")}</span>}
+    </span>
   );
 }
 
@@ -193,6 +228,10 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         <Link href="/help#scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">
           {t("fraudLink")}
         </Link>
+      </div>
+
+      <div className="mt-3">
+        <TrackButton serviceId={service.id} />
       </div>
 
       {service.official_url && (

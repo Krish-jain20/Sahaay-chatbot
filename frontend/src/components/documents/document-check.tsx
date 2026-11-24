@@ -40,7 +40,8 @@ export function DocumentCheck() {
       .then(([list, types]: [ServiceLite[], DocTypeInfo[]]) => {
         setServices(list);
         setDocTypes(types);
-        setServiceId(list[0]?.id ?? "");
+        const wanted = new URLSearchParams(window.location.search).get("service");
+        setServiceId(list.find((x) => x.id === wanted)?.id ?? list[0]?.id ?? "");
       })
       .catch(() => setState("error"));
   }, []);

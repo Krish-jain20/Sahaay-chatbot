@@ -7,6 +7,7 @@ Only confirmed, masked values are stored here. No uploads, no full ID numbers.
 
 from __future__ import annotations
 
+import copy
 import threading
 import uuid
 from datetime import UTC, datetime
@@ -34,6 +35,8 @@ class Store(Protocol):
         self, user_id: str, case_id: str, reference_masked: str | None, submitted_on: str | None
     ) -> dict[str, Any] | None: ...
     def get_submission(self, user_id: str, case_id: str) -> dict[str, Any] | None: ...
+    def update_case_state(self, user_id: str, case_id: str, state: dict[str, Any]) -> bool: ...
+    def delete_case(self, user_id: str, case_id: str) -> bool: ...
 
 
 class MemoryStore:
@@ -79,17 +82,38 @@ class MemoryStore:
                 "user_id": user_id,
                 "service_id": service_id,
                 "journey_step": 0,
+                "state": {},
                 "created_at": datetime.now(UTC).isoformat(),
             }
             self.cases[case["id"]] = case
-            return dict(case)
+            return copy.deepcopy(case)
 
     def list_cases(self, user_id: str) -> list[dict[str, Any]]:
-        return [dict(c) for c in self.cases.values() if c["user_id"] == user_id]
+        rows = [copy.deepcopy(c) for c in self.cases.values() if c["user_id"] == user_id]
+        return sorted(rows, key=lambda c: c["created_at"], reverse=True)
 
     def get_case(self, user_id: str, case_id: str) -> dict[str, Any] | None:
         c = self.cases.get(case_id)
-        return dict(c) if c and c["user_id"] == user_id else None
+        return copy.deepcopy(c) if c and c["user_id"] == user_id else None
+
+    def update_case_state(self, user_id: str, case_id: str, state: dict[str, Any]) -> bool:
+        with self._lock:
+            c = self.cases.get(case_id)
+            if not c or c["user_id"] != user_id:
+                return False
+            c["state"] = copy.deepcopy(state)
+            return True
+
+    def delete_case(self, user_id: str, case_id: str) -> bool:
+        with self._lock:
+            c = self.cases.get(case_id)
+            if not c or c["user_id"] != user_id:
+                return False
+            del self.cases[case_id]
+            self.documents.pop(case_id, None)
+            self.events.pop(case_id, None)
+            self.submissions.pop(case_id, None)
+            return True
 
     def save_document(
         self, user_id: str, case_id: str, doc_type: str, fields: dict[str, Any], issue_date: str | None
@@ -156,6 +180,15 @@ class MemoryStore:
         return dict(row) if row else None
 
 
+CASE_COLUMNS = "id,user_id,service_id,journey_step,state_json,created_at"
+
+
+def _case_row(row: dict[str, Any]) -> dict[str, Any]:
+    out = {k: v for k, v in row.items() if k != "state_json"}
+    out["state"] = row.get("state_json") or {}
+    return out
+
+
 class SupabaseStore:
     def __init__(self, url: str, secret_key: str, timeout: float = 10.0) -> None:
         self._http = httpx.Client(
@@ -217,7 +250,7 @@ class SupabaseStore:
                 json={"user_id": user_id, "service_id": service_id},
             )
         )
-        return r.json()[0]
+        return _case_row(r.json()[0])
 
     def list_cases(self, user_id: str) -> list[dict[str, Any]]:
         r = self._check(
@@ -225,12 +258,12 @@ class SupabaseStore:
                 "/cases",
                 params={
                     "user_id": f"eq.{user_id}",
-                    "select": "id,user_id,service_id,journey_step,created_at",
+                    "select": CASE_COLUMNS,
                     "order": "created_at.desc",
                 },
             )
         )
-        return r.json()
+        return [_case_row(c) for c in r.json()]
 
     def get_case(self, user_id: str, case_id: str) -> dict[str, Any] | None:
         try:
@@ -243,12 +276,32 @@ class SupabaseStore:
                 params={
                     "id": f"eq.{case_id}",
                     "user_id": f"eq.{user_id}",
-                    "select": "id,user_id,service_id,journey_step,created_at",
+                    "select": CASE_COLUMNS,
                 },
             )
         )
         rows = r.json()
-        return rows[0] if rows else None
+        return _case_row(rows[0]) if rows else None
+
+    def update_case_state(self, user_id: str, case_id: str, state: dict[str, Any]) -> bool:
+        if self.get_case(user_id, case_id) is None:
+            return False
+        self._check(
+            self._http.patch(
+                "/cases",
+                params={"id": f"eq.{case_id}", "user_id": f"eq.{user_id}"},
+                headers={"Prefer": "return=minimal"},
+                json={"state_json": state, "updated_at": datetime.now(UTC).isoformat()},
+            )
+        )
+        return True
+
+    def delete_case(self, user_id: str, case_id: str) -> bool:
+        if self.get_case(user_id, case_id) is None:
+            return False
+        # Events, documents and submissions cascade.
+        self._check(self._http.delete("/cases", params={"id": f"eq.{case_id}", "user_id": f"eq.{user_id}"}))
+        return True
 
     def save_document(
         self, user_id: str, case_id: str, doc_type: str, fields: dict[str, Any], issue_date: str | None

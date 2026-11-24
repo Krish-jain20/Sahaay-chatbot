@@ -57,6 +57,8 @@ def export_my_data(user: CurrentUser, request: Request) -> dict[str, Any]:
                 "documents": store.list_documents(user.id, cid),
                 "steps": store.list_events(user.id, cid),
                 "submission": store.get_submission(user.id, cid),
+                "notes": (c.get("state") or {}).get("notes", []),
+                "follow_up_days": (c.get("state") or {}).get("follow_up_days"),
             }
         )
     return {"facts": store.list_facts(user.id), "cases": cases}
