@@ -114,7 +114,7 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
       : null;
   const cta: { href: string; label: string; external?: boolean } | null = {
     check_eligibility: { href: eligibilityQ, label: t("ctaEligibility") },
-    add_documents: custom ? { href: "#check-h", label: t("yourDocs") } : { href: `/documents?service=${card.service_id}`, label: t("openDocs") },
+    add_documents: custom ? { href: "#check-h", label: t("yourDocs") } : { href: "/documents", label: t("openDocs") },
     fill_form: { href: links.forms.length ? "/forms" : "/chat", label: links.forms.length ? t("openForm") : t("openChat") },
     submit: portalCta,
     follow_up: { href: "/drafts?kind=rti", label: t("ctaRti") },
@@ -305,7 +305,7 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
         <p className="mt-2 text-[13.5px] text-ink-3">{t("readyCaption")}</p>
         {!custom && (
           <Button asChild variant="secondary" className="mt-3">
-            <Link href={`/documents?service=${card.service_id}`}>{t("openDocs")}</Link>
+            <Link href="/documents">{t("openDocs")}</Link>
           </Button>
         )}
       </section>

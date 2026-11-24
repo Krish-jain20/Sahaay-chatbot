@@ -36,6 +36,7 @@ class Store(Protocol):
     ) -> dict[str, Any] | None: ...
     def get_submission(self, user_id: str, case_id: str) -> dict[str, Any] | None: ...
     def update_case_state(self, user_id: str, case_id: str, state: dict[str, Any]) -> bool: ...
+    def delete_documents_of_type(self, user_id: str, doc_type: str) -> int: ...
     def delete_case(self, user_id: str, case_id: str) -> bool: ...
 
 
@@ -137,6 +138,19 @@ class MemoryStore:
         if self.get_case(user_id, case_id) is None:
             return []
         return [dict(d) for d in self.documents.get(case_id, [])]
+
+    def delete_documents_of_type(self, user_id: str, doc_type: str) -> int:
+        """Remove this user's saved document of one type from every case. Returns how many were removed."""
+        with self._lock:
+            removed = 0
+            for cid, c in self.cases.items():
+                if c["user_id"] != user_id:
+                    continue
+                docs = self.documents.get(cid, [])
+                keep = [d for d in docs if d["doc_type"] != doc_type]
+                removed += len(docs) - len(keep)
+                self.documents[cid] = keep
+            return removed
 
     def add_event(self, user_id: str, case_id: str, step: int, note: str | None) -> bool:
         with self._lock:
@@ -357,6 +371,19 @@ class SupabaseStore:
             }
             for d in r.json()
         ]
+
+    def delete_documents_of_type(self, user_id: str, doc_type: str) -> int:
+        ids = [c["id"] for c in self.list_cases(user_id)]
+        if not ids:
+            return 0
+        r = self._check(
+            self._http.delete(
+                "/documents",
+                params={"case_id": f"in.({','.join(ids)})", "doc_type": f"eq.{doc_type}"},
+                headers={"Prefer": "return=representation"},
+            )
+        )
+        return len(r.json())
 
     def add_event(self, user_id: str, case_id: str, step: int, note: str | None) -> bool:
         if self.get_case(user_id, case_id) is None:
