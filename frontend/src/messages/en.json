@@ -14,13 +14,16 @@
     "placeholder": "Type your question…",
     "send": "Send",
     "stop": "Stop",
-    "empty": "Ask about a Delhi income certificate, the SC/ST/OBC merit scholarship or old-age pension.",
+    "empty": "Ask about Delhi income certificate, scholarship or old-age pension (verified), or any other government service, such as a ration card, a birth certificate or a driving licence.",
     "suggestion": "How do I get an income certificate in Delhi?",
     "error": "Something went wrong. Please try again.",
     "stopped": "Stopped.",
     "confirmed": "Confirmed",
     "suggestion2": "I'm a student in Delhi, family income about 3 lakh",
-    "suggestion3": "My mother is 67, can she get a pension?"
+    "suggestion3": "My mother is 67, can she get a pension?",
+    "suggestion4": "How do I apply for a ration card in Delhi?",
+    "suggestion5": "What documents are needed for a birth certificate in Delhi?",
+    "suggestion6": "How do I renew a driving licence?"
   },
   "card": {
     "verified": "Verified from official portal · {date}",
@@ -82,7 +85,7 @@
     "error": "I couldn't load this. Please try again.",
     "link": "Compare services",
     "askChat": "Ask in chat",
-    "webBadge": "From the web, unverified",
+    "webBadge": "From the web",
     "webRemove": "Remove web column",
     "notVerified": "Not verified",
     "webSummary": "From the web",
@@ -356,7 +359,7 @@
     "error": "Could not load. Please try again.",
     "deleteError": "Could not delete. Please try again.",
     "reports": "Official sources and the date they were checked are shown with each answer. If something looks wrong, use “Report incorrect information” on a service card.",
-    "webNote": "If Sahaay has no verified record for your question, it may search the web. Only your question, with identity numbers already hidden, goes to the AI model and its search provider (Tavily, a web search service). Web answers are labelled as unverified."
+    "webNote": "If Sahaay has no verified record for your question, it may search the web. Only your question, with identity numbers already hidden, goes to the AI model and its search provider (Tavily, a web search service). Web answers list their sources and the search date, so you can check them."
   },
   "account": {
     "title": "Your account",

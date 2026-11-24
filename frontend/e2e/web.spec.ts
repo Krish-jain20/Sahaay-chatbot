@@ -18,7 +18,6 @@ test("chat: a web answer is labelled unverified and every source says whether it
           "card",
           {
             type: "web",
-            label: "From the web, not a verified Sahaay record. Verify locally.",
             retrieved_on: "2026-11-24",
             sources: [
               { n: 1, title: "revenue.delhi.gov.in", url: "https://example.test/r1", official: true, kind: "official" },
@@ -38,7 +37,7 @@ test("chat: a web answer is labelled unverified and every source says whether it
   await page.keyboard.press("Enter");
   const card = page.getByTestId("web-card");
   await expect(card).toBeVisible();
-  await expect(card).toContainText("not a verified Sahaay record");
+  await expect(card).not.toContainText("not a verified Sahaay record");
   await expect(card.getByRole("listitem").nth(0)).toContainText("on Sahaay's checked official list");
   await expect(card.getByRole("listitem").nth(1)).toContainText("Government web address, not yet checked by Sahaay");
   await expect(card).toContainText("Searched on 2026-11-24");
@@ -55,7 +54,6 @@ test("compare: a web-found service is an unverified extra column with its source
         summary: "Pays farmers in instalments. Verify locally.",
         web: {
           type: "web",
-          label: "From the web, not a verified Sahaay record. Verify locally.",
           retrieved_on: "2026-11-24",
           sources: [{ n: 1, title: "someblog.example", url: "https://example.test/r2", official: false }],
         },
@@ -66,9 +64,8 @@ test("compare: a web-found service is an unverified extra column with its source
   await page.waitForLoadState("networkidle");
   await page.getByLabel("Add a service from the web").fill("PM Kisan");
   await page.getByRole("button", { name: "Search the web" }).click();
-  await expect(page.getByTestId("web-col-head")).toContainText("From the web, unverified");
+  await expect(page.getByTestId("web-col-head")).toContainText("From the web");
   await expect(page.getByTestId("web-summary")).toContainText("Pays farmers in instalments");
-  await expect(page.getByTestId("web-summary")).toContainText("not a verified Sahaay record");
   await expect(page.getByText("not on Sahaay's official list")).toBeVisible();
   await page.getByRole("button", { name: "Remove web column" }).click();
   await expect(page.getByTestId("web-col-head")).toHaveCount(0);

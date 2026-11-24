@@ -61,6 +61,11 @@
       "host": "www.mha.gov.in",
       "owner": "Ministry of Home Affairs, Government of India",
       "verified_on": "2026-11-24"
+    },
+    {
+      "host": "www.india.gov.in",
+      "owner": "National Portal of India (NIC, Government of India). Its services directory was seen through a web search on 2026-11-24; direct connections from the build environment fail",
+      "verified_on": "2026-11-24"
     }
   ]
 }

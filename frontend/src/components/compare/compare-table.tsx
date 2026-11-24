@@ -253,7 +253,7 @@ export function CompareTable() {
                   <td className="p-3 align-top" data-testid="web-summary">
                     <p>{webCol.summary}</p>
                     <p className="mt-1 text-[12.5px] text-ink-3">
-                      {webCol.web.label} {tw("retrieved", { date: webCol.web.retrieved_on })}
+                      {tw("retrieved", { date: webCol.web.retrieved_on })}
                     </p>
                   </td>
                 </tr>

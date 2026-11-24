@@ -461,6 +461,9 @@ class LLM:
             log.warning("web search failed: %s", type(e).__name__)
             raise LLMError("web search failed") from e
         hits = [h for h in hits if clean_snippet(h.content)]
+        # Random commercial pages (directories, review sites) add noise next to government pages.
+        gov = [h for h in hits if (urlparse(h.url).hostname or "").endswith((".gov.in", ".nic.in"))]
+        hits = gov or hits
         if not hits:
             return None
         results = "\n".join(

@@ -14,7 +14,6 @@ from urllib.parse import urlparse
 
 from app.data.loader import Catalog
 from app.data.models import Lang
-from app.graph.templates import t
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited
 from app.safety.allowlist import is_allowed
 from app.safety.claims import find_violations
@@ -73,7 +72,6 @@ def run_web_search(
         )
     card = {
         "type": "web",
-        "label": t("web.label", lang),
         "retrieved_on": today,
         "sources": sources[:MAX_SOURCES],
     }
