@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 
 import { AlertIcon, CheckIcon, HelpIcon, LinkIcon, ShieldCheckIcon, XIcon } from "@/components/icons";
@@ -143,8 +144,11 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         </div>
       </dl>
 
-      <div>
+      <div className="flex flex-wrap items-center gap-x-4">
         <ReportButton serviceId={service.id} />
+        <Link href="/help/scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">
+          {t("fraudLink")}
+        </Link>
       </div>
 
       {service.official_url && (

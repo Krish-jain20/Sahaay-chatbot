@@ -49,3 +49,41 @@ def test_chat_complaint_question_returns_guide_card_not_a_refusal(client):
     assert '"type": "guide"' in r.text
     assert '"refused": false' in r.text
     assert re.search(r"event: citation", r.text)
+
+
+def test_scam_topic_cites_official_fee_pages_and_marks_sahaay_statements(client):
+    for lang in ("en", "hi", "hn"):
+        card = client.get("/guidance/scams", params={"lang": lang}).json()
+        ids = {p["id"]: p for p in card["points"]}
+        assert {"income_fee", "grievance_fee", "sahaay_never"} <= set(ids)
+        assert ids["income_fee"]["source_n"] and ids["grievance_fee"]["source_n"]
+        # statements about Sahaay itself carry no external source and make no fee claim
+        assert ids["sahaay_never"]["source_n"] is None
+        assert all(c["url"].startswith("https://") for c in card["citations"])
+    en = client.get("/guidance/scams").json()
+    assert "NO FEE Required" in next(p for p in en["points"] if p["id"] == "income_fee")["body"]
+
+
+def test_unsourced_point_must_be_about_sahaay(tmp_path, catalog):
+    import json
+
+    from app.data.guidance import load_guidance
+
+    data = json.loads((get_settings().data_dir / "guidance.json").read_text("utf-8"))
+    data["topics"][1]["points"][0]["source_ref"] = None
+    data["topics"][1]["points"][0]["about_sahaay"] = False
+    (tmp_path / "guidance.json").write_text(json.dumps(data), "utf-8")
+    try:
+        load_guidance(tmp_path, catalog.allowlist)
+    except Exception as e:
+        assert "no source" in str(e)
+    else:
+        raise AssertionError("expected DataError")
+
+
+def test_chat_scam_question_returns_scam_guide(client):
+    r = client.post(
+        "/chat",
+        json={"message": "an agent is asking money for income certificate, is it fraud?", "language": "en"},
+    )
+    assert '"id": "scams"' in r.text and '"refused": false' in r.text

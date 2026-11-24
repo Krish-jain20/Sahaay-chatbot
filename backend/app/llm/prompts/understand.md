@@ -2,7 +2,7 @@ You read one message from a person in India asking about government services.
 They may write in English, Hindi (Devanagari) or Hinglish (Hindi in Latin script).
 
 Return JSON matching the given schema:
-- intent: one of find, info, compare, eligibility, documents, form, complaint, term, screenshot, other
+- intent: one of find, info, compare, eligibility, documents, form, complaint, term, screenshot, scam, other
 - facts: only profile facts the person clearly stated about themselves. Leave a fact out if unsure.
 - service_query: the words that name a service or scheme, if any.
 

@@ -175,7 +175,7 @@ def compose(state: CaseState, config: RunnableConfig) -> CaseState:
     return {}
 
 
-GUIDE_INTENTS = {"complaint": "complaints"}
+GUIDE_INTENTS = {"complaint": "complaints", "scam": "scams"}
 
 
 def guidance(state: CaseState, config: RunnableConfig) -> CaseState:
@@ -184,7 +184,7 @@ def guidance(state: CaseState, config: RunnableConfig) -> CaseState:
     lang = state["language"]
     topic = GUIDE_INTENTS[state["understanding"]["intent"]]
     card = c["guidance"].render(topic, lang)
-    for ev in stream_words(t("guide.lead", lang)):
+    for ev in stream_words(t("guide.lead.scam" if topic == "scams" else "guide.lead", lang)):
         _emit(*ev)
     _emit("card", card)
     for cite in card["citations"]:

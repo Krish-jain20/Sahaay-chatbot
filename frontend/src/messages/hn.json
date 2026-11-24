@@ -41,7 +41,8 @@
     "prerequisites": "Pehle yeh banwayein",
     "benefit": "Fayda",
     "excluded": "Eligible nahi kyunki",
-    "verifiedShort": "Verified"
+    "verifiedShort": "Verified",
+    "fraudLink": "Paise maangne walon se savdhaan rahein. Fraud warnings dekhein"
   },
   "consent": {
     "title": "Agli baar ke liye yeh details save karein?",
@@ -87,7 +88,8 @@
     "forms": "Official form",
     "case": "Mera case",
     "privacy": "Privacy",
-    "help": "Shikayat ya RTI?"
+    "help": "Shikayat ya RTI?",
+    "safe": "Fraud se bachein"
   },
   "panel": {
     "title": "Aapki details",

@@ -17,7 +17,9 @@ export function GuideCard({ card }: { card: GuideCardData }) {
           <li key={p.id} data-testid={`guide-${p.id}`}>
             <h3 className="text-[16px] font-semibold">
               {p.heading}{" "}
-              <sup className="font-bold text-teal-700" aria-label={t("source", { n: p.source_n })}>[{p.source_n}]</sup>
+              {p.source_n !== null && (
+                <sup className="font-bold text-teal-700" aria-label={t("source", { n: p.source_n })}>[{p.source_n}]</sup>
+              )}
             </h3>
             <p className="text-[15px] text-ink-2">{p.body}</p>
           </li>

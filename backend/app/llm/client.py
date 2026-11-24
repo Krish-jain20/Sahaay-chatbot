@@ -39,6 +39,7 @@ Intent = Literal[
     "complaint",
     "term",
     "screenshot",
+    "scam",
     "other",
 ]
 
@@ -158,6 +159,10 @@ _INTENT_WORDS: list[tuple[Intent, tuple[str, ...]]] = [
     ("compare", ("compare", "difference", "vs", "तुलना")),
     ("documents", ("document", "documents", "kagaz", "दस्तावेज़", "कागज़")),
     ("eligibility", ("eligible", "eligibility", "qualify", "patra", "पात्र", "yogya")),
+    (
+        "scam",
+        ("scam", "fraud", "fake", "cheat", "thug", "dalal", "dalaal", "bribe", "धोखा", "ठग", "दलाल", "रिश्वत"),
+    ),
     ("complaint", ("complaint", "shikayat", "शिकायत", "rti")),
     ("info", ("how", "what", "kaise", "kya", "कैसे", "क्या", "apply", "fee")),
 ]

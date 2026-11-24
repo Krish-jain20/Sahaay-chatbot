@@ -35,6 +35,9 @@ export default function Home() {
           <Button asChild variant="secondary">
             <Link href="/help/complaints">{t("nav.help")}</Link>
           </Button>
+          <Button asChild variant="secondary">
+            <Link href="/help/scams">{t("nav.safe")}</Link>
+          </Button>
         </div>
         <p className="rounded-2xl bg-teal-100 px-4 py-3 text-[15px] text-ink-2">{t("home.scope")}</p>
         <p className="text-center text-[13.5px]">

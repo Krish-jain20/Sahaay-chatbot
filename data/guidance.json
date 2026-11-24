@@ -17,6 +17,14 @@
       "publisher": "Department of Personnel and Training (DoPT), Government of India",
       "date_checked": "2026-11-24",
       "effective_date": null
+    },
+    {
+      "id": "income_cert_page",
+      "title": "Income Certificate: FAQ (application fee, where to apply, response time)",
+      "url": "https://revenue.delhi.gov.in/revenue/income-certificate",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
     }
   ],
   "topics": [
@@ -45,7 +53,8 @@
             "hi": "जब कोई सेवा देर से मिले, बिना साफ़ कारण के मना हो जाए या ठीक से न संभाली जाए, तब शिकायत करें। CPGRAMS सेवा-वितरण से जुड़ी शिकायतों का केंद्रीय ऑनलाइन पोर्टल है। यह 24x7 खुला रहता है और हर शिकायत को एक पंजीकरण आईडी मिलती है जिससे आप उसे ट्रैक कर सकते हैं। पोर्टल के अनुसार सरकार शिकायत दर्ज करने का कोई शुल्क नहीं लेती।",
             "hn": "Jab koi service der se mile, bina saaf kaaran ke mana ho jaaye ya theek se na sambhali jaaye, tab shikayat karein. CPGRAMS service delivery se judi shikayaton ka central online portal hai. Yeh 24x7 khula rehta hai aur har shikayat ko ek registration ID milti hai jisse aap use track kar sakte hain. Portal ke mutabik sarkar shikayat darj karne ka koi fee nahi leti."
           },
-          "source_ref": "cpgrams"
+          "source_ref": "cpgrams",
+          "about_sahaay": false
         },
         {
           "id": "appeal",
@@ -59,7 +68,8 @@
             "hi": "शिकायत बंद होने के बाद आप फ़ीडबैक दे सकते हैं। CPGRAMS पर अगर आप समाधान को 'Poor' रेट करते हैं तो अपील दर्ज करने का विकल्प खुल जाता है, और आप शिकायत पंजीकरण संख्या से अपील को ट्रैक कर सकते हैं। RTI अनुरोध के लिए अलग रास्ता है: पहली अपील, फिर केंद्रीय सूचना आयोग में दूसरी अपील।",
             "hn": "Shikayat band hone ke baad aap feedback de sakte hain. CPGRAMS par agar aap resolution ko 'Poor' rate karte hain to appeal file karne ka option khul jaata hai, aur aap grievance registration number se appeal track kar sakte hain. RTI request ke liye alag raasta hai: pehli appeal, phir Central Information Commission mein doosri appeal."
           },
-          "source_ref": "cpgrams"
+          "source_ref": "cpgrams",
+          "about_sahaay": false
         },
         {
           "id": "rti",
@@ -73,7 +83,8 @@
             "hi": "RTI किसी सरकारी दफ़्तर से रिकॉर्ड या जानकारी माँगने के लिए है, जैसे आपकी फ़ाइल की स्थिति और कारण। CPGRAMS RTI मामले नहीं लेता। केंद्रीय RTI Online पोर्टल केवल केंद्र सरकार के निकायों के लिए है। उसकी अपनी सूचना कहती है कि दिल्ली सरकार (GNCTD) समेत राज्य सरकार के निकायों के लिए आवेदन न करें, और ऐसे आवेदन बिना रिफ़ंड वापस कर दिए जाते हैं। दिल्ली के किसी विभाग के लिए स्थानीय रूप से पुष्टि करें कि वह RTI आवेदन कैसे लेता है।",
             "hn": "RTI kisi sarkari daftar se record ya jaankari maangne ke liye hai, jaise aapki file ki status aur reasons. CPGRAMS RTI matters nahi leta. Central RTI Online portal sirf central government bodies ke liye hai. Uski apni notice kehti hai ki Delhi sarkar (GNCTD) samet state government bodies ke liye application na dein, aur aisi applications bina refund wapas kar di jaati hain. Delhi ke kisi department ke liye locally verify karein ki woh RTI application kaise leta hai."
           },
-          "source_ref": "rtionline"
+          "source_ref": "rtionline",
+          "about_sahaay": false
         },
         {
           "id": "not_covered",
@@ -87,7 +98,83 @@
             "hi": "RTI मामले, अदालत से जुड़े (विचाराधीन) मामले, धार्मिक मामले, और सरकारी कर्मचारियों के सेवा संबंधी मामले (जब तक वे तय रास्ते पहले न अपना चुके हों)। ईमेल से भेजी शिकायत पर कार्रवाई नहीं होती; पोर्टल पर दर्ज करें।",
             "hn": "RTI matters, court se jude (sub judice) matters, religious matters, aur sarkari karmchariyon ke service matters (jab tak woh tay raaste pehle na apna chuke hon). Email se bheji shikayat par action nahi hota; portal par darj karein."
           },
-          "source_ref": "cpgrams"
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        }
+      ]
+    },
+    {
+      "id": "scams",
+      "title": {
+        "en": "Avoid fraud when applying",
+        "hi": "आवेदन करते समय धोखे से बचें",
+        "hn": "Apply karte waqt fraud se bachein"
+      },
+      "intro": {
+        "en": "Only what the official pages say about fees, plus what Sahaay itself does. Where a fee is not on an official page, verify it locally.",
+        "hi": "केवल वही जो आधिकारिक पेज फ़ीस के बारे में कहते हैं, और जो Sahaay खुद करता है। जहाँ फ़ीस आधिकारिक पेज पर नहीं है, वहाँ स्थानीय रूप से पुष्टि करें।",
+        "hn": "Sirf wahi jo official pages fees ke baare mein kehte hain, aur jo Sahaay khud karta hai. Jahan fee official page par nahi hai, wahan locally verify karein."
+      },
+      "points": [
+        {
+          "id": "income_fee",
+          "heading": {
+            "en": "Income certificate: the official page says no fee",
+            "hi": "आय प्रमाण पत्र: आधिकारिक पेज पर कोई फ़ीस नहीं",
+            "hn": "Income certificate: official page par koi fees nahi"
+          },
+          "body": {
+            "en": "The Delhi Revenue Department's page answers 'What is the application fee?' with 'NO FEE Required'. A Common Service Centre (CSC) may charge its own service fee, and that amount is not on the official page, so verify it locally. Be careful with anyone who asks you to pay for the certificate itself, and ask for a receipt for anything you do pay.",
+            "hi": "दिल्ली राजस्व विभाग के पेज पर 'आवेदन शुल्क क्या है?' के जवाब में 'NO FEE Required' लिखा है। कॉमन सर्विस सेंटर (CSC) अपना सेवा शुल्क ले सकता है, और वह राशि आधिकारिक पेज पर नहीं है, इसलिए स्थानीय रूप से पुष्टि करें। जो आपसे प्रमाण पत्र के लिए ही पैसे माँगे, उससे सावधान रहें, और जो भी भुगतान करें उसकी रसीद लें।",
+            "hn": "Delhi Revenue Department ke page par 'application fee kya hai?' ke jawaab mein 'NO FEE Required' likha hai. Common Service Centre (CSC) apna service fee le sakta hai, aur woh amount official page par nahi hai, isliye locally verify karein. Jo aapse certificate ke liye hi paise maange, usse savdhaan rahein, aur jo bhi payment karein uski receipt lein."
+          },
+          "source_ref": "income_cert_page",
+          "about_sahaay": false
+        },
+        {
+          "id": "grievance_fee",
+          "heading": {
+            "en": "Complaints on CPGRAMS: no government fee",
+            "hi": "CPGRAMS पर शिकायत: सरकारी शुल्क नहीं",
+            "hn": "CPGRAMS par shikayat: sarkari fee nahi"
+          },
+          "body": {
+            "en": "The CPGRAMS portal says the Government does not charge a fee for filing a grievance, and that any money paid by the public for filing goes only to CSC. It also says a grievance sent by email is not attended to. File it on the portal yourself, and be careful with anyone who promises results for a payment.",
+            "hi": "CPGRAMS पोर्टल के अनुसार सरकार शिकायत दर्ज करने का कोई शुल्क नहीं लेती, और शिकायत दर्ज करने के लिए जनता द्वारा दिया गया पैसा केवल CSC को जाता है। यह भी लिखा है कि ईमेल से भेजी शिकायत पर कार्रवाई नहीं होती। शिकायत पोर्टल पर खुद दर्ज करें, और जो भुगतान के बदले नतीजे का वादा करे उससे सावधान रहें।",
+            "hn": "CPGRAMS portal ke mutabik sarkar shikayat darj karne ka koi fee nahi leti, aur shikayat darj karne ke liye public dwara diya gaya paisa sirf CSC ko jaata hai. Yeh bhi likha hai ki email se bheji shikayat par action nahi hota. Shikayat portal par khud darj karein, aur jo payment ke badle result ka vaada kare usse savdhaan rahein."
+          },
+          "source_ref": "cpgrams",
+          "about_sahaay": false
+        },
+        {
+          "id": "sahaay_fees",
+          "heading": {
+            "en": "Scholarship and pension: Sahaay has no confirmed fee",
+            "hi": "छात्रवृत्ति और पेंशन: Sahaay के पास पुष्ट शुल्क नहीं",
+            "hn": "Scholarship aur pension: Sahaay ke paas confirmed fee nahi"
+          },
+          "body": {
+            "en": "Sahaay has no confirmed application fee for these two services, so it shows 'Verify locally' instead of a number. Check with the department or its official page before paying anyone.",
+            "hi": "इन दोनों सेवाओं के लिए Sahaay के पास आवेदन शुल्क की पुष्ट जानकारी नहीं है, इसलिए वह कोई संख्या नहीं बल्कि 'स्थानीय रूप से पुष्टि करें' दिखाता है। किसी को भी भुगतान करने से पहले विभाग या उसके आधिकारिक पेज से पूछ लें।",
+            "hn": "In dono services ke liye Sahaay ke paas application fee ki confirmed jaankari nahi hai, isliye woh koi number nahi balki 'Verify locally' dikhata hai. Kisi ko bhi payment karne se pehle department ya uske official page se pooch lein."
+          },
+          "source_ref": null,
+          "about_sahaay": true
+        },
+        {
+          "id": "sahaay_never",
+          "heading": {
+            "en": "What Sahaay never does",
+            "hi": "Sahaay क्या कभी नहीं करता",
+            "hn": "Sahaay kya kabhi nahi karta"
+          },
+          "body": {
+            "en": "Sahaay never asks for an OTP, a password, a full Aadhaar, PAN or bank number, or any payment. It only shows links to official sites it has checked, matched to the exact web address. If a message, call or website claiming to be Sahaay asks for these, do not share them.",
+            "hi": "Sahaay कभी OTP, पासवर्ड, पूरा आधार, PAN या बैंक नंबर, या कोई भुगतान नहीं माँगता। वह केवल उन आधिकारिक साइटों के लिंक दिखाता है जिन्हें जाँचा गया है और जिनका वेब पता ठीक-ठीक मिलता है। अगर Sahaay होने का दावा करने वाला कोई संदेश, कॉल या वेबसाइट ये माँगे तो न दें।",
+            "hn": "Sahaay kabhi OTP, password, poora Aadhaar, PAN ya bank number, ya koi payment nahi maangta. Woh sirf un official sites ke links dikhata hai jinhe check kiya gaya hai aur jinka web address bilkul match karta hai. Agar Sahaay hone ka daava karne wala koi message, call ya website yeh maange to na dein."
+          },
+          "source_ref": null,
+          "about_sahaay": true
         }
       ]
     }

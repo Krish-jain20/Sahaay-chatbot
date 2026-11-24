@@ -55,6 +55,11 @@ T: dict[str, dict[Lang, str]] = {
         "hi": "ये तीन अलग तरीक़े हैं। आधिकारिक पोर्टलों के अनुसार इनमें फ़र्क़ यह है।",
         "hn": "Yeh teen alag tareeke hain. Official portals ke mutabik inmein farq yeh hai.",
     },
+    "guide.lead.scam": {
+        "en": "Be careful with anyone asking for money. Here is what the official pages say about fees, and what Sahaay never does.",
+        "hi": "पैसे माँगने वाले किसी भी व्यक्ति से सावधान रहें। फ़ीस के बारे में आधिकारिक पेज क्या कहते हैं और Sahaay क्या कभी नहीं करता, यह नीचे है।",
+        "hn": "Paise maangne wale kisi bhi vyakti se savdhaan rahein. Fees ke baare mein official pages kya kehte hain aur Sahaay kya kabhi nahi karta, yeh neeche hai.",
+    },
     "guard.blocked": {
         "en": "I can't give that answer safely. Please check the official page for this service.",
         "hi": "मैं यह उत्तर सुरक्षित रूप से नहीं दे सकता। कृपया इस सेवा का आधिकारिक पेज देखें।",

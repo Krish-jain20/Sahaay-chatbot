@@ -34,3 +34,5 @@ Not verified: whether the e-District office still accepts exactly this version; 
 - https://pgportal.gov.in/ (CPGRAMS home), checked 2026-11-24: grievances on service delivery, 24x7, registration ID, appeal when feedback rating is Poor, matters not taken up (RTI, sub judice, religious, employee service), no government fee.
 - https://rtionline.gov.in/ (RTI Online home), checked 2026-11-24: central government only; notice says not to file for state bodies including GNCT Delhi (returned without refund); first appeal; CIC second appeal.
 - Not sourced yet: how a Delhi department accepts RTI applications, Delhi appellate authorities. The card says verify locally.
+- https://revenue.delhi.gov.in/revenue/income-certificate, checked 2026-11-24: FAQ "What is the application fee? NO FEE Required."
+- Not sourced: cyber-crime reporting portal and helpline number (cybercrime.gov.in could not be fetched from this environment).

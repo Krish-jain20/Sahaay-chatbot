@@ -41,7 +41,8 @@
     "prerequisites": "Get these first",
     "benefit": "Benefit",
     "excluded": "Not eligible because",
-    "verifiedShort": "Verified"
+    "verifiedShort": "Verified",
+    "fraudLink": "Be careful with anyone asking for money. See fraud warnings"
   },
   "consent": {
     "title": "Save these details for next time?",
@@ -87,7 +88,8 @@
     "forms": "Official form",
     "case": "My case",
     "privacy": "Privacy",
-    "help": "Complaint or RTI?"
+    "help": "Complaint or RTI?",
+    "safe": "Avoid fraud"
   },
   "panel": {
     "title": "Your details",

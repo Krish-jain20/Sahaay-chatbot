@@ -53,6 +53,6 @@ export interface GuideCardData {
   id: string;
   title: string;
   intro: string;
-  points: { id: string; heading: string; body: string; source_n: number }[];
+  points: { id: string; heading: string; body: string; source_n: number | null }[];
   citations: Citation[];
 }
