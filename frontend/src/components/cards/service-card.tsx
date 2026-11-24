@@ -160,6 +160,34 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         </div>
       </dl>
 
+      {card.grievance.length > 0 && (
+        <section aria-labelledby={`gr-${service.id}`}>
+          <h4 id={`gr-${service.id}`} className="text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">
+            {t("complain")}
+          </h4>
+          <ul className="mt-1 space-y-1 text-[14px]" data-testid="grievance-channels">
+            {card.grievance.map((g) => (
+              <li key={`${g.type}-${g.name}`}>
+                {g.url ? (
+                  <a href={g.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-teal-700 underline">
+                    {g.name}
+                  </a>
+                ) : (
+                  <span className="font-semibold">{g.name}</span>
+                )}
+                {g.phone && (
+                  <>
+                    {" "}
+                    <a href={`tel:${g.phone.replace(/\s/g, "")}`} className="text-teal-700 underline">{g.phone}</a>
+                  </>
+                )}{" "}
+                <CiteChip n={g.source_n} citations={citations} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <div className="flex flex-wrap items-center gap-x-4">
         <ReportButton serviceId={service.id} />
         <Link href="/help/scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">

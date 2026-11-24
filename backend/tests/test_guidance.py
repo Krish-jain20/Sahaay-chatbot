@@ -26,18 +26,29 @@ def test_rti_points_say_central_portal_excludes_delhi_and_name_the_delhi_route(c
     pts = {p["id"]: p for p in body["points"]}
     assert "Delhi" in pts["rti"]["body"]
     assert "rtionline.delhi.gov.in" in pts["delhi_rti"]["body"]
-    assert "verify locally" in pts["delhi_rti"]["body"].lower()  # other departments are not sourced
+    assert "returned without refund" in pts["delhi_rti"]["body"]
+    assert {"delhi_pgc", "delhi_pgc_form"} <= set(pts)
 
 
 def test_cyber_helpline_is_cited_and_not_claimed_as_opened(client):
     p = next(p for p in client.get("/guidance/scams").json()["points"] if p["id"] == "cyber_helpline")
     assert "1930" in p["body"] and "did not open" in p["body"] and p["source_n"]
+    portal = next(p for p in client.get("/guidance/scams").json()["points"] if p["id"] == "cyber_portal")
+    assert "does not mention the number 1930" in portal["body"]
 
 
 def test_terms_each_have_a_source_and_all_languages(client):
     for lang in ("en", "hi", "hn"):
         card = client.get("/guidance/terms", params={"lang": lang}).json()
-        assert {p["id"] for p in card["points"]} >= {"cpgrams", "grievance", "appeal", "rti_online"}
+        assert {p["id"] for p in card["points"]} >= {
+            "cpgrams",
+            "grievance",
+            "appeal",
+            "rti_online",
+            "pgc",
+            "pio",
+            "sub_judice",
+        }
         assert all(p["source_n"] and p["heading"] and p["body"] for p in card["points"])
 
 
@@ -108,3 +119,15 @@ def test_chat_scam_question_returns_scam_guide(client):
         json={"message": "an agent is asking money for income certificate, is it fraud?", "language": "en"},
     )
     assert '"id": "scams"' in r.text and '"refused": false' in r.text
+
+
+def test_service_grievance_channels_are_sourced_with_dates(catalog):
+    for rec in catalog.services.values():
+        types = {c.type for c in rec.grievance.channels}
+        assert {"cpgrams", "state_portal"} <= types
+        for c in rec.grievance.channels:
+            assert rec.source(c.source_ref).date_checked
+    sch = catalog.services["delhi-merit-scholarship-scstobc"]
+    assert any(c.type == "helpline" and c.phone == "011-23379512" for c in sch.grievance.channels)
+    # appellate authority for the service itself is not sourced, so it stays empty
+    assert all(r.grievance.appellate_authority.en is None for r in catalog.services.values())

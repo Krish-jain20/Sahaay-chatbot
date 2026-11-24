@@ -46,7 +46,8 @@
     "alternatives": "Other services that may fit",
     "altLikely": "You meet the listed conditions",
     "altIncomplete": "Needs more details",
-    "altHint": "Ask about one in the chat."
+    "altHint": "Ask about one in the chat.",
+    "complain": "Where to complain"
   },
   "consent": {
     "title": "Save these details for next time?",

@@ -142,6 +142,10 @@ def eligibility(state: CaseState, config: RunnableConfig) -> CaseState:
         },
         "prerequisites": [{"id": p, "name": catalog.services[p].name.get(lang)} for p in rec.prerequisites],
         "alternatives": _alternatives(catalog, rec, facts, today, lang),
+        "grievance": [
+            {"type": c.type, "name": c.name, "url": c.url, "phone": c.phone, "source_n": cite_n[c.source_ref]}
+            for c in rec.grievance.channels
+        ],
         "fee_strip": {**asdict(fee_strip(rec)), "source_n": cite_n[rec.fees.source_ref]},
     }
     _emit("card", card)

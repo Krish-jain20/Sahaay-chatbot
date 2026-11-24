@@ -182,6 +182,27 @@
         "url": "https://pgportal.gov.in/",
         "phone": null,
         "source_ref": "cpgrams"
+      },
+      {
+        "type": "state_portal",
+        "name": "Public Grievances Commission, Delhi (Delhi government)",
+        "url": "https://pgc.delhi.gov.in/",
+        "phone": "011-23379911",
+        "source_ref": "pgc_contact"
+      },
+      {
+        "type": "helpline",
+        "name": "Department for Welfare of SC/ST/OBC: helpline for scholarship enquiries",
+        "url": "https://scstwelfare.delhi.gov.in/scstwelfare/contact-us",
+        "phone": "011-23379512",
+        "source_ref": "sc_contact"
+      },
+      {
+        "type": "department",
+        "name": "Complaint officer (Section Officer), Department for Welfare of SC/ST/OBC",
+        "url": "https://socialwelfare.delhi.gov.in/sites/default/files/2026-02/list_of_compliant_officers_nodal_officers.pdf",
+        "phone": "9868154357",
+        "source_ref": "nodal_list"
       }
     ],
     "appellate_authority": {
@@ -219,6 +240,30 @@
       "title": "CPGRAMS home page: about, issues not taken up, appeals",
       "url": "https://pgportal.gov.in/",
       "publisher": "Department of Administrative Reforms and Public Grievances (DARPG), Government of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "pgc_contact",
+      "title": "Public Grievances Commission: Contact Us",
+      "url": "https://pgc.delhi.gov.in/pgc/contact-us",
+      "publisher": "Public Grievances Commission, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "nodal_list",
+      "title": "List of nodal officers / complaint officers of GNCTD departments",
+      "url": "https://socialwelfare.delhi.gov.in/sites/default/files/2026-02/list_of_compliant_officers_nodal_officers.pdf",
+      "publisher": "Social Welfare Department, GNCTD (list covering GNCTD departments)",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "sc_contact",
+      "title": "Department for Welfare of SC/ST/OBC: Contact Us (scholarship enquiries)",
+      "url": "https://scstwelfare.delhi.gov.in/scstwelfare/contact-us",
+      "publisher": "Department for Welfare of SC/ST/OBC, GNCTD",
       "date_checked": "2026-11-24",
       "effective_date": null
     }

@@ -229,6 +229,20 @@
         "url": "https://pgportal.gov.in/",
         "phone": null,
         "source_ref": "cpgrams"
+      },
+      {
+        "type": "state_portal",
+        "name": "Public Grievances Commission, Delhi (Delhi government)",
+        "url": "https://pgc.delhi.gov.in/",
+        "phone": "011-23379911",
+        "source_ref": "pgc_contact"
+      },
+      {
+        "type": "department",
+        "name": "Department of Social Welfare: district office helpline numbers (pick your district on the page)",
+        "url": "https://socialwelfare.delhi.gov.in/social/contact-us",
+        "phone": null,
+        "source_ref": "sw_contact"
       }
     ],
     "appellate_authority": {
@@ -266,6 +280,22 @@
       "title": "CPGRAMS home page: about, issues not taken up, appeals",
       "url": "https://pgportal.gov.in/",
       "publisher": "Department of Administrative Reforms and Public Grievances (DARPG), Government of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "pgc_contact",
+      "title": "Public Grievances Commission: Contact Us",
+      "url": "https://pgc.delhi.gov.in/pgc/contact-us",
+      "publisher": "Public Grievances Commission, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "sw_contact",
+      "title": "Department of Social Welfare: Contact Us (district offices and helpline numbers)",
+      "url": "https://socialwelfare.delhi.gov.in/social/contact-us",
+      "publisher": "Social Welfare Department, GNCTD",
       "date_checked": "2026-11-24",
       "effective_date": null
     }

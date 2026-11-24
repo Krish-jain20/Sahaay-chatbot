@@ -28,6 +28,7 @@ export interface ServiceCardData {
     exclusions_hit: { id: string; label: string }[];
   };
   prerequisites: { id: string; name: string }[];
+  grievance: { type: string; name: string | null; url: string | null; phone: string | null; source_n: number }[];
   alternatives: { id: string; name: string; verdict: "likely" | "incomplete" }[];
   fee_strip: {
     official_fee_inr: number | null;

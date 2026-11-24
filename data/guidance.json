@@ -41,6 +41,54 @@
       "publisher": "Revenue Department, GNCTD",
       "date_checked": "2026-11-24",
       "effective_date": null
+    },
+    {
+      "id": "rti_delhi",
+      "title": "RTI Online (Delhi): online RTI information system for GNCT of Delhi",
+      "url": "https://rtionline.delhi.gov.in/",
+      "publisher": "Administrative Reforms Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "pgc_about",
+      "title": "Public Grievances Commission: About Us",
+      "url": "https://pgc.delhi.gov.in/pgc/about-us",
+      "publisher": "Public Grievances Commission, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "pgc_complaint",
+      "title": "Public Grievances Commission: Lodge Complaint form",
+      "url": "https://pgc.delhi.gov.in/lodge-complaint",
+      "publisher": "Public Grievances Commission, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "mha_home",
+      "title": "Ministry of Home Affairs home page ('National Cyber Crime Reporting' link)",
+      "url": "https://www.mha.gov.in/",
+      "publisher": "Ministry of Home Affairs, Government of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "revenue_domicile",
+      "title": "Domicile Certificate: documents required",
+      "url": "https://revenue.delhi.gov.in/revenue/domicile-certificate",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "sw_pios",
+      "title": "Social Welfare Department: Particulars of PIOs",
+      "url": "https://socialwelfare.delhi.gov.in/sites/default/files/rti-files/particulars_of_pios_0.pdf",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
     }
   ],
   "topics": [
@@ -120,16 +168,46 @@
         {
           "id": "delhi_rti",
           "heading": {
-            "en": "RTI for a Delhi department",
-            "hi": "दिल्ली के विभाग के लिए RTI",
-            "hn": "Delhi department ke liye RTI"
+            "en": "RTI for a Delhi department: the Delhi RTI portal",
+            "hi": "दिल्ली के विभाग के लिए RTI: दिल्ली RTI पोर्टल",
+            "hn": "Delhi ke department ke liye RTI: Delhi RTI portal"
           },
           "body": {
-            "en": "The Delhi Revenue Department's website links a Delhi government RTI website (rtionline.delhi.gov.in) and has pages for 'Particulars of PIOs' and for orders passed by the First Appellate Authority under RTI. For any other Delhi department, verify locally how it accepts RTI applications.",
-            "hi": "दिल्ली राजस्व विभाग की वेबसाइट दिल्ली सरकार की RTI वेबसाइट (rtionline.delhi.gov.in) से जुड़ी है और उसमें 'PIO का विवरण' और RTI के तहत प्रथम अपीलीय प्राधिकारी के आदेशों के पेज हैं। दिल्ली के किसी अन्य विभाग के लिए स्थानीय रूप से पुष्टि करें कि वह RTI आवेदन कैसे लेता है।",
-            "hn": "Delhi Revenue Department ki website Delhi sarkar ki RTI website (rtionline.delhi.gov.in) se judi hai aur usmein 'PIO ka vivaran' aur RTI ke tahat First Appellate Authority ke orders ke pages hain. Delhi ke kisi aur department ke liye locally verify karein ki woh RTI application kaise leta hai."
+            "en": "Delhi has its own RTI portal (rtionline.delhi.gov.in), described as an initiative of the Government of NCT of Delhi. It says Indian citizens can file an RTI application or first appeal through it only for departments and public authorities of the Delhi government. Applications for the Central Government or other states are returned without refund. Its help desk lists 011-23392726 and 011-23392421 (09:30 to 18:00 on working days).",
+            "hi": "दिल्ली का अपना RTI पोर्टल (rtionline.delhi.gov.in) है, जिसे दिल्ली सरकार की पहल बताया गया है। उसके अनुसार भारतीय नागरिक इस पर RTI आवेदन या प्रथम अपील केवल दिल्ली सरकार के विभागों और सार्वजनिक प्राधिकरणों के लिए कर सकते हैं। केंद्र सरकार या अन्य राज्यों के लिए किए गए आवेदन बिना रिफ़ंड वापस कर दिए जाते हैं। हेल्प डेस्क के नंबर 011-23392726 और 011-23392421 (कार्य दिवसों में 09:30 से 18:00) लिखे हैं।",
+            "hn": "Delhi ka apna RTI portal (rtionline.delhi.gov.in) hai, jise Delhi sarkar ki pehel bataya gaya hai. Uske mutabik Indian citizens is par RTI application ya first appeal sirf Delhi sarkar ke departments aur public authorities ke liye kar sakte hain. Central Government ya doosre states ke liye ki gayi applications bina refund wapas kar di jaati hain. Help desk ke numbers 011-23392726 aur 011-23392421 (working days mein 09:30 se 18:00) likhe hain."
           },
-          "source_ref": "revenue_rti",
+          "source_ref": "rti_delhi",
+          "about_sahaay": false
+        },
+        {
+          "id": "delhi_pgc",
+          "heading": {
+            "en": "Delhi's own complaint body: the Public Grievances Commission",
+            "hi": "दिल्ली की अपनी शिकायत संस्था: लोक शिकायत आयोग",
+            "hn": "Delhi ki apni shikayat body: Public Grievances Commission"
+          },
+          "body": {
+            "en": "The Public Grievances Commission (PGC) of the Delhi government says it is an additional forum where the public can lodge their grievances. Each department, and bodies like MCD, NDMC and Delhi Jal Board, also has its own grievance redressal mechanism.",
+            "hi": "दिल्ली सरकार का लोक शिकायत आयोग (PGC) कहता है कि यह एक अतिरिक्त मंच है जहाँ जनता अपनी शिकायतें दर्ज कर सकती है। हर विभाग का, और MCD, NDMC, दिल्ली जल बोर्ड जैसे निकायों का भी, अपना शिकायत निवारण तंत्र है।",
+            "hn": "Delhi sarkar ka Public Grievances Commission (PGC) kehta hai ki yeh ek additional forum hai jahan public apni shikayatein darj kar sakti hai. Har department ka, aur MCD, NDMC, Delhi Jal Board jaise bodies ka bhi, apna grievance redressal mechanism hai."
+          },
+          "source_ref": "pgc_about",
+          "about_sahaay": false
+        },
+        {
+          "id": "delhi_pgc_form",
+          "heading": {
+            "en": "Before you go to the Delhi commission",
+            "hi": "दिल्ली आयोग के पास जाने से पहले",
+            "hn": "Delhi commission ke paas jaane se pehle"
+          },
+          "body": {
+            "en": "Its online complaint form asks whether you have already exhausted the available channels within the department and whether the matter is sub-judice in any court. So try the department first and keep those details ready.",
+            "hi": "उसका ऑनलाइन शिकायत फ़ॉर्म पूछता है कि क्या आप विभाग के भीतर उपलब्ध रास्ते आज़मा चुके हैं और क्या मामला किसी अदालत में विचाराधीन है। इसलिए पहले विभाग से कोशिश करें और ये जानकारी तैयार रखें।",
+            "hn": "Uska online complaint form poochhta hai ki kya aap department ke andar available raaste aazma chuke hain aur kya matter kisi court mein sub-judice hai. Isliye pehle department se koshish karein aur yeh details taiyaar rakhein."
+          },
+          "source_ref": "pgc_complaint",
           "about_sahaay": false
         }
       ]
@@ -193,6 +271,21 @@
           "about_sahaay": false
         },
         {
+          "id": "cyber_portal",
+          "heading": {
+            "en": "The national reporting portal is linked from the Home Ministry",
+            "hi": "राष्ट्रीय रिपोर्टिंग पोर्टल गृह मंत्रालय से जुड़ा है",
+            "hn": "National reporting portal Home Ministry se juda hai"
+          },
+          "body": {
+            "en": "The Ministry of Home Affairs home page lists 'National Cyber Crime Reporting' with a link to cybercrime.gov.in. The Ministry's page does not mention the number 1930; that number is confirmed here only by the Delhi Revenue Department's page.",
+            "hi": "गृह मंत्रालय के होम पेज पर 'National Cyber Crime Reporting' लिखा है और cybercrime.gov.in का लिंक है। मंत्रालय के पेज पर नंबर 1930 का ज़िक्र नहीं है; यह नंबर यहाँ केवल दिल्ली राजस्व विभाग के पेज से पुष्ट है।",
+            "hn": "Ministry of Home Affairs ke home page par 'National Cyber Crime Reporting' likha hai aur cybercrime.gov.in ka link hai. Ministry ke page par number 1930 ka zikr nahi hai; yeh number yahan sirf Delhi Revenue Department ke page se confirmed hai."
+          },
+          "source_ref": "mha_home",
+          "about_sahaay": false
+        },
+        {
           "id": "sahaay_fees",
           "heading": {
             "en": "Scholarship and pension: Sahaay has no confirmed fee",
@@ -232,9 +325,9 @@
         "hn": "Shabdon ka matlab"
       },
       "intro": {
-        "en": "A short list of terms taken from the official portals. More will be added only when an official page defines them.",
-        "hi": "आधिकारिक पोर्टलों से लिए गए शब्दों की छोटी सूची। और शब्द तभी जुड़ेंगे जब कोई आधिकारिक पेज उन्हें परिभाषित करे।",
-        "hn": "Official portals se liye gaye shabdon ki chhoti list. Aur shabd tabhi judenge jab koi official page unhe define kare."
+        "en": "Terms taken from official pages. A term is added only when an official page defines it or states a fact about it.",
+        "hi": "आधिकारिक पेजों से लिए गए शब्द। कोई शब्द तभी जुड़ता है जब कोई आधिकारिक पेज उसे परिभाषित करे या उसके बारे में तथ्य बताए।",
+        "hn": "Official pages se liye gaye shabd. Koi shabd tabhi judta hai jab koi official page use define kare ya uske baare mein fact bataye."
       },
       "points": [
         {
@@ -325,6 +418,96 @@
             "hn": "Jahan doosri appeal file hoti hai. Iska second appeal portal RTI Online se juda hai, isliye first appeal ke registration number se RTI application aur first appeal ki details mil jaati hain."
           },
           "source_ref": "rtionline",
+          "about_sahaay": false
+        },
+        {
+          "id": "pgc",
+          "heading": {
+            "en": "Public Grievances Commission (PGC), Delhi",
+            "hi": "लोक शिकायत आयोग (PGC), दिल्ली",
+            "hn": "Public Grievances Commission (PGC), Delhi"
+          },
+          "body": {
+            "en": "The Delhi government's additional forum where the public can lodge grievances, set up in 1997 with the Central Government's prior approval.",
+            "hi": "दिल्ली सरकार का अतिरिक्त मंच जहाँ जनता शिकायत दर्ज कर सकती है, जिसे 1997 में केंद्र सरकार की पूर्व मंज़ूरी से बनाया गया।",
+            "hn": "Delhi sarkar ka additional forum jahan public shikayat darj kar sakti hai, jise 1997 mein Central Government ki prior approval se banaya gaya."
+          },
+          "source_ref": "pgc_about",
+          "about_sahaay": false
+        },
+        {
+          "id": "pio",
+          "heading": {
+            "en": "PIO (Public Information Officer)",
+            "hi": "PIO (लोक सूचना अधिकारी)",
+            "hn": "PIO (Public Information Officer)"
+          },
+          "body": {
+            "en": "The officer who handles RTI applications for an office. The Social Welfare Department's list of PIOs gives each PIO's designation, address and the matters they handle.",
+            "hi": "वह अधिकारी जो किसी कार्यालय के RTI आवेदन संभालता है। समाज कल्याण विभाग की PIO सूची में हर PIO का पद, पता और उसके संभाले मामले दिए हैं।",
+            "hn": "Woh adhikari jo kisi office ke RTI applications sambhalta hai. Social Welfare Department ki PIO list mein har PIO ka designation, address aur uske sambhale matters diye hain."
+          },
+          "source_ref": "sw_pios",
+          "about_sahaay": false
+        },
+        {
+          "id": "sub_judice",
+          "heading": {
+            "en": "Sub judice (matter before a court)",
+            "hi": "विचाराधीन (अदालत में मामला)",
+            "hn": "Sub judice (court mein matter)"
+          },
+          "body": {
+            "en": "A matter that is before a court. CPGRAMS lists court-related (sub judice) matters as not taken up, and the Delhi PGC complaint form asks whether your matter is sub-judice in any court.",
+            "hi": "ऐसा मामला जो अदालत में है। CPGRAMS अदालत से जुड़े (विचाराधीन) मामलों को नहीं लेता, और दिल्ली PGC का शिकायत फ़ॉर्म पूछता है कि आपका मामला किसी अदालत में विचाराधीन है या नहीं।",
+            "hn": "Aisa matter jo court mein hai. CPGRAMS court se jude (sub judice) matters ko nahi leta, aur Delhi PGC ka complaint form poochhta hai ki aapka matter kisi court mein sub-judice hai ya nahi."
+          },
+          "source_ref": "pgc_complaint",
+          "about_sahaay": false
+        },
+        {
+          "id": "gazetted_attestation",
+          "heading": {
+            "en": "Attestation by a Gazetted Officer",
+            "hi": "राजपत्रित अधिकारी से सत्यापन",
+            "hn": "Gazetted Officer se attestation"
+          },
+          "body": {
+            "en": "For the income certificate the Revenue Department page says all documents need to be attested by a Gazetted Officer. For the domicile certificate it asks for the contact number and ID card copy of the class I gazetted officer who attested the form.",
+            "hi": "आय प्रमाण पत्र के लिए राजस्व विभाग के पेज पर लिखा है कि सभी दस्तावेज़ राजपत्रित अधिकारी से सत्यापित होने चाहिए। निवास प्रमाण पत्र के लिए सत्यापित करने वाले प्रथम श्रेणी राजपत्रित अधिकारी का संपर्क नंबर और पहचान पत्र की प्रति माँगी जाती है।",
+            "hn": "Income certificate ke liye Revenue Department ke page par likha hai ki saare documents Gazetted Officer se attested hone chahiye. Domicile certificate ke liye attest karne wale class I gazetted officer ka contact number aur ID card ki copy maangi jaati hai."
+          },
+          "source_ref": "revenue_domicile",
+          "about_sahaay": false
+        },
+        {
+          "id": "domicile_stay",
+          "heading": {
+            "en": "Domicile certificate: proof of stay",
+            "hi": "निवास प्रमाण पत्र: निवास का प्रमाण",
+            "hn": "Domicile certificate: stay ka proof"
+          },
+          "body": {
+            "en": "The Revenue Department page lists, among the documents, proof of continuous stay in Delhi for the last 3 years, such as an education certificate, electricity bill, house tax or water bill.",
+            "hi": "राजस्व विभाग के पेज पर दस्तावेज़ों में दिल्ली में पिछले 3 साल के लगातार निवास का प्रमाण लिखा है, जैसे शिक्षा प्रमाण पत्र, बिजली बिल, हाउस टैक्स या पानी का बिल।",
+            "hn": "Revenue Department ke page par documents mein Delhi mein pichhle 3 saal ke lagataar nivaas ka proof likha hai, jaise education certificate, bijli bill, house tax ya paani ka bill."
+          },
+          "source_ref": "revenue_domicile",
+          "about_sahaay": false
+        },
+        {
+          "id": "sdm_dc_office",
+          "heading": {
+            "en": "Where to apply in person: SDM or Deputy Commissioner",
+            "hi": "सामने जाकर आवेदन: SDM या उपायुक्त कार्यालय",
+            "hn": "Seedhe jaakar apply: SDM ya Deputy Commissioner office"
+          },
+          "body": {
+            "en": "For the income certificate the Revenue Department page says you can approach the SDM of your area, or the concerned office of the Deputy Commissioner, between 10:00 AM and 1:00 PM on any working day. You can also apply online.",
+            "hi": "आय प्रमाण पत्र के लिए राजस्व विभाग के पेज पर लिखा है कि आप अपने क्षेत्र के SDM या उपायुक्त के संबंधित कार्यालय में किसी भी कार्य दिवस पर सुबह 10:00 से दोपहर 1:00 बजे के बीच जा सकते हैं। आप ऑनलाइन भी आवेदन कर सकते हैं।",
+            "hn": "Income certificate ke liye Revenue Department ke page par likha hai ki aap apne area ke SDM ya Deputy Commissioner ke concerned office mein kisi bhi working day par subah 10:00 se dopahar 1:00 baje ke beech ja sakte hain. Aap online bhi apply kar sakte hain."
+          },
+          "source_ref": "income_cert_page",
           "about_sahaay": false
         }
       ]

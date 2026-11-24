@@ -33,3 +33,10 @@ def test_scholarship_card_does_not_offer_its_own_prerequisite_as_alternative(cli
 def test_unknown_facts_are_never_reported_as_likely(client):
     card = _card(client, "income certificate", {})
     assert all(a["verdict"] != "likely" for a in card["alternatives"])
+
+
+def test_card_carries_sourced_grievance_channels(client):
+    card = _card(client, "SC ST OBC merit scholarship", {})
+    ch = card["grievance"]
+    assert {c["type"] for c in ch} >= {"cpgrams", "state_portal", "helpline"}
+    assert all(c["source_n"] for c in ch)
