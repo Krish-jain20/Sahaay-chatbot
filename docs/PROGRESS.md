@@ -114,3 +114,4 @@ Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 - Run it: see README.md. Eval: `cd backend && uv run python -m tests.eval.run`.
 
 
+| Home redesign | built | Home is now an editorial page: hero (headline, one Start a chat button, a still sample chat that is decorative and hidden from assistive tech), three-step how it works, a tool grid (Chat, Compare, Documents, Drafts, Official form, Help and rights, My case), a popular-services strip that links to `/compare#<id>` (Compare opens and scrolls to that card), a trust band (official sources, files never stored, not a government channel) and a footer with the disclaimer. Tokens, radii and motion follow DESIGN.md; no emoji, gradients or logos. All text in en, hi and hn (Hindi and Hinglish copy is mine: needs native review). The scope line still counts services from the data. Tests: `e2e/home.spec.ts`, a11y and phone tap-target checks pass |

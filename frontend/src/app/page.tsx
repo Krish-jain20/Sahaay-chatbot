@@ -1,50 +1,24 @@
-import Link from "next/link";
-import { useTranslations } from "next-intl";
-
 import { AppShell } from "@/components/app-shell";
-import { ScopeBanner } from "@/components/scope-banner";
-import { Disclaimer } from "@/components/top-bar";
-import { Button } from "@/components/ui/button";
+import { Hero } from "@/components/home/hero";
+import { HowItWorks } from "@/components/home/how-it-works";
+import { PopularServices } from "@/components/home/popular-services";
+import { SiteFooter } from "@/components/home/site-footer";
+import { ToolsGrid } from "@/components/home/tools-grid";
+import { Trust } from "@/components/home/trust";
 
 export default function Home() {
-  const t = useTranslations();
   return (
-    <AppShell>
-      <main className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.05em] text-teal-700">{t("common.tagline")}</p>
-        <h1 className="text-[31px] font-extrabold sm:text-[34px]">{t("home.headline")}</h1>
-        <p className="text-[17px] text-ink-2">{t("home.sub")}</p>
-        <div className="flex flex-wrap gap-3">
-          <Button asChild variant="accent">
-            <Link href="/chat">{t("home.start")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/compare">{t("compare.link")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/case">{t("nav.case")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/documents">{t("nav.documents")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/drafts">{t("nav.drafts")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/forms">{t("nav.forms")}</Link>
-          </Button>
-          <Button asChild variant="secondary">
-            <Link href="/help">{t("nav.help")}</Link>
-          </Button>
-        </div>
-        <ScopeBanner />
-        <p className="text-center text-[13.5px]">
-          <Link href="/privacy" className="inline-flex min-h-11 items-center text-teal-700 underline">
-            {t("nav.privacy")}
-          </Link>
-        </p>
-        <Disclaimer text={t("common.disclaimer")} />
+    <AppShell wide>
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
+        <Hero />
+        <HowItWorks />
+        <ToolsGrid />
+        <PopularServices />
+        <Trust />
       </main>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
+        <SiteFooter />
+      </div>
     </AppShell>
   );
 }

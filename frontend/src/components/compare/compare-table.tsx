@@ -58,6 +58,15 @@ export function CompareTable() {
       .catch(() => setState("error"));
   }, [locale]);
 
+  // A link such as /compare#income-certificate opens that card and scrolls to it.
+  useEffect(() => {
+    if (state !== "ready") return;
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id || !cards.some((c) => c.id === id)) return;
+    setOpen(id);
+    requestAnimationFrame(() => document.getElementById(`card-${id}`)?.scrollIntoView({ block: "start" }));
+  }, [state, cards]);
+
   const shown = useMemo(() => {
     const q = filter.trim().toLowerCase();
     return q ? cards.filter((c) => `${c.name} ${c.department} ${c.summary}`.toLowerCase().includes(q)) : cards;
@@ -143,7 +152,7 @@ export function CompareTable() {
           </li>
         )}
         {shown.map((c) => (
-          <li key={c.id}>
+          <li key={c.id} id={`card-${c.id}`} className="scroll-mt-24">
             <ServiceCardView
               card={c}
               open={open === c.id}
