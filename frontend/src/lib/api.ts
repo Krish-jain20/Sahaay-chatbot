@@ -318,6 +318,35 @@ export async function scanDocument(file: File, docType: string): Promise<ScanRes
   return { error: body.detail ?? "other" };
 }
 
+export interface DocRowData {
+  doc_type: string;
+  held: { doc_type: string; evaluated: Check["evaluated"]; issue_date: string | null } | null;
+  needed_by: { case_id: string; name: string | null; required: boolean; status: Check["status"]; expires_on: string | null }[];
+  scannable: boolean;
+  required_anywhere: boolean;
+  needs_attention: boolean;
+}
+export interface DocumentsOverview {
+  documents: DocRowData[];
+  missing_count: number;
+  custom: { case_id: string; name: string; documents: { id: string; name: string; have: boolean }[] }[];
+}
+
+/** One list of documents across all cases: add once, it counts for every case that needs it. */
+export async function loadDocumentsOverview(lang: string): Promise<DocumentsOverview | null> {
+  const res = await authed(`/documents/overview?lang=${lang}`);
+  return res.ok ? ((await res.json()) as DocumentsOverview) : null;
+}
+
+export async function serviceReadiness(serviceId: string): Promise<Readiness | null> {
+  const res = await authed(`/services/${serviceId}/readiness`);
+  return res.ok ? ((await res.json()) as Readiness) : null;
+}
+
+export async function removeDocument(docType: string): Promise<boolean> {
+  return (await authed(`/documents/${docType}`, { method: "DELETE" })).ok;
+}
+
 export async function saveDocument(
   caseId: string,
   docType: string,
