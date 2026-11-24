@@ -44,3 +44,40 @@ test("chat: a web answer is labelled unverified and every source says whether it
   await expect(card).toContainText("Searched on 2026-11-24");
   await expect(page.getByText("The page lists proof of stay.")).toBeVisible();
 });
+
+test("compare: a web-found service is an unverified extra column with its sources", async ({ page }) => {
+  await page.route("**/compare/web", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        name: "PM Kisan",
+        summary: "Pays farmers in instalments. Verify locally.",
+        web: {
+          type: "web",
+          label: "From the web, not a verified Sahaay record. Verify locally.",
+          retrieved_on: "2026-11-24",
+          sources: [{ n: 1, title: "someblog.example", url: "https://example.test/r2", official: false }],
+        },
+      }),
+    });
+  });
+  await page.goto("/compare");
+  await page.waitForLoadState("networkidle");
+  await page.getByLabel("Add a service from the web").fill("PM Kisan");
+  await page.getByRole("button", { name: "Search the web" }).click();
+  await expect(page.getByTestId("web-col-head")).toContainText("From the web, unverified");
+  await expect(page.getByTestId("web-summary")).toContainText("Pays farmers in instalments");
+  await expect(page.getByTestId("web-summary")).toContainText("not a verified Sahaay record");
+  await expect(page.getByText("not on Sahaay's official list")).toBeVisible();
+  await page.getByRole("button", { name: "Remove web column" }).click();
+  await expect(page.getByTestId("web-col-head")).toHaveCount(0);
+});
+
+test("compare: says plainly when web search is unavailable", async ({ page }) => {
+  await page.goto("/compare");
+  await page.waitForLoadState("networkidle");
+  await page.getByLabel("Add a service from the web").fill("PM Kisan");
+  await page.getByRole("button", { name: "Search the web" }).click();
+  await expect(page.getByText("Web search is not available right now.")).toBeVisible();
+});

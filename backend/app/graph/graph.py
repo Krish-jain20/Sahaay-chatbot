@@ -10,12 +10,10 @@ run config, not in the checkpointed state, so state stays small and serialisable
 
 from __future__ import annotations
 
-import re
 from collections.abc import Iterator
 from dataclasses import asdict
 from datetime import date
 from typing import Any, TypedDict
-from urllib.parse import urlparse
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.config import get_stream_writer
@@ -26,10 +24,10 @@ from app.data.loader import Catalog
 from app.data.models import Lang
 from app.graph.pipeline import _citations, ask_missing, retrieve, stream_words
 from app.graph.templates import t
+from app.graph.websearch import run_web_search
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
 from app.rules.eligibility import Fact, check
 from app.rules.fees import fee_strip, is_stale
-from app.safety.allowlist import is_allowed
 from app.safety.claims import find_violations
 from app.safety.pii import mask_pii
 
@@ -103,59 +101,20 @@ def _alternatives(
     return sorted(out, key=lambda a: a["verdict"] != "likely")[:3]
 
 
-_URL = re.compile(r"https?://\S+|www\.\S+")
-
-
-def _host(source: dict[str, str]) -> str:
-    """Grounding titles are the site's domain; otherwise fall back to the link's host."""
-    title = source.get("title", "").strip().lower()
-    if re.fullmatch(r"[a-z0-9.-]+\.[a-z]{2,}", title):
-        return title
-    return (urlparse(source.get("url", "")).hostname or "").lower()
-
-
 def web(state: CaseState, config: RunnableConfig) -> CaseState:
     """No verified record matched: answer from a live web search, clearly labelled as unverified."""
     catalog, llm = _deps(config)
     lang = state["language"]
     _status("web", lang, "running")
-    try:
-        ans = llm.web_search(state["message"], lang, user_id=state["user_id"])
-    except (RateLimited, BudgetExceeded, LLMError):
-        ans = None
+    res = run_web_search(llm, catalog, state["message"], lang, state["user_id"], state["today"])
     _status("web", lang, "done")
-    text = _URL.sub("", mask_pii(ans.text)[0]).strip() if ans else ""
-    if not text or find_violations(text):
-        key = "guard.blocked" if text else "refusal.no_source"
-        for ev in stream_words(t(key, lang)):
+    if res.card is None:
+        for ev in stream_words(t("guard.blocked" if res.blocked else "refusal.no_source", lang)):
             _emit(*ev)
         _emit("done", {"refused": True})
         return {}
-    seen: set[str] = set()
-    sources = []
-    for src in ans.sources:
-        host = _host(src)
-        if not host or host in seen:
-            continue
-        seen.add(host)
-        sources.append(
-            {
-                "n": len(sources) + 1,
-                "title": host,
-                "url": src["url"],
-                "official": is_allowed(f"https://{host}/", catalog.allowlist),
-            }
-        )
-    _emit(
-        "card",
-        {
-            "type": "web",
-            "label": t("web.label", lang),
-            "retrieved_on": state["today"],
-            "sources": sources[:6],
-        },
-    )
-    for ev in stream_words(text):
+    _emit("card", res.card)
+    for ev in stream_words(res.text):
         _emit(*ev)
     _emit("done", {"refused": False})
     return {}

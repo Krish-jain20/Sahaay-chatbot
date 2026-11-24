@@ -81,7 +81,18 @@
     "loading": "Loading…",
     "error": "I couldn't load this. Please try again.",
     "link": "Compare services",
-    "askChat": "Ask in chat"
+    "askChat": "Ask in chat",
+    "webBadge": "From the web, unverified",
+    "webRemove": "Remove web column",
+    "notVerified": "Not verified",
+    "webSummary": "From the web",
+    "webSummaryNone": "Verified details are in the rows above",
+    "webAdd": "Add a service from the web",
+    "webAddHelp": "For a service Sahaay has no verified record for. Shown as an unverified column. Verify locally.",
+    "webSearch": "Search the web",
+    "webBusy": "Searching...",
+    "webNone": "The web search found nothing safe to show for that name.",
+    "webUnavailable": "Web search is not available right now."
   },
   "nav": {
     "home": "Home",

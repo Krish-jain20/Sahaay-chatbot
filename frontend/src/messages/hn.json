@@ -81,7 +81,18 @@
     "loading": "Load ho raha hai…",
     "error": "Yeh load nahi ho saka. Please dobara try karein.",
     "link": "Services ki tulna karein",
-    "askChat": "Chat mein poochhein"
+    "askChat": "Chat mein poochhein",
+    "webBadge": "Web se, unverified",
+    "webRemove": "Web column hatayein",
+    "notVerified": "Verified nahi",
+    "webSummary": "Web se",
+    "webSummaryNone": "Verified details upar ki rows mein hain",
+    "webAdd": "Web se koi service jodein",
+    "webAddHelp": "Aisi service ke liye jiska Sahaay ke paas verified record nahi hai. Unverified column ki tarah dikhegi. Locally verify karein.",
+    "webSearch": "Web par search karein",
+    "webBusy": "Search kar rahe hain...",
+    "webNone": "Us naam ke liye web search mein dikhane layak safe jaankari nahi mili.",
+    "webUnavailable": "Web search abhi available nahi hai."
   },
   "nav": {
     "home": "Home",

@@ -100,3 +100,30 @@ def test_prompt_treats_pages_as_data_and_forbids_promises():
 
     p = load_prompt("web_search")
     assert "data" in p and "NO_SOURCE" in p and "approved" in p
+
+
+def _compare_web(client, provider, query="PM Kisan Samman Nidhi", enabled=True):
+    s = get_settings().model_copy(update={"web_search_enabled": enabled})
+    client.app.state.llm = LLM(provider=provider, settings=s)
+    return client.post("/compare/web", json={"query": query, "language": "en"})
+
+
+def test_compare_web_column_is_labelled_and_sourced(client):
+    p = FakeWeb("It pays farmers in instalments. Verify locally. https://x.example", SRC)
+    r = _compare_web(client, p)
+    assert r.status_code == 200
+    body = r.json()
+    assert "instalments" in body["summary"] and "http" not in body["summary"]
+    assert "not a verified Sahaay record" in body["web"]["label"]
+    assert {s["title"]: s["official"] for s in body["web"]["sources"]}["somefakeblog.com"] is False
+
+
+def test_compare_web_masks_the_query_and_blocks_forbidden_claims(client):
+    p = FakeWeb("You will be approved.", SRC)
+    assert _compare_web(client, p, query="scheme 2345 6789 0124").status_code == 404
+    assert "2345 6789 0124" not in p.web_requests[0].text
+
+
+def test_compare_web_unavailable_when_off_or_offline(client):
+    assert _compare_web(client, FakeWeb("x", SRC), enabled=False).status_code == 503
+    assert _compare_web(client, StubProvider()).status_code == 503
