@@ -14,7 +14,8 @@ def _pdf_works() -> bool:
         return False
 
 
-needs_pdf = pytest.mark.skipif(not _pdf_works(), reason="WeasyPrint system libraries not available")
+PDF_OK = _pdf_works()
+needs_pdf = pytest.mark.skipif(not PDF_OK, reason="WeasyPrint system libraries not available")
 
 RTI = {
     "kind": "rti",

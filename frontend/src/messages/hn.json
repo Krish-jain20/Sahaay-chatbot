@@ -84,7 +84,8 @@
     "menu": "Main menu",
     "documents": "Documents",
     "drafts": "Drafts",
-    "forms": "Official form"
+    "forms": "Official form",
+    "case": "Mera case"
   },
   "panel": {
     "title": "Aapki details",
@@ -264,5 +265,45 @@
       "district": "Zila",
       "country": "Desh"
     }
+  },
+  "case": {
+    "title": "Mera case",
+    "sub": "Ek service par apni progress track kijiye. Har step aap khud mark karte hain.",
+    "service": "Service",
+    "own": "Aapki apni progress, sarkari status nahi",
+    "s1": "Eligibility check hui",
+    "s2": "Documents verify hue",
+    "s3": "Form bhara",
+    "s4": "Official portal par submit",
+    "s5": "Reference number save",
+    "done": "Ho gaya",
+    "current": "Current step",
+    "upcoming": "Abhi nahi",
+    "mark": "Done mark karein",
+    "undo": "Undo",
+    "next": "Agla step",
+    "n1": "Chat mein dekhiye aap kiske liye qualify karte hain, phir yeh step mark kijiye.",
+    "n2": "Apne documents add kijiye aur dekhiye kya baaki hai, phir yeh step mark kijiye.",
+    "n3": "Apna form taiyaar kijiye, har field check kijiye, phir yeh step mark kijiye.",
+    "n4": "Official portal ya office mein submit kijiye. Submit karne ki date bhariye, phir yeh step mark kijiye.",
+    "n5": "Jo reference number mila woh bhariye. Hum sirf aakhri 4 characters rakhte hain.",
+    "n6": "Paanchon steps record hain. Apna reference number safe rakhiye.",
+    "submittedOn": "Submit karne ki date",
+    "reference": "Reference number",
+    "referenceKept": "{ref} ke roop mein save",
+    "submittedDate": "{date} ko submit kiya",
+    "readiness": "Ready documents",
+    "readyCount": "{total} mein se {done} zaroori documents ready",
+    "readyCaption": "Aapki checklist par based. Approval ka andaza nahi.",
+    "openChat": "Chat kholiye",
+    "openDocs": "Documents check karein",
+    "openForm": "Official form bhariye",
+    "openDrafts": "Complaint ya RTI draft",
+    "summary": "Case summary download karein (PDF)",
+    "loading": "Load ho raha hai…",
+    "error": "Load nahi ho paya. Dobara try kijiye.",
+    "saveError": "Save nahi ho paya. Dobara try kijiye.",
+    "tooShort": "Kam se kam 4 letters ya digits likhiye.",
+    "futureDate": "Date future ki nahi ho sakti."
   }
 }

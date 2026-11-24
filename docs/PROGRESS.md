@@ -66,13 +66,23 @@ PR #1 is merged into `main`; follow-up work goes in small PRs. Eval baseline: 17
 | S4-06 | needs you | grievance data per service (department, CPGRAMS, helpline) with sources; drafts leave office names to the user |
 | S4-07 | todo | grievance vs RTI vs appeal explainer |
 | S4-08 | done | complaint, RTI and CPGRAMS drafts as PDFs (WeasyPrint), English and Hindi; Hindi PDF embeds Noto Sans Devanagari; `/drafts` page in 3 languages |
-| S4-09 | todo | case summary PDF |
+| S4-09 | done | `GET /cases/{id}/summary.pdf?lang=en|hi`: services, own-progress steps, checklist with how each item was evaluated, fees as in the record ("Verify locally" when unknown), sources with date checked |
 | S4-10 | partly | draft e2e tests added; flows 2 and 3 not written yet |
 
 Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip where those are missing. The Dockerfile in S6-06 must include them.
 
-## Stages 5 to 6
-Not started: glossary, screenshots, journey, dashboard (5),
+## Stage 5: Navigate and track
+| ID | Status | Notes |
+|---|---|---|
+| S5-01, S5-02 | todo | glossary needs sourced terms (human) |
+| S5-03 | todo | screenshot assistant |
+| S5-04 | done | `POST /cases/{id}/steps`, `DELETE /cases/{id}/steps/{n}`; user-recorded steps with timestamps; checked on live Supabase |
+| S5-05 | done | five-step tracker on `/case`, labelled "Your own progress, not government status", with next-step guidance |
+| S5-06 | partly | `/case` is the case page (tracker, readiness, shortcuts, summary PDF); a multi-case dashboard is not built yet |
+| S5-07 | done | submission date and reference number; only `XXXX` + last 4 characters are stored or shown |
+
+## Stage 6 and the rest
+Not started: glossary and screenshots (5),
 email sign-in, privacy page, Postgres checkpointer, Docker and deploy, README polish (6).
 Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 

@@ -27,6 +27,13 @@ class Store(Protocol):
         self, user_id: str, case_id: str, doc_type: str, fields: dict[str, Any], issue_date: str | None
     ) -> dict[str, Any] | None: ...
     def list_documents(self, user_id: str, case_id: str) -> list[dict[str, Any]]: ...
+    def add_event(self, user_id: str, case_id: str, step: int, note: str | None) -> bool: ...
+    def delete_event(self, user_id: str, case_id: str, step: int) -> bool: ...
+    def list_events(self, user_id: str, case_id: str) -> list[dict[str, Any]]: ...
+    def save_submission(
+        self, user_id: str, case_id: str, reference_masked: str | None, submitted_on: str | None
+    ) -> dict[str, Any] | None: ...
+    def get_submission(self, user_id: str, case_id: str) -> dict[str, Any] | None: ...
 
 
 class MemoryStore:
@@ -36,6 +43,8 @@ class MemoryStore:
         self.corrections: list[dict[str, Any]] = []
         self.cases: dict[str, dict[str, Any]] = {}
         self.documents: dict[str, list[dict[str, Any]]] = {}
+        self.events: dict[str, list[dict[str, Any]]] = {}
+        self.submissions: dict[str, dict[str, Any]] = {}
 
     def upsert_fact(self, user_id: str, key: str, value: Any, source: str, confirmed: bool) -> None:
         with self._lock:
@@ -60,6 +69,8 @@ class MemoryStore:
             for cid in [c for c, v in self.cases.items() if v["user_id"] == user_id]:
                 del self.cases[cid]
                 self.documents.pop(cid, None)
+                self.events.pop(cid, None)
+                self.submissions.pop(cid, None)
 
     def create_case(self, user_id: str, service_id: str) -> dict[str, Any]:
         with self._lock:
@@ -102,6 +113,47 @@ class MemoryStore:
         if self.get_case(user_id, case_id) is None:
             return []
         return [dict(d) for d in self.documents.get(case_id, [])]
+
+    def add_event(self, user_id: str, case_id: str, step: int, note: str | None) -> bool:
+        with self._lock:
+            if self.get_case(user_id, case_id) is None:
+                return False
+            evs = self.events.setdefault(case_id, [])
+            if not any(e["step"] == step for e in evs):  # recording a step twice keeps the first
+                evs.append({"step": step, "note": note, "at": datetime.now(UTC).isoformat()})
+            return True
+
+    def delete_event(self, user_id: str, case_id: str, step: int) -> bool:
+        with self._lock:
+            if self.get_case(user_id, case_id) is None:
+                return False
+            self.events[case_id] = [e for e in self.events.get(case_id, []) if e["step"] != step]
+            return True
+
+    def list_events(self, user_id: str, case_id: str) -> list[dict[str, Any]]:
+        if self.get_case(user_id, case_id) is None:
+            return []
+        return [dict(e) for e in self.events.get(case_id, [])]
+
+    def save_submission(
+        self, user_id: str, case_id: str, reference_masked: str | None, submitted_on: str | None
+    ) -> dict[str, Any] | None:
+        with self._lock:
+            if self.get_case(user_id, case_id) is None:
+                return None
+            cur = self.submissions.get(case_id, {})
+            row = {
+                "reference_no_masked": reference_masked or cur.get("reference_no_masked"),
+                "submitted_on": submitted_on or cur.get("submitted_on"),
+            }
+            self.submissions[case_id] = row
+            return dict(row)
+
+    def get_submission(self, user_id: str, case_id: str) -> dict[str, Any] | None:
+        if self.get_case(user_id, case_id) is None:
+            return None
+        row = self.submissions.get(case_id)
+        return dict(row) if row else None
 
 
 class SupabaseStore:
@@ -252,3 +304,71 @@ class SupabaseStore:
             }
             for d in r.json()
         ]
+
+    def add_event(self, user_id: str, case_id: str, step: int, note: str | None) -> bool:
+        if self.get_case(user_id, case_id) is None:
+            return False
+        existing = self._check(
+            self._http.get(
+                "/case_events", params={"case_id": f"eq.{case_id}", "step": f"eq.{step}", "select": "id"}
+            )
+        ).json()
+        if not existing:  # recording a step twice keeps the first
+            self._check(
+                self._http.post(
+                    "/case_events",
+                    headers={"Prefer": "return=minimal"},
+                    json={"case_id": case_id, "step": step, "note": note},
+                )
+            )
+        return True
+
+    def delete_event(self, user_id: str, case_id: str, step: int) -> bool:
+        if self.get_case(user_id, case_id) is None:
+            return False
+        self._check(
+            self._http.delete("/case_events", params={"case_id": f"eq.{case_id}", "step": f"eq.{step}"})
+        )
+        return True
+
+    def list_events(self, user_id: str, case_id: str) -> list[dict[str, Any]]:
+        if self.get_case(user_id, case_id) is None:
+            return []
+        r = self._check(
+            self._http.get("/case_events", params={"case_id": f"eq.{case_id}", "select": "step,note,at"})
+        )
+        return r.json()
+
+    def get_submission(self, user_id: str, case_id: str) -> dict[str, Any] | None:
+        if self.get_case(user_id, case_id) is None:
+            return None
+        r = self._check(
+            self._http.get(
+                "/submissions",
+                params={
+                    "case_id": f"eq.{case_id}",
+                    "select": "reference_no_masked,submitted_on",
+                    "limit": "1",
+                },
+            )
+        )
+        rows = r.json()
+        return rows[0] if rows else None
+
+    def save_submission(
+        self, user_id: str, case_id: str, reference_masked: str | None, submitted_on: str | None
+    ) -> dict[str, Any] | None:
+        cur = self.get_submission(user_id, case_id)
+        if self.get_case(user_id, case_id) is None:
+            return None
+        row = {
+            "reference_no_masked": reference_masked or (cur or {}).get("reference_no_masked"),
+            "submitted_on": submitted_on or (cur or {}).get("submitted_on"),
+        }
+        self._check(self._http.delete("/submissions", params={"case_id": f"eq.{case_id}"}))
+        self._check(
+            self._http.post(
+                "/submissions", headers={"Prefer": "return=minimal"}, json={"case_id": case_id, **row}
+            )
+        )
+        return row
