@@ -42,7 +42,7 @@ test("axe: chat with an answer card, and the review screens", async ({ page }) =
 
   await page.goto("/drafts");
   await page.waitForLoadState("networkidle");
-  await page.getByRole("button", { name: "RTI application" }).click();
+  await page.getByTestId("draft-rti").click();
   await page.getByLabel("Your name").fill("Asha");
   await page.getByLabel("Your address").fill("Delhi");
   await page.getByLabel(/Public authority/).fill("PIO");

@@ -134,13 +134,45 @@ export async function saveDocument(
   return res.ok ? ((await res.json()) as { readiness: Readiness }).readiness : null;
 }
 
-// ---- Drafts (complaint / RTI / CPGRAMS) -------------------------------------------------
+// ---- Drafts (complaints, RTI, appeals, grievances) --------------------------------------
 
-export type DraftKind = "complaint" | "rti" | "cpgrams";
+export type DraftKind = string;
 export type DraftFields = Record<string, string | boolean>;
 export interface DraftPreview {
   rows: { key: string; label: string; value: string }[];
   hash: string;
+}
+export interface DraftFieldDef {
+  key: string;
+  type: "text" | "multiline" | "date" | "checkbox" | "choice";
+  required: boolean;
+  label: string;
+  hint: string | null;
+  options: { id: string; label: string }[];
+}
+export interface DraftCard {
+  id: DraftKind;
+  group: string;
+  icon: string;
+  title: string;
+  blurb: string;
+  tags: string[];
+  enclose: string | null;
+  portal: { host: string; url: string; date_checked: string | null } | null;
+  fields: DraftFieldDef[];
+}
+export interface DraftCatalog {
+  groups: { id: string; title: string }[];
+  kinds: DraftCard[];
+}
+
+export async function fetchDraftCatalog(lang: string): Promise<DraftCatalog | null> {
+  try {
+    const res = await fetch(`${API_URL}/drafts/catalog?lang=${lang}`);
+    return res.ok ? ((await res.json()) as DraftCatalog) : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function previewDraft(
