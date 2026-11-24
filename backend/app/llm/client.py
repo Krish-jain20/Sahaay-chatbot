@@ -82,6 +82,17 @@ class FormFieldsResult(BaseModel):
     fields: list[VisionFormField] = []
 
 
+class ServiceSuggestion(BaseModel):
+    """A starting checklist for a service the user named. Unverified: the user reviews and edits it."""
+
+    found: bool = False
+    department: str | None = None
+    documents: list[str] = []
+    steps: list[str] = []
+    timeline_days: int | None = None
+    note: str | None = None
+
+
 def load_prompt(name: str) -> str:
     return (PROMPTS / f"{name}.md").read_text("utf-8")
 
@@ -527,6 +538,49 @@ class LLM:
             return None
         sources = [{"title": urlparse(h.url).hostname or "", "url": h.url} for h in hits]
         return WebAnswer(text=text, sources=sources)
+
+    def suggest_service(
+        self, name: str, lang: str, *, user_id: str
+    ) -> tuple[ServiceSuggestion, list[dict[str, str]]] | None:
+        """Suggested department, documents and steps for a service the user named, from a web search.
+
+        Returns None when web search is off or nothing usable came back. Only the masked service name leaves.
+        """
+        if not self.web_enabled:
+            return None
+        name = mask(name)
+        system = load_prompt("service_suggest") + f"\nLanguage: {lang}"
+        if self.settings.web_search_provider == "google":
+            req = LLMRequest(
+                model=self.settings.llm_model_web or self.settings.llm_model_strong,
+                system=system,
+                text=f"<service>\n{name}\n</service>",
+                web=True,  # grounding cannot be combined with a response schema, so the JSON is parsed below
+            )
+            resp = self._call(user_id, req)
+            sources = resp.sources
+            raw = resp.text
+        else:
+            hits = self._hits(f"{name} India how to apply documents required")
+            if not hits:
+                return None
+            req = LLMRequest(
+                model=self.settings.llm_model_fast,
+                system=system,
+                text=f"<service>\n{name}\n</service>\n<results>\n{self._results_block(hits)}\n</results>",
+                schema=ServiceSuggestion,
+            )
+            raw = self._call(user_id, req).text
+            sources = [{"title": urlparse(h.url).hostname or "", "url": h.url} for h in hits]
+        try:
+            body = re.sub(r"^\s*```(?:json)?|```\s*$", "", raw.strip())
+            out = ServiceSuggestion.model_validate_json(body)
+        except ValidationError:
+            log.warning("service suggestion was not valid JSON")
+            return None
+        if not out.found:
+            return None
+        return out, sources
 
     def help_answer(self, question: str, cards: str, lang: str, *, user_id: str) -> str | None:
         """Answer from matching help cards plus labelled general guidance, when the web gave nothing."""

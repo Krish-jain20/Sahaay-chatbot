@@ -111,6 +111,38 @@ export interface CaseNote {
   at: string;
   text: string;
 }
+export interface CaseTodo {
+  id: string;
+  text: string;
+  done: boolean;
+}
+export type KeyDateKind = "deadline" | "appointment" | "other";
+/** A date the user set themselves (last date, appointment). Their own reminder, not an official date. */
+export interface KeyDate {
+  on: string;
+  kind: KeyDateKind;
+  label: string;
+  days_left: number;
+  soon: boolean;
+  passed: boolean;
+}
+export interface WebSource {
+  title: string;
+  url: string;
+  official: boolean;
+  kind?: "official" | "gov_unchecked" | "other";
+}
+/** A service the user added. Every detail is theirs (or an AI suggestion they accepted), never checked by Sahaay. */
+export interface CustomDetails {
+  label: "added_by_you";
+  ai_suggested: boolean;
+  portal_url: string | null;
+  portal_official: boolean;
+  documents: { id: string; name: string; have: boolean }[];
+  timeline_days: number | null;
+  sources: WebSource[];
+  added_on: string | null;
+}
 /** One case as the My cases page shows it. Progress is the user's own record, never government status. */
 export interface CaseCard {
   id: string;
@@ -131,6 +163,10 @@ export interface CaseCard {
     follow_up: FollowUp;
   };
   notes: CaseNote[];
+  todos: CaseTodo[];
+  todos_done: number;
+  key_date: KeyDate | null;
+  custom: CustomDetails | null;
   steps_text: { n: number; text: string | null }[];
   prerequisites: { id: string; name: string | null }[];
   links: CaseLinks;
@@ -174,7 +210,15 @@ export async function startCase(serviceId: string): Promise<string | null> {
 export async function patchCase(
   id: string,
   lang: string,
-  body: { follow_up_days?: number; clear_follow_up?: boolean; reply_received?: boolean },
+  body: {
+    follow_up_days?: number;
+    clear_follow_up?: boolean;
+    reply_received?: boolean;
+    key_date?: string;
+    key_date_kind?: KeyDateKind;
+    key_date_label?: string;
+    clear_key_date?: boolean;
+  },
 ): Promise<CaseCard | null> {
   const res = await authed(`/cases/${id}?lang=${lang}`, { method: "PATCH", body: JSON.stringify(body) });
   return res.ok ? ((await res.json()) as CaseCard) : null;
@@ -187,6 +231,65 @@ export async function addNote(id: string, lang: string, text: string): Promise<C
 
 export async function deleteNote(id: string, lang: string, noteId: string): Promise<CaseCard | null> {
   const res = await authed(`/cases/${id}/notes/${noteId}?lang=${lang}`, { method: "DELETE" });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export interface CustomServiceInput {
+  name: string;
+  department: string;
+  portal_url: string | null;
+  documents: string[];
+  steps: string[];
+  timeline_days: number | null;
+  ai_suggested: boolean;
+  sources: { title: string; url: string }[];
+}
+
+export async function addCustomCase(lang: string, body: CustomServiceInput): Promise<CaseCard | { error: string }> {
+  const res = await authed(`/cases/custom?lang=${lang}`, { method: "POST", body: JSON.stringify(body) });
+  return res.ok ? ((await res.json()) as CaseCard) : formError(res);
+}
+
+export async function editCustomCase(id: string, lang: string, body: CustomServiceInput): Promise<CaseCard | { error: string }> {
+  const res = await authed(`/cases/${id}/custom?lang=${lang}`, { method: "PUT", body: JSON.stringify(body) });
+  return res.ok ? ((await res.json()) as CaseCard) : formError(res);
+}
+
+export async function tickCustomDocument(id: string, lang: string, docId: string, have: boolean): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/custom/documents/${docId}?lang=${lang}`, { method: "PATCH", body: JSON.stringify({ have }) });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+/** AI-suggested starting checklist for a service the user named. Unverified: shown labelled and editable. */
+export interface ServiceSuggestion {
+  found: boolean;
+  department?: string;
+  documents?: string[];
+  steps?: string[];
+  timeline_days?: number | null;
+  note?: string;
+  portal_url?: string | null;
+  retrieved_on?: string;
+  sources?: WebSource[];
+}
+
+export async function suggestService(name: string, lang: string): Promise<ServiceSuggestion | "unavailable"> {
+  const res = await authed("/cases/suggest", { method: "POST", body: JSON.stringify({ name, lang }) });
+  return res.ok ? ((await res.json()) as ServiceSuggestion) : "unavailable";
+}
+
+export async function addTodo(id: string, lang: string, text: string): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/todos?lang=${lang}`, { method: "POST", body: JSON.stringify({ text }) });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export async function tickTodo(id: string, lang: string, todoId: string, done: boolean): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/todos/${todoId}?lang=${lang}`, { method: "PATCH", body: JSON.stringify({ done }) });
+  return res.ok ? ((await res.json()) as CaseCard) : null;
+}
+
+export async function deleteTodo(id: string, lang: string, todoId: string): Promise<CaseCard | null> {
+  const res = await authed(`/cases/${id}/todos/${todoId}?lang=${lang}`, { method: "DELETE" });
   return res.ok ? ((await res.json()) as CaseCard) : null;
 }
 

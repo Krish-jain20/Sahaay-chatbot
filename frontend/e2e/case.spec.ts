@@ -70,3 +70,69 @@ test("track this: a chat service card starts a case and links to it", async ({ p
   await page.getByRole("link", { name: "Open in My cases" }).click();
   await expect(page.getByRole("heading", { name: /income certificate/i, level: 2 })).toBeVisible();
 });
+
+test("my cases: add your own service, tick its documents, edit it, set a date and to-dos", async ({ page }) => {
+  await page.goto("/case");
+  await page.waitForLoadState("networkidle");
+  await page.getByTestId("add-own").click();
+
+  // Offline (stub LLM): the AI suggestion says so and the user fills the details in themselves.
+  await page.getByLabel("Service name").fill("Ration card");
+  await page.getByTestId("suggest").click();
+  await expect(page.getByText("AI suggestions are not available right now")).toBeVisible();
+
+  await page.getByLabel("Portal link (optional)").fill("not a link");
+  await page.getByTestId("save-service").click();
+  await expect(page.getByText("The link must start with https://")).toBeVisible();
+  await page.getByLabel("Portal link (optional)").fill("https://example.com/ration");
+  await page.getByLabel("Department or office (optional)").fill("Food and Supplies");
+  await page.getByLabel("Documents you need (one per line)").fill("Address proof\nFamily photo");
+  await page.getByLabel("Steps (one per line, optional)").fill("Fill the form\nVisit the circle office");
+  await page.getByLabel("Expected time in days (optional)").fill("30");
+  await page.getByTestId("save-service").click();
+
+  // The case opens, labelled as the user's own, and the link is never presented as official.
+  await expect(page.getByRole("heading", { name: "Ration card", level: 2 })).toBeVisible();
+  await expect(page.getByTestId("custom-note")).toContainText("not checked by Sahaay");
+  const links = page.getByTestId("case-links");
+  await expect(links.getByRole("link", { name: "Open the link you added" })).toHaveAttribute("href", "https://example.com/ration");
+  await expect(links.getByRole("link", { name: "Open the official portal" })).toHaveCount(0);
+  await expect(page.getByText("Using your own estimate of 30 days.")).toBeVisible();
+
+  await expect(page.getByTestId("case-ready")).toHaveText("0 of 2 required documents ready");
+  await page.getByTestId("case-checklist").getByRole("checkbox", { name: "Address proof" }).click();
+  await expect(page.getByTestId("case-ready")).toHaveText("1 of 2 required documents ready");
+
+  // Editing keeps the tick on a document that is still listed.
+  await page.getByTestId("edit-service").click();
+  await page.getByLabel("Documents you need (one per line)").fill("Address proof\nFamily photo\nIncome certificate");
+  await page.getByTestId("save-service").click();
+  await expect(page.getByTestId("case-ready")).toHaveText("1 of 3 required documents ready");
+
+  // An important date and a to-do list, both the user's own.
+  const soon = new Date(Date.now() + 3 * 864e5).toISOString().slice(0, 10);
+  await page.getByLabel("Type").selectOption("appointment");
+  await page.getByLabel("Date", { exact: true }).fill(soon);
+  await page.getByLabel("What is it? (optional)").fill("Circle office visit");
+  await page.getByTestId("save-date").click();
+  await expect(page.getByTestId("key-date")).toContainText("Appointment (Circle office visit)");
+  await expect(page.getByTestId("key-date")).toContainText("3 days left");
+
+  await page.getByLabel(/Add a to-do/).fill("Get a family photo");
+  await page.getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByTestId("case-todos").getByRole("checkbox", { name: "Get a family photo" }).click();
+  await expect(page.getByText("1 of 1 to-dos done")).toBeVisible();
+
+  // Back on the list: the tile shows the label and the date; search and filter find it.
+  await page.getByRole("button", { name: "All my cases" }).click();
+  const tile = page.getByTestId("case-custom").filter({ hasText: "Ration card" });
+  await expect(tile.getByTestId("added-by-you")).toBeVisible();
+  await expect(tile.getByTestId("tile-date")).toContainText("3 days left");
+  await page.getByLabel("Search your cases").fill("ration");
+  await expect(page.getByTestId("case-list").locator("li")).toHaveCount(1);
+  await page.getByLabel("Search your cases").fill("zzz");
+  await expect(page.getByText("No cases match your search.")).toBeVisible();
+  await page.getByLabel("Search your cases").fill("");
+  await page.getByLabel("Show").selectOption("done");
+  await expect(page.getByTestId("case-custom")).toHaveCount(0);
+});

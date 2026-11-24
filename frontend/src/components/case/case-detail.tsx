@@ -4,18 +4,25 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { AddService, SourceList } from "@/components/case/add-service";
+import { dateWhen } from "@/components/case/case-tile";
 import { AlertIcon, CheckIcon, LinkIcon, XIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   addNote,
+  addTodo,
   deleteCase,
   deleteNote,
+  deleteTodo,
   downloadSummary,
   patchCase,
   recordStep,
+  tickCustomDocument,
+  tickTodo,
   undoStep,
   type CaseCard,
   type Check,
+  type KeyDateKind,
 } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
@@ -39,12 +46,18 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
   const [note, setNote] = useState("");
   const [days, setDays] = useState(card.overview.follow_up.user_set ? String(card.overview.follow_up.days) : "");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [todo, setTodo] = useState("");
+  const [kdOn, setKdOn] = useState(card.key_date?.on ?? "");
+  const [kdKind, setKdKind] = useState<KeyDateKind>(card.key_date?.kind ?? "deadline");
+  const [kdLabel, setKdLabel] = useState(card.key_date?.label ?? "");
 
   const j = card.journey;
   const ov = card.overview;
   const fu = ov.follow_up;
   const links = card.links;
   const name = card.service_name ?? card.service_id;
+  const custom = card.custom;
 
   async function run(fn: () => Promise<unknown>) {
     setBusy(true);
@@ -80,12 +93,30 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
     URL.revokeObjectURL(url);
   }
 
+  if (editing && custom) {
+    return (
+      <AddService
+        existing={card}
+        onCancel={() => setEditing(false)}
+        onSaved={async () => {
+          setEditing(false);
+          await onChange();
+        }}
+      />
+    );
+  }
+
   const eligibilityQ = `/chat?q=${encodeURIComponent(tt("eligQuestion", { name }))}`;
+  const portalCta = links.official_url
+    ? { href: links.official_url, label: t("openPortal"), external: true }
+    : custom?.portal_url
+      ? { href: custom.portal_url, label: t("yourLink"), external: true }
+      : null;
   const cta: { href: string; label: string; external?: boolean } | null = {
     check_eligibility: { href: eligibilityQ, label: t("ctaEligibility") },
-    add_documents: { href: `/documents?service=${card.service_id}`, label: t("openDocs") },
+    add_documents: custom ? { href: "#check-h", label: t("yourDocs") } : { href: `/documents?service=${card.service_id}`, label: t("openDocs") },
     fill_form: { href: links.forms.length ? "/forms" : "/chat", label: links.forms.length ? t("openForm") : t("openChat") },
-    submit: links.official_url ? { href: links.official_url, label: t("openPortal"), external: true } : null,
+    submit: portalCta,
     follow_up: { href: "/drafts?kind=rti", label: t("ctaRti") },
     confirm_documents: null,
     save_reference: null,
@@ -96,8 +127,20 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
   return (
     <div className="space-y-5">
       <header>
+        {custom && (
+          <span className="mb-2 inline-block rounded-full bg-bg-sunken px-2.5 py-0.5 text-[12px] font-semibold text-ink-2">{t("addedByYou")}</span>
+        )}
         <h2 className="font-display text-[26px] font-extrabold leading-tight">{name}</h2>
-        <p className="text-[14.5px] text-ink-3">{card.department}</p>
+        {card.department && <p className="text-[14.5px] text-ink-3">{card.department}</p>}
+        {custom && (
+          <div className="mt-3 rounded-xl bg-bg-sunken p-3 text-[14px] text-ink-2" role="note" data-testid="custom-note">
+            <p>{t("customNote")}</p>
+            {custom.ai_suggested && <p className="mt-1 font-semibold text-warn-700">{t("customAiNote")}</p>}
+            <Button variant="secondary" className="mt-3" onClick={() => setEditing(true)} data-testid="edit-service">
+              {t("editService")}
+            </Button>
+          </div>
+        )}
         {card.prerequisites.length > 0 && (
           <p className="mt-2 text-[14.5px] text-ink-2">{tt("prereq", { names: card.prerequisites.map((p) => p.name).join(", ") })}</p>
         )}
@@ -220,25 +263,155 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
 
       {/* Smart checklist */}
       <section aria-labelledby="check-h" className={panel}>
-        <h3 id="check-h" className="text-[17px] font-bold">{t("readiness")}</h3>
-        <p className="mt-1 text-[15px]" data-testid="case-ready">
-          {tt("readyCount", { done: ov.docs_ready, total: ov.docs_total })}
-        </p>
-        <ul className="mt-3 divide-y divide-line" data-testid="case-checklist">
-          {card.readiness.checks.map((c) => (
-            <CheckRow key={c.doc_type} check={c} label={td(`types.${c.doc_type}`)} />
-          ))}
-        </ul>
+        <h3 id="check-h" className="text-[17px] font-bold">{custom ? t("yourDocs") : t("readiness")}</h3>
+        {(!custom || custom.documents.length > 0) && (
+          <p className="mt-1 text-[15px]" data-testid="case-ready">
+            {tt("readyCount", { done: ov.docs_ready, total: ov.docs_total })}
+          </p>
+        )}
+        {custom ? (
+          custom.documents.length === 0 ? (
+            <p className="mt-2 text-[14.5px] text-ink-2">{t("noDocs")}</p>
+          ) : (
+            <ul className="mt-3 divide-y divide-line" data-testid="case-checklist">
+              {custom.documents.map((d) => (
+                <li key={d.id}>
+                  <label className="flex min-h-11 cursor-pointer items-center justify-between gap-3 py-1 text-[15px]">
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        className="size-5 shrink-0 accent-teal-700"
+                        checked={d.have}
+                        disabled={busy}
+                        onChange={(e) => run(() => tickCustomDocument(card.id, locale, d.id, e.target.checked))}
+                      />
+                      {d.name}
+                    </span>
+                    <span className={cn("shrink-0 rounded-full px-2.5 py-0.5 text-[12.5px] font-semibold", d.have ? "bg-ok-100 text-ok-700" : "bg-bad-100 text-bad-700")}>
+                      {d.have ? t("docDeclared") : t("doc_missing")}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          )
+        ) : (
+          <ul className="mt-3 divide-y divide-line" data-testid="case-checklist">
+            {card.readiness.checks.map((c) => (
+              <CheckRow key={c.doc_type} check={c} label={td(`types.${c.doc_type}`)} />
+            ))}
+          </ul>
+        )}
         <p className="mt-2 text-[13.5px] text-ink-3">{t("readyCaption")}</p>
-        <Button asChild variant="secondary" className="mt-3">
-          <Link href={`/documents?service=${card.service_id}`}>{t("openDocs")}</Link>
-        </Button>
+        {!custom && (
+          <Button asChild variant="secondary" className="mt-3">
+            <Link href={`/documents?service=${card.service_id}`}>{t("openDocs")}</Link>
+          </Button>
+        )}
+      </section>
+
+      {/* Important date: the user's own reminder */}
+      <section aria-labelledby="date-h" className={panel}>
+        <h3 id="date-h" className="text-[17px] font-bold">{t("dateTitle")}</h3>
+        <p className="mt-1 text-[14.5px] text-ink-2">{t("dateHelp")}</p>
+        {card.key_date && (
+          <p
+            className={cn(
+              "mt-3 inline-flex rounded-full px-3 py-1 text-[14px] font-semibold",
+              card.key_date.passed ? "bg-bg-sunken text-ink-2" : card.key_date.soon ? "bg-marigold-500 text-ink" : "bg-teal-100 text-teal-700",
+            )}
+            data-testid="key-date"
+          >
+            {tt(`kind.${card.key_date.kind}`)}
+            {card.key_date.label ? ` (${card.key_date.label})` : ""}: {card.key_date.on} · {dateWhen(tt, card.key_date)}
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap items-end gap-3">
+          <div>
+            <label htmlFor="kd-kind" className="mb-1 block text-[14px] font-semibold text-ink-2">{t("dateKind")}</label>
+            <select id="kd-kind" className={cn(input, "md:w-44")} value={kdKind} onChange={(e) => setKdKind(e.target.value as KeyDateKind)}>
+              {(["deadline", "appointment", "other"] as const).map((k) => (
+                <option key={k} value={k}>{tt(`kind.${k}`)}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="kd-on" className="mb-1 block text-[14px] font-semibold text-ink-2">{t("dateOn")}</label>
+            <input id="kd-on" type="date" className={cn(input, "md:w-44")} value={kdOn} onChange={(e) => setKdOn(e.target.value)} />
+          </div>
+          <div className="min-w-0 flex-1 basis-48">
+            <label htmlFor="kd-label" className="mb-1 block text-[14px] font-semibold text-ink-2">{t("dateLabel")}</label>
+            <input id="kd-label" maxLength={60} className={cn(input, "md:w-full")} value={kdLabel} onChange={(e) => setKdLabel(e.target.value)} />
+          </div>
+          <Button
+            variant="secondary"
+            disabled={busy || !kdOn}
+            onClick={() => run(() => patchCase(card.id, locale, { key_date: kdOn, key_date_kind: kdKind, key_date_label: kdLabel.trim() }))}
+            data-testid="save-date"
+            aria-label={`${t("save")}: ${t("dateTitle")}`}
+          >
+            {t("save")}
+          </Button>
+          {card.key_date && (
+            <Button
+              variant="ghost"
+              disabled={busy}
+              onClick={() => run(async () => { setKdOn(""); setKdLabel(""); return patchCase(card.id, locale, { clear_key_date: true }); })}
+            >
+              {t("clearDate")}
+            </Button>
+          )}
+        </div>
+      </section>
+
+      {/* To-do list */}
+      <section aria-labelledby="todo-h" className={panel}>
+        <h3 id="todo-h" className="text-[17px] font-bold">{t("todoTitle")}</h3>
+        <p className="mt-1 text-[13.5px] text-ink-3">{t("todoHelp")}</p>
+        {card.todos.length > 0 && (
+          <>
+            <p className="mt-2 text-[14px] text-ink-2">{tt("todoCount", { done: card.todos_done, total: card.todos.length })}</p>
+            <ul className="mt-2 space-y-1" data-testid="case-todos">
+              {card.todos.map((td_) => (
+                <li key={td_.id} className="flex items-center justify-between gap-2 rounded-xl bg-bg-sunken pl-3">
+                  <label className="flex min-h-11 flex-1 cursor-pointer items-center gap-3 text-[15px]">
+                    <input
+                      type="checkbox"
+                      className="size-5 shrink-0 accent-teal-700"
+                      checked={td_.done}
+                      disabled={busy}
+                      onChange={(e) => run(() => tickTodo(card.id, locale, td_.id, e.target.checked))}
+                    />
+                    <span className={cn(td_.done && "text-ink-3 line-through")}>{td_.text}</span>
+                  </label>
+                  <button type="button" onClick={() => run(() => deleteTodo(card.id, locale, td_.id))} aria-label={`${t("deleteTodo")}: ${td_.text}`} className="grid size-11 shrink-0 place-items-center rounded-full text-ink-2 hover:bg-line">
+                    <XIcon className="size-5" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <form
+          className="mt-3 flex flex-wrap items-end gap-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!todo.trim()) return;
+            void run(async () => { const r = await addTodo(card.id, locale, todo.trim()); if (r) setTodo(""); return r; });
+          }}
+        >
+          <div className="min-w-0 flex-1 basis-56">
+            <label htmlFor="todo" className="mb-1 block text-[14px] font-semibold text-ink-2">{t("todoLabel")}</label>
+            <input id="todo" maxLength={120} className={cn(input, "md:w-full")} value={todo} onChange={(e) => setTodo(e.target.value)} />
+          </div>
+          <Button type="submit" variant="secondary" disabled={busy || !todo.trim()}>{t("addTodo")}</Button>
+        </form>
       </section>
 
       {/* Steps for this service, from the scheme data */}
       {card.steps_text.length > 0 && (
         <section aria-labelledby="how-h" className={panel}>
-          <h3 id="how-h" className="text-[17px] font-bold">{t("howTitle")}</h3>
+          <h3 id="how-h" className="text-[17px] font-bold">{custom ? t("yourSteps") : t("howTitle")}</h3>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-[15px] text-ink-2">
             {card.steps_text.map((s) => (
               <li key={s.n}>{s.text}</li>
@@ -263,6 +436,15 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
               </a>
             </li>
           )}
+          {custom?.portal_url && !custom.portal_official && (
+            <li>
+              <a className={linkCls} href={custom.portal_url} target="_blank" rel="noopener noreferrer">
+                <LinkIcon className="size-5" />
+                {t("yourLink")}
+              </a>
+              <p className="text-[13px] text-ink-3">{t("notCheckedBadge")}</p>
+            </li>
+          )}
           {links.forms.map((f) => (
             <li key={f.id}>
               <Link className={linkCls} href="/forms">{t("openForm")}</Link>
@@ -275,6 +457,11 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
           <li><Link className={linkCls} href="/drafts?kind=rti">{t("ctaRti")}</Link></li>
           <li><Link className={linkCls} href="/drafts?kind=cpgrams">{t("ctaCpgrams")}</Link></li>
         </ul>
+        {custom && custom.sources.length > 0 && (
+          <div className="mt-3 text-[14px]">
+            <SourceList sources={custom.sources} heading={tt("aiSources", { date: custom.added_on ?? "" })} />
+          </div>
+        )}
         {links.sources.length > 0 && (
           <>
             <h4 className={cn(heading, "mt-4")}>{t("sourcesTitle")}</h4>
@@ -308,13 +495,13 @@ export function CaseDetail({ card, onChange, onClose }: { card: CaseCard; onChan
           </Button>
           {fu.user_set && (
             <Button variant="ghost" disabled={busy} onClick={() => run(async () => { setDays(""); return patchCase(card.id, locale, { clear_follow_up: true }); })}>
-              {t("useDefault")}
+              {custom ? t("useEstimate") : t("useDefault")}
             </Button>
           )}
         </div>
         <p className="mt-2 text-[14px] text-ink-2">
-          {fu.due_on ? tt("followOn", { date: fu.due_on }) : fu.days === null ? t("followUnknown") : t("followAfterSubmit")}
-          {!fu.user_set && fu.days !== null ? ` ${tt("followDefault", { days: fu.days })}` : ""}
+          {fu.due_on ? tt("followOn", { date: fu.due_on }) : fu.days === null ? (custom ? t("customNoTimeline") : t("followUnknown")) : t("followAfterSubmit")}
+          {!fu.user_set && fu.days !== null ? ` ${tt(custom ? "customTimeline" : "followDefault", { days: fu.days })}` : ""}
         </p>
         {card.submission?.submitted_on && (
           <label className="mt-3 flex min-h-11 cursor-pointer items-center gap-3 text-[15px]">
