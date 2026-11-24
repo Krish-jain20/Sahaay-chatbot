@@ -344,7 +344,8 @@
     "loading": "Loading…",
     "error": "Could not load. Please try again.",
     "deleteError": "Could not delete. Please try again.",
-    "reports": "Official sources and the date they were checked are shown with each answer. If something looks wrong, use “Report incorrect information” on a service card."
+    "reports": "Official sources and the date they were checked are shown with each answer. If something looks wrong, use “Report incorrect information” on a service card.",
+    "webNote": "If Sahaay has no verified record for your question, it may search the web. Only your question, with identity numbers already hidden, goes to the AI model and its search provider (Google). Web answers are labelled as unverified."
   },
   "account": {
     "title": "Your account",
@@ -365,5 +366,11 @@
     "loading": "Loading...",
     "error": "Could not load this guide. Please try again.",
     "note": "General guidance from official portals, not legal advice. Sahaay is an AI assistant, not an official government channel."
+  },
+  "web": {
+    "sources": "Sources found on the web",
+    "official": "on Sahaay's checked official list",
+    "unofficial": "not on Sahaay's official list",
+    "retrieved": "Searched on {date}. Check the official page before you act. This is not an approval or a promise of any benefit."
   }
 }

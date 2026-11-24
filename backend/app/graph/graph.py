@@ -10,10 +10,12 @@ run config, not in the checkpointed state, so state stays small and serialisable
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterator
 from dataclasses import asdict
 from datetime import date
 from typing import Any, TypedDict
+from urllib.parse import urlparse
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.config import get_stream_writer
@@ -27,6 +29,7 @@ from app.graph.templates import t
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
 from app.rules.eligibility import Fact, check
 from app.rules.fees import fee_strip, is_stale
+from app.safety.allowlist import is_allowed
 from app.safety.claims import find_violations
 from app.safety.pii import mask_pii
 
@@ -98,6 +101,64 @@ def _alternatives(
         if verdict != "not_eligible":
             out.append({"id": other.id, "name": other.name.get(lang), "verdict": verdict})
     return sorted(out, key=lambda a: a["verdict"] != "likely")[:3]
+
+
+_URL = re.compile(r"https?://\S+|www\.\S+")
+
+
+def _host(source: dict[str, str]) -> str:
+    """Grounding titles are the site's domain; otherwise fall back to the link's host."""
+    title = source.get("title", "").strip().lower()
+    if re.fullmatch(r"[a-z0-9.-]+\.[a-z]{2,}", title):
+        return title
+    return (urlparse(source.get("url", "")).hostname or "").lower()
+
+
+def web(state: CaseState, config: RunnableConfig) -> CaseState:
+    """No verified record matched: answer from a live web search, clearly labelled as unverified."""
+    catalog, llm = _deps(config)
+    lang = state["language"]
+    _status("web", lang, "running")
+    try:
+        ans = llm.web_search(state["message"], lang, user_id=state["user_id"])
+    except (RateLimited, BudgetExceeded, LLMError):
+        ans = None
+    _status("web", lang, "done")
+    text = _URL.sub("", mask_pii(ans.text)[0]).strip() if ans else ""
+    if not text or find_violations(text):
+        key = "guard.blocked" if text else "refusal.no_source"
+        for ev in stream_words(t(key, lang)):
+            _emit(*ev)
+        _emit("done", {"refused": True})
+        return {}
+    seen: set[str] = set()
+    sources = []
+    for src in ans.sources:
+        host = _host(src)
+        if not host or host in seen:
+            continue
+        seen.add(host)
+        sources.append(
+            {
+                "n": len(sources) + 1,
+                "title": host,
+                "url": src["url"],
+                "official": is_allowed(f"https://{host}/", catalog.allowlist),
+            }
+        )
+    _emit(
+        "card",
+        {
+            "type": "web",
+            "label": t("web.label", lang),
+            "retrieved_on": state["today"],
+            "sources": sources[:6],
+        },
+    )
+    for ev in stream_words(text):
+        _emit(*ev)
+    _emit("done", {"refused": False})
+    return {}
 
 
 def eligibility(state: CaseState, config: RunnableConfig) -> CaseState:
@@ -220,6 +281,13 @@ def _after_understand(s: CaseState) -> str:
     return "search"
 
 
+def _after_search(s: CaseState, config: RunnableConfig) -> str:
+    if s.get("service_id"):
+        return "eligibility"
+    _, llm = _deps(config)
+    return "web" if llm.web_enabled else "compose"
+
+
 def build_graph(checkpointer: Any | None = None):
     g = StateGraph(CaseState)
     g.add_node("understand", understand)
@@ -228,10 +296,12 @@ def build_graph(checkpointer: Any | None = None):
     g.add_node("ask_missing", ask_missing_node)
     g.add_node("compose", compose)
     g.add_node("guidance", guidance)
+    g.add_node("web", web)
     g.add_edge(START, "understand")
     g.add_conditional_edges("understand", _after_understand)
     g.add_edge("guidance", END)
-    g.add_conditional_edges("search", lambda s: "eligibility" if s.get("service_id") else "compose")
+    g.add_conditional_edges("search", _after_search)
+    g.add_edge("web", END)
     g.add_edge("eligibility", "ask_missing")
     g.add_edge("ask_missing", "compose")
     g.add_edge("compose", END)

@@ -6,18 +6,19 @@ import { useEffect, useRef, useState } from "react";
 import { CasePanel } from "@/components/chat/case-panel";
 import { GuideCard } from "@/components/cards/guide-card";
 import { ServiceCard } from "@/components/cards/service-card";
+import { WebCard } from "@/components/cards/web-card";
 import { CheckIcon, SendIcon, StopIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { API_URL, readSse } from "@/lib/sse";
 import { deleteMyData, loadFacts, saveFacts } from "@/lib/api";
 import { getAccessToken } from "@/lib/supabase";
-import type { Chip, Citation, GuideCardData, ServiceCardData, StatusPill } from "@/lib/types";
+import type { Chip, Citation, GuideCardData, ServiceCardData, StatusPill, WebCardData } from "@/lib/types";
 
 interface BotMsg {
   role: "bot";
   text: string;
   statuses: StatusPill[];
-  card?: ServiceCardData | GuideCardData;
+  card?: ServiceCardData | GuideCardData | WebCardData;
   citations: Citation[];
   chips: Chip[];
   streaming: boolean;
@@ -107,7 +108,7 @@ export function Chat() {
           const piece = (data as { text: string }).text;
           patchBot((m) => ({ ...m, text: m.text + piece }));
         } else if (event === "card") {
-          patchBot((m) => ({ ...m, card: data as ServiceCardData | GuideCardData }));
+          patchBot((m) => ({ ...m, card: data as ServiceCardData | GuideCardData | WebCardData }));
         } else if (event === "citation") {
           patchBot((m) => ({ ...m, citations: [...m.citations, data as Citation] }));
         } else if (event === "chips") {
@@ -224,6 +225,7 @@ export function Chat() {
               )}
               {m.card?.type === "service" && <ServiceCard card={m.card} citations={m.citations} />}
               {m.card?.type === "guide" && <GuideCard card={m.card} />}
+              {m.card?.type === "web" && <WebCard card={m.card} />}
               {m.chips.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {m.chips.map((c) => (

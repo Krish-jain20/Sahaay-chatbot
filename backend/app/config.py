@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     llm_model_fast: str = "gemini-3.5-flash-lite"
     llm_model_strong: str = "gemini-3.5-flash"
+    llm_model_web: str = ""  # model used for web search; empty means llm_model_strong
+    web_search_enabled: bool = True  # only has an effect when a Gemini key is set
     daily_token_budget: int = 200_000
     llm_requests_per_minute: int = 20
     supabase_url: str = ""

@@ -58,3 +58,10 @@ export interface GuideCardData {
   points: { id: string; heading: string; body: string; source_n: number | null }[];
   citations: Citation[];
 }
+
+export interface WebCardData {
+  type: "web";
+  label: string;
+  retrieved_on: string;
+  sources: { n: number; title: string; url: string; official: boolean }[];
+}

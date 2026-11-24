@@ -60,6 +60,16 @@ T: dict[str, dict[Lang, str]] = {
         "hi": "पैसे माँगने वाले किसी भी व्यक्ति से सावधान रहें। फ़ीस के बारे में आधिकारिक पेज क्या कहते हैं और Sahaay क्या कभी नहीं करता, यह नीचे है।",
         "hn": "Paise maangne wale kisi bhi vyakti se savdhaan rahein. Fees ke baare mein official pages kya kehte hain aur Sahaay kya kabhi nahi karta, yeh neeche hai.",
     },
+    "status.web": {
+        "en": "Searching the web",
+        "hi": "वेब पर खोज रहे हैं",
+        "hn": "Web par search kar rahe hain",
+    },
+    "web.label": {
+        "en": "From the web, not a verified Sahaay record. Verify locally.",
+        "hi": "वेब से, Sahaay का सत्यापित रिकॉर्ड नहीं। स्थानीय रूप से पुष्टि करें।",
+        "hn": "Web se, Sahaay ka verified record nahi. Locally verify karein.",
+    },
     "guard.blocked": {
         "en": "I can't give that answer safely. Please check the official page for this service.",
         "hi": "मैं यह उत्तर सुरक्षित रूप से नहीं दे सकता। कृपया इस सेवा का आधिकारिक पेज देखें।",
