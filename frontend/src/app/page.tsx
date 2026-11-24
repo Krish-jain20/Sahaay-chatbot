@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { AppShell } from "@/components/app-shell";
+import { ScopeBanner } from "@/components/scope-banner";
 import { Disclaimer } from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
 
@@ -42,7 +43,7 @@ export default function Home() {
             <Link href="/help/terms">{t("nav.terms")}</Link>
           </Button>
         </div>
-        <p className="rounded-2xl bg-teal-100 px-4 py-3 text-[15px] text-ink-2">{t("home.scope")}</p>
+        <ScopeBanner />
         <p className="text-center text-[13.5px]">
           <Link href="/privacy" className="inline-flex min-h-11 items-center text-teal-700 underline">
             {t("nav.privacy")}

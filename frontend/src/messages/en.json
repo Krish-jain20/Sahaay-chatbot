@@ -8,7 +8,8 @@
     "headline": "From confusion to action on government services",
     "sub": "Tell me your situation in English, Hindi or Hinglish. I'll show what may apply, with official sources.",
     "start": "Start a chat",
-    "scope": "Now covering Delhi: income certificate, SC/ST/OBC merit scholarship and old-age pension."
+    "scope": "Now covering {n} Delhi services. You can ask about any other government service too: web answers show their sources and the search date.",
+    "scopeNoCount": "Now covering many Delhi services. You can ask about any other government service too: web answers show their sources and the search date."
   },
   "chat": {
     "placeholder": "Type your question…",

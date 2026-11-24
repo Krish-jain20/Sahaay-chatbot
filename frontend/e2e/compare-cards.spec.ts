@@ -64,3 +64,13 @@ test("compare: card headings are translated and the English-only details say so"
   await page.getByRole("button", { name: /^राशन कार्ड/ }).click();
   await expect(page.getByRole("region", { name: /^राशन कार्ड/ })).toContainText("केवल अंग्रेज़ी में");
 });
+
+test("home: the banner counts the services from the data and mentions other government services", async ({ page }) => {
+  await page.goto("/");
+  const banner = page.getByTestId("scope-banner");
+  await expect(banner).toContainText(/Now covering \d+ Delhi services/);
+  await expect(banner).toContainText("any other government service");
+  const cards = await (await page.request.get("http://localhost:8100/cards")).json();
+  await expect(banner).toContainText(`Now covering ${cards.length} Delhi services`);
+  await expect(banner).not.toContainText("income certificate");
+});

@@ -8,7 +8,8 @@
     "headline": "Sarkari kaam mein confusion se action tak",
     "sub": "Apni situation English, Hindi ya Hinglish mein batayein. Main official sources ke saath bataunga kya apply ho sakta hai.",
     "start": "Chat shuru karein",
-    "scope": "Abhi Delhi: income certificate, SC/ST/OBC merit scholarship aur old-age pension."
+    "scope": "Abhi Delhi ki {n} services shamil hain. Kisi bhi doosri sarkari service ke baare mein bhi pooch sakte hain: web se mile jawaab apne sources aur search ki date dikhate hain.",
+    "scopeNoCount": "Abhi Delhi ki kai services shamil hain. Kisi bhi doosri sarkari service ke baare mein bhi pooch sakte hain: web se mile jawaab apne sources aur search ki date dikhate hain."
   },
   "chat": {
     "placeholder": "Apna sawaal likhein…",
