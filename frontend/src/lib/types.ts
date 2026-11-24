@@ -28,6 +28,8 @@ export interface ServiceCardData {
     exclusions_hit: { id: string; label: string }[];
   };
   prerequisites: { id: string; name: string }[];
+  grievance: { type: string; name: string | null; url: string | null; phone: string | null; source_n: number }[];
+  alternatives: { id: string; name: string; verdict: "likely" | "incomplete" }[];
   fee_strip: {
     official_fee_inr: number | null;
     csc_max_inr: number | null;
@@ -53,6 +55,6 @@ export interface GuideCardData {
   id: string;
   title: string;
   intro: string;
-  points: { id: string; heading: string; body: string; source_n: number }[];
+  points: { id: string; heading: string; body: string; source_n: number | null }[];
   citations: Citation[];
 }

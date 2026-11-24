@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 
 import { AlertIcon, CheckIcon, HelpIcon, LinkIcon, ShieldCheckIcon, XIcon } from "@/components/icons";
@@ -126,6 +127,22 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         </>
       )}
 
+      {card.alternatives.length > 0 && (
+        <section aria-labelledby={`alt-${service.id}`}>
+          <h4 id={`alt-${service.id}`} className="mt-3 text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">
+            {t("alternatives")}
+          </h4>
+          <ul className="mt-1 space-y-1 text-[14px]" data-testid="alternatives">
+            {card.alternatives.map((a) => (
+              <li key={a.id} className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">{a.name}</span>
+                <span className="text-ink-3">{a.verdict === "likely" ? t("altLikely") : t("altIncomplete")}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[12.5px] text-ink-3">{t("altHint")}</p>
+        </section>
+      )}
       <dl className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-teal-100 p-3 text-[14px]">
         <div>
           <dt className="text-ink-3">{t("officialFee")}</dt>
@@ -143,8 +160,39 @@ export function ServiceCard({ card, citations }: { card: ServiceCardData; citati
         </div>
       </dl>
 
-      <div>
+      {card.grievance.length > 0 && (
+        <section aria-labelledby={`gr-${service.id}`}>
+          <h4 id={`gr-${service.id}`} className="text-[11px] font-semibold uppercase tracking-[0.05em] text-ink-3">
+            {t("complain")}
+          </h4>
+          <ul className="mt-1 space-y-1 text-[14px]" data-testid="grievance-channels">
+            {card.grievance.map((g) => (
+              <li key={`${g.type}-${g.name}`}>
+                {g.url ? (
+                  <a href={g.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-teal-700 underline">
+                    {g.name}
+                  </a>
+                ) : (
+                  <span className="font-semibold">{g.name}</span>
+                )}
+                {g.phone && (
+                  <>
+                    {" "}
+                    <a href={`tel:${g.phone.replace(/\s/g, "")}`} className="text-teal-700 underline">{g.phone}</a>
+                  </>
+                )}{" "}
+                <CiteChip n={g.source_n} citations={citations} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-4">
         <ReportButton serviceId={service.id} />
+        <Link href="/help/scams" className="inline-flex min-h-11 items-center text-[14px] text-teal-700 underline">
+          {t("fraudLink")}
+        </Link>
       </div>
 
       {service.official_url && (

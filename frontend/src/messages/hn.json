@@ -41,7 +41,13 @@
     "prerequisites": "Pehle yeh banwayein",
     "benefit": "Fayda",
     "excluded": "Eligible nahi kyunki",
-    "verifiedShort": "Verified"
+    "verifiedShort": "Verified",
+    "fraudLink": "Paise maangne walon se savdhaan rahein. Fraud warnings dekhein",
+    "alternatives": "Doosri services jo aapke liye ho sakti hain",
+    "altLikely": "Aap listed conditions poori karte hain",
+    "altIncomplete": "Aur details chahiye",
+    "altHint": "Chat mein kisi ke baare mein poochhein.",
+    "complain": "Shikayat kahan karein"
   },
   "consent": {
     "title": "Agli baar ke liye yeh details save karein?",
@@ -87,7 +93,9 @@
     "forms": "Official form",
     "case": "Mera case",
     "privacy": "Privacy",
-    "help": "Shikayat ya RTI?"
+    "help": "Shikayat ya RTI?",
+    "safe": "Fraud se bachein",
+    "terms": "Shabdon ka matlab"
   },
   "panel": {
     "title": "Aapki details",

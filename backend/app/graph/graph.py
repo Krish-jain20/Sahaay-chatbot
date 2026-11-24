@@ -86,6 +86,20 @@ def search(state: CaseState, config: RunnableConfig) -> CaseState:
     return {"service_id": matches[0].id if matches else None}
 
 
+def _alternatives(
+    catalog: Catalog, rec: Any, facts: dict[str, Fact], today: date, lang: Lang
+) -> list[dict[str, Any]]:
+    """Other verified services the person is not ruled out of. Unknown stays 'incomplete', never 'likely'."""
+    out = []
+    for other in catalog.served():
+        if other.id == rec.id or other.id in rec.prerequisites:
+            continue
+        verdict = check(other, facts, today).verdict.value
+        if verdict != "not_eligible":
+            out.append({"id": other.id, "name": other.name.get(lang), "verdict": verdict})
+    return sorted(out, key=lambda a: a["verdict"] != "likely")[:3]
+
+
 def eligibility(state: CaseState, config: RunnableConfig) -> CaseState:
     catalog, _ = _deps(config)
     lang = state["language"]
@@ -127,6 +141,11 @@ def eligibility(state: CaseState, config: RunnableConfig) -> CaseState:
             "exclusions_hit": [{"id": x, "label": xlabels[x]} for x in result.exclusions_hit],
         },
         "prerequisites": [{"id": p, "name": catalog.services[p].name.get(lang)} for p in rec.prerequisites],
+        "alternatives": _alternatives(catalog, rec, facts, today, lang),
+        "grievance": [
+            {"type": c.type, "name": c.name, "url": c.url, "phone": c.phone, "source_n": cite_n[c.source_ref]}
+            for c in rec.grievance.channels
+        ],
         "fee_strip": {**asdict(fee_strip(rec)), "source_n": cite_n[rec.fees.source_ref]},
     }
     _emit("card", card)
@@ -175,7 +194,7 @@ def compose(state: CaseState, config: RunnableConfig) -> CaseState:
     return {}
 
 
-GUIDE_INTENTS = {"complaint": "complaints"}
+GUIDE_INTENTS = {"complaint": "complaints", "scam": "scams"}
 
 
 def guidance(state: CaseState, config: RunnableConfig) -> CaseState:
@@ -184,7 +203,7 @@ def guidance(state: CaseState, config: RunnableConfig) -> CaseState:
     lang = state["language"]
     topic = GUIDE_INTENTS[state["understanding"]["intent"]]
     card = c["guidance"].render(topic, lang)
-    for ev in stream_words(t("guide.lead", lang)):
+    for ev in stream_words(t("guide.lead.scam" if topic == "scams" else "guide.lead", lang)):
         _emit(*ev)
     _emit("card", card)
     for cite in card["citations"]:

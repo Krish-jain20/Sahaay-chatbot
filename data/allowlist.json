@@ -41,6 +41,26 @@
       "host": "rtionline.gov.in",
       "owner": "RTI Online, Department of Personnel and Training, Government of India",
       "verified_on": "2026-11-24"
+    },
+    {
+      "host": "rtionline.delhi.gov.in",
+      "owner": "Delhi government RTI portal (content: Administrative Reforms Department, GNCTD; hosted by NIC). Read on 2026-11-24 through a fetch helper; direct connections from the build environment fail",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "cybercrime.gov.in",
+      "owner": "National cyber crime reporting portal, as linked next to 'Cyber Crime Helpline No 1930' on revenue.delhi.gov.in (link taken from that page; the site refused connections from the build environment)",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "pgc.delhi.gov.in",
+      "owner": "Public Grievances Commission, GNCTD",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "www.mha.gov.in",
+      "owner": "Ministry of Home Affairs, Government of India",
+      "verified_on": "2026-11-24"
     }
   ]
 }

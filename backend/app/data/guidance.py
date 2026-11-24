@@ -20,7 +20,8 @@ class Point(Strict):
     id: str
     heading: LText
     body: LText
-    source_ref: str
+    source_ref: str | None
+    about_sahaay: bool = False  # a statement about Sahaay itself, so it has no external source
 
 
 class Topic(Strict):
@@ -56,7 +57,10 @@ def load_guidance(data_dir: Path, allowlist: Allowlist) -> GuidanceSet:
             raise DataError(f"guidance: source {s.id} has no date_checked")
     for topic in g.topics:
         for p in topic.points:
-            if p.source_ref not in ids:
+            if p.source_ref is None:
+                if not p.about_sahaay:
+                    raise DataError(f"guidance {topic.id}/{p.id}: no source and not about Sahaay")
+            elif p.source_ref not in ids:
                 raise DataError(f"guidance {topic.id}/{p.id}: unknown source_ref {p.source_ref}")
             for lang in ("en", "hi", "hn"):
                 text = " ".join([p.heading.get(lang) or "", p.body.get(lang) or ""])
@@ -67,7 +71,7 @@ def load_guidance(data_dir: Path, allowlist: Allowlist) -> GuidanceSet:
 
 def render(topic: Topic, sources: dict[str, Source], lang: Lang) -> dict[str, Any]:
     """Resolve one topic to plain strings plus numbered citations, in the card/API shape."""
-    order = list(dict.fromkeys(p.source_ref for p in topic.points))
+    order = list(dict.fromkeys(p.source_ref for p in topic.points if p.source_ref))
     n = {sid: i + 1 for i, sid in enumerate(order)}
     return {
         "type": "guide",
@@ -79,7 +83,7 @@ def render(topic: Topic, sources: dict[str, Source], lang: Lang) -> dict[str, An
                 "id": p.id,
                 "heading": p.heading.get(lang),
                 "body": p.body.get(lang),
-                "source_n": n[p.source_ref],
+                "source_n": n[p.source_ref] if p.source_ref else None,
             }
             for p in topic.points
         ],
