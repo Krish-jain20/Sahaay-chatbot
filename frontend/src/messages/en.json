@@ -9,7 +9,67 @@
     "sub": "Tell me your situation in English, Hindi or Hinglish. I'll show what may apply, with official sources.",
     "start": "Start a chat",
     "scope": "Now covering {n} Delhi services. You can ask about any other government service too: web answers show their sources and the search date.",
-    "scopeNoCount": "Now covering many Delhi services. You can ask about any other government service too: web answers show their sources and the search date."
+    "scopeNoCount": "Now covering many Delhi services. You can ask about any other government service too: web answers show their sources and the search date.",
+    "eyebrow": "Government services, made clear",
+    "browse": "Browse all services",
+    "point1": "Official sources only",
+    "point2": "Your files are never stored",
+    "point3": "English, Hindi, Hinglish",
+    "preview": {
+      "user": "My father is 68. Can he get an old-age pension in Delhi?",
+      "step1": "Checked age",
+      "step2": "Checked residence",
+      "title": "Old-age pension, Delhi",
+      "met": "Age: met",
+      "unknown": "Income: need your certificate",
+      "source": "Source: official Delhi portal, checked on the date shown",
+      "chip": "Which documents do I need?",
+      "caption": "A sample conversation, for illustration"
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "Three steps from question to submitted form",
+      "s1t": "Tell us your situation",
+      "s1b": "Describe it in your own words, in any of three languages. No forms to fill first.",
+      "s2t": "See what applies to you",
+      "s2b": "Each condition is marked met, not met or unknown, with the official source beside it.",
+      "s3t": "Prepare and keep track",
+      "s3b": "Check your documents, draft the form, and follow your own progress in one case folder."
+    },
+    "tools": {
+      "eyebrow": "Everything in one place",
+      "title": "Tools for each step",
+      "sub": "Start anywhere. Each tool works on its own and shares your case folder.",
+      "open": "Open",
+      "compareName": "Compare services",
+      "chatDesc": "Ask in plain words. Get a clear next step and the sources behind it.",
+      "compareDesc": "Side-by-side cards for fees, documents and time.",
+      "documentsDesc": "Check a document photo for clarity and missing details.",
+      "draftsDesc": "Complaint, RTI and grievance drafts you review first.",
+      "formsDesc": "Upload any form and fill it from a few answers.",
+      "helpDesc": "Know your rights and what to do when something goes wrong.",
+      "caseDesc": "Your own checklist and progress, kept on your side."
+    },
+    "services": {
+      "eyebrow": "Popular services",
+      "title": "Start with a service you need",
+      "all": "See all services"
+    },
+    "trust": {
+      "eyebrow": "Why you can rely on it",
+      "title": "Careful with facts, careful with your data",
+      "sourcesT": "Official sources",
+      "sourcesB": "Every fact shows where it came from and when it was checked. If we are not sure, we say verify locally.",
+      "filesT": "Files never stored",
+      "filesB": "Photos and PDFs are read in memory and discarded. Personal numbers are masked before anything is saved.",
+      "notOfficialT": "Not a government channel",
+      "notOfficialB": "Sahaay is an AI assistant. It cannot show live application status or promise an outcome."
+    },
+    "footer": {
+      "ask": "Ask",
+      "prepare": "Prepare",
+      "about": "About"
+    }
   },
   "chat": {
     "placeholder": "Type your question…",

@@ -9,7 +9,67 @@
     "sub": "Apni situation English, Hindi ya Hinglish mein batayein. Main official sources ke saath bataunga kya apply ho sakta hai.",
     "start": "Chat shuru karein",
     "scope": "Abhi Delhi ki {n} services shamil hain. Kisi bhi doosri sarkari service ke baare mein bhi pooch sakte hain: web se mile jawaab apne sources aur search ki date dikhate hain.",
-    "scopeNoCount": "Abhi Delhi ki kai services shamil hain. Kisi bhi doosri sarkari service ke baare mein bhi pooch sakte hain: web se mile jawaab apne sources aur search ki date dikhate hain."
+    "scopeNoCount": "Abhi Delhi ki kai services shamil hain. Kisi bhi doosri sarkari service ke baare mein bhi pooch sakte hain: web se mile jawaab apne sources aur search ki date dikhate hain.",
+    "eyebrow": "Sarkari services, saaf bhasha mein",
+    "browse": "Saari services dekhein",
+    "point1": "Sirf official sources",
+    "point2": "Aapki files kabhi store nahi hoti",
+    "point3": "English, Hindi, Hinglish",
+    "preview": {
+      "user": "Mere papa 68 saal ke hain. Kya unhe Delhi mein old-age pension mil sakti hai?",
+      "step1": "Umar check ki",
+      "step2": "Nivas check kiya",
+      "title": "Old-age pension, Delhi",
+      "met": "Umar: poori",
+      "unknown": "Income: aapka certificate chahiye",
+      "source": "Source: Delhi ka official portal, dikhayi gayi date ko check kiya",
+      "chip": "Mujhe kaun se documents chahiye?",
+      "caption": "Example ke liye ek sample baatcheet"
+    },
+    "how": {
+      "eyebrow": "Yeh kaise kaam karta hai",
+      "title": "Sawaal se form jama karne tak teen kadam",
+      "s1t": "Apni situation batayein",
+      "s1b": "Apne shabdon mein, teeno bhashaon mein se kisi mein batayein. Pehle koi form nahi bharna.",
+      "s2t": "Dekhein aap par kya lagu hota hai",
+      "s2b": "Har shart par poori, poori nahi ya pata nahi ka nishaan hota hai, saath mein official source.",
+      "s3t": "Taiyari karein aur progress dekhein",
+      "s3b": "Documents check karein, form ka draft banayein, aur ek case folder mein apni progress dekhein."
+    },
+    "tools": {
+      "eyebrow": "Sab kuch ek jagah",
+      "title": "Har kadam ke liye tools",
+      "sub": "Kahin se bhi shuru karein. Har tool alag se kaam karta hai aur aapke case folder se juda rehta hai.",
+      "open": "Kholein",
+      "compareName": "Services ki tulna",
+      "chatDesc": "Aasan shabdon mein poochhein. Agla kadam aur uske sources paayein.",
+      "compareDesc": "Fees, documents aur time ke side-by-side cards.",
+      "documentsDesc": "Document ki photo ki clarity aur chhooti hui details check karein.",
+      "draftsDesc": "Shikayat, RTI aur grievance ke drafts, jo aap pehle dekhte hain.",
+      "formsDesc": "Koi bhi form upload karein aur kuch jawabon se bharein.",
+      "helpDesc": "Apne adhikaar jaanein aur gadbad hone par kya karein.",
+      "caseDesc": "Aapki apni checklist aur progress, aapke paas hi."
+    },
+    "services": {
+      "eyebrow": "Popular services",
+      "title": "Apni zaroorat ki service se shuru karein",
+      "all": "Saari services dekhein"
+    },
+    "trust": {
+      "eyebrow": "Bharosa kyun",
+      "title": "Facts aur aapke data, dono mein savdhani",
+      "sourcesT": "Official sources",
+      "sourcesB": "Har fact ke saath source aur check ki date dikhti hai. Pakka na ho toh hum local level par verify karne ko kehte hain.",
+      "filesT": "Files kabhi store nahi hoti",
+      "filesB": "Photos aur PDF memory mein padhkar hata diye jaate hain. Kuch bhi save hone se pehle personal numbers mask ho jaate hain.",
+      "notOfficialT": "Sarkari channel nahi",
+      "notOfficialB": "Sahaay ek AI assistant hai. Yeh application ka live status nahi dikha sakta aur result ka vaada nahi karta."
+    },
+    "footer": {
+      "ask": "Poochhein",
+      "prepare": "Taiyari",
+      "about": "Jaankari"
+    }
   },
   "chat": {
     "placeholder": "Apna sawaal likhein…",
