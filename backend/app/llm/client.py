@@ -69,6 +69,19 @@ class VisionResult(BaseModel):
     likely_document: str | None = None
 
 
+class VisionFormField(BaseModel):
+    label: str
+    mapped_profile_key: str | None = None
+    x_norm: float
+    y_norm: float
+    w_norm: float | None = None
+    required: bool = False
+
+
+class FormFieldsResult(BaseModel):
+    fields: list[VisionFormField] = []
+
+
 def load_prompt(name: str) -> str:
     return (PROMPTS / f"{name}.md").read_text("utf-8")
 
@@ -431,6 +444,20 @@ class LLM:
             image_mime=mime,
         )
         return VisionResult.model_validate_json(self._call(user_id, req).text)
+
+    def detect_form_fields(
+        self, image: bytes, lang: str, *, user_id: str, mime: str = "image/png"
+    ) -> FormFieldsResult:
+        """Blanks on one page of an uploaded blank form. The image is the only thing sent."""
+        req = LLMRequest(
+            model=self.settings.llm_model_fast,
+            system=load_prompt("form_fields") + f"\nLanguage: {lang}",
+            text="<document>\nList the blanks on this page.\n</document>",
+            schema=FormFieldsResult,
+            image=image,
+            image_mime=mime,
+        )
+        return FormFieldsResult.model_validate_json(self._call(user_id, req).text)
 
     @property
     def web_enabled(self) -> bool:
