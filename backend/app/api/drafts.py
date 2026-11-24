@@ -1,4 +1,6 @@
-"""Complaint / RTI / CPGRAMS drafts with a human confirmation gate.
+"""Draft letters (complaints, RTI, appeals, grievances) with a human confirmation gate.
+
+`GET /drafts/catalog` lists every draft type with its fields, localised.
 
 Step 1 (`/drafts/preview`): the user sees every field exactly as it will appear, plus a content hash.
 Step 2 (`/drafts/pdf`): the PDF is produced only if the user ticked "I checked every field" and sent
@@ -10,19 +12,20 @@ from __future__ import annotations
 import logging
 from typing import Literal
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from app.api.auth import CurrentUser
 from app.pdf import drafts
+from app.pdf.draft_catalog import KIND_IDS
 
 router = APIRouter()
 log = logging.getLogger("sahaay.drafts")
 
 
 class DraftIn(BaseModel):
-    kind: Literal["complaint", "rti", "cpgrams"]
+    kind: str = Field(max_length=40)
     lang: Literal["en", "hi", "hn"] = "en"
     fields: dict[str, str | bool | None] = Field(default_factory=dict)
 
@@ -32,8 +35,17 @@ class DownloadIn(DraftIn):
     checked_all_fields: bool = False
 
 
+@router.get("/drafts/catalog")
+def catalog(request: Request, lang: Literal["en", "hi", "hn"] = "en") -> dict[str, object]:
+    allow = request.app.state.catalog.allowlist
+    checked = {d.host: d.verified_on.isoformat() if d.verified_on else None for d in allow.domains}
+    return drafts.catalog(lang, checked)
+
+
 def _prepare(body: DraftIn) -> tuple[drafts.Lang, dict[str, str]]:
     lang: drafts.Lang = "hi" if body.lang == "hi" else "en"
+    if body.kind not in KIND_IDS:
+        raise HTTPException(422, "unknown_kind")
     try:
         fields = drafts.clean_fields(body.kind, body.fields)
     except drafts.DraftError as e:

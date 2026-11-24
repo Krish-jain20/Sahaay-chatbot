@@ -49,3 +49,24 @@ export const ArrowRightIcon = ({ className }: P) => <svg {...base} className={cl
 export const BookmarkCheckIcon = ({ className }: P) => (
   <svg {...base} className={className}><path d="M6 4h12v17l-6-4-6 4z" /><path d="M9 10l2 2 4-4" /></svg>
 );
+export const SearchIcon = ({ className }: P) => (
+  <svg {...base} className={className}><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg>
+);
+export const ArrowLeftIcon = ({ className }: P) => <svg {...base} className={className}><path d="M19 12H5M11 6l-6 6 6 6" /></svg>;
+export const BoltIcon = ({ className }: P) => <svg {...base} className={className}><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z" /></svg>;
+export const DropIcon = ({ className }: P) => <svg {...base} className={className}><path d="M12 3.5S5.5 10.5 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10.5 12 3.5 12 3.5z" /></svg>;
+export const ReceiptIcon = ({ className }: P) => (
+  <svg {...base} className={className}><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" /><path d="M9 8h6M9 12h6" /></svg>
+);
+export const BagIcon = ({ className }: P) => (
+  <svg {...base} className={className}><path d="M5 8h14l-1 12H6z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>
+);
+export const CapIcon = ({ className }: P) => (
+  <svg {...base} className={className}><path d="M2.5 9.5L12 5l9.5 4.5L12 14z" /><path d="M6.5 11.5V16c1.5 1.7 3.5 2.5 5.5 2.5s4-.8 5.5-2.5v-4.5M21.5 9.5V15" /></svg>
+);
+export const UsersIcon = ({ className }: P) => (
+  <svg {...base} className={className}><circle cx="9" cy="8.5" r="3.2" /><path d="M3 19.5c.6-3.4 3-5 6-5s5.4 1.6 6 5" /><path d="M16 5.5a3 3 0 0 1 0 6M18 14.8c1.7.6 2.7 2 3 4.7" /></svg>
+);
+export const BuildingIcon = ({ className }: P) => (
+  <svg {...base} className={className}><path d="M5 21V4.5h9V21M14 9.5h5V21M3 21h18" /><path d="M8.5 8h2M8.5 12h2M8.5 16h2" /></svg>
+);

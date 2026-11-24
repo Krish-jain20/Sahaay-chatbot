@@ -41,3 +41,4 @@ testpaths = ["tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "app/graph/templates.py" = ["E501"]
+"app/pdf/draft_catalog.py" = ["E501"]  # one localised sentence per line
