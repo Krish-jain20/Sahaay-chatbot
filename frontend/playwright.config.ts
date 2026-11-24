@@ -8,6 +8,7 @@ export default defineConfig({
   testDir: "./e2e",
   timeout: 60_000,
   retries: 0,
+  workers: 1, // tests share one backend and one guest user; privacy.spec deletes all of that user's data
   reporter: [["list"]],
   use: {
     baseURL: WEB,

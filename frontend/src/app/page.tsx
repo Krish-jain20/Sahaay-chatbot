@@ -34,6 +34,11 @@ export default function Home() {
           </Button>
         </div>
         <p className="rounded-2xl bg-teal-100 px-4 py-3 text-[15px] text-ink-2">{t("home.scope")}</p>
+        <p className="text-center text-[13.5px]">
+          <Link href="/privacy" className="inline-flex min-h-11 items-center text-teal-700 underline">
+            {t("nav.privacy")}
+          </Link>
+        </p>
         <Disclaimer text={t("common.disclaimer")} />
       </main>
     </AppShell>

@@ -85,7 +85,8 @@
     "documents": "Documents",
     "drafts": "Drafts",
     "forms": "Official form",
-    "case": "Mera case"
+    "case": "Mera case",
+    "privacy": "Privacy"
   },
   "panel": {
     "title": "Aapki details",
@@ -305,5 +306,34 @@
     "saveError": "Save nahi ho paya. Dobara try kijiye.",
     "tooShort": "Kam se kam 4 letters ya digits likhiye.",
     "futureDate": "Date future ki nahi ho sakti."
+  },
+  "privacy": {
+    "title": "Privacy aur mera data",
+    "sub": "Sahaay aapke baare mein kya rakhta hai, kya kabhi nahi rakhta, aur sab kuch kaise delete karein.",
+    "keepTitle": "Hum kya rakhte hain",
+    "keep1": "Jo details aapne save karne ke liye chuni, jaise age ya category, aapki sahmati ke baad.",
+    "keep2": "Aapka case: service, jo steps aapne mark kiye, submit karne ki date, aur reference number jo aakhri 4 characters tak chhota kiya gaya.",
+    "keep3": "Jin documents ko aapne confirm kiya: sirf checked fields, ID numbers aakhri 4 digits tak.",
+    "neverTitle": "Hum kya kabhi nahi rakhte",
+    "never1": "Aapke upload kiye photos ya PDFs. Woh memory mein padhe jaate hain aur hata diye jaate hain.",
+    "never2": "Poora Aadhaar, PAN, phone ya bank number.",
+    "never3": "Hamare banaye PDFs. Woh aapko milte hain, save nahi hote.",
+    "modelNote": "AI model sirf wahi text dekhta hai jisme ID numbers pehle se chhupe hon. Free model services mili information use kar sakti hain, isliye chat mein asli ID number kabhi mat likhiye.",
+    "yourData": "Aapka saved data",
+    "none": "Abhi kuch save nahi hai.",
+    "facts": "Details",
+    "cases": "Cases",
+    "docs": "Documents",
+    "steps": "Recorded steps",
+    "submission": "Submission",
+    "deleteTitle": "Sab kuch delete karein",
+    "deleteHelp": "Isse aapki saved details, cases, documents, steps aur submission details hat jayengi. Ise wapas nahi kiya ja sakta.",
+    "deleteConfirm": "Main samajhta/samajhti hoon ki ise wapas nahi kiya ja sakta",
+    "deleteButton": "Mera data delete karein",
+    "deleted": "Aapka saara saved data delete ho gaya.",
+    "loading": "Load ho raha hai…",
+    "error": "Load nahi ho paya. Dobara try kijiye.",
+    "deleteError": "Delete nahi ho paya. Dobara try kijiye.",
+    "reports": "Har jawab ke saath official sources aur check ki date dikhti hai. Kuch galat lage to service card par “Galat information report karein” use kijiye."
   }
 }

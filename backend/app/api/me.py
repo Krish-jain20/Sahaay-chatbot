@@ -42,6 +42,26 @@ def save_fact(body: FactIn, user: CurrentUser, request: Request) -> dict[str, bo
     return {"ok": True}
 
 
+@router.get("/me/data")
+def export_my_data(user: CurrentUser, request: Request) -> dict[str, Any]:
+    """Everything stored for this user, as it is stored (already masked). For the privacy page."""
+    store = request.app.state.store
+    cases = []
+    for c in store.list_cases(user.id):
+        cid = c["id"]
+        cases.append(
+            {
+                "id": cid,
+                "service_id": c["service_id"],
+                "created_at": c.get("created_at"),
+                "documents": store.list_documents(user.id, cid),
+                "steps": store.list_events(user.id, cid),
+                "submission": store.get_submission(user.id, cid),
+            }
+        )
+    return {"facts": store.list_facts(user.id), "cases": cases}
+
+
 @router.delete("/me/data")
 def delete_my_data(user: CurrentUser, request: Request) -> dict[str, bool]:
     request.app.state.store.delete_user_data(user.id)
