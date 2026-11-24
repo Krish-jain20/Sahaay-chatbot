@@ -7,7 +7,8 @@ import { CasePanel } from "@/components/chat/case-panel";
 import { GuideCard } from "@/components/cards/guide-card";
 import { ServiceCard } from "@/components/cards/service-card";
 import { WebCard } from "@/components/cards/web-card";
-import { CheckIcon, SendIcon, StopIcon } from "@/components/icons";
+import { Avatar, BotBubble, UserBubble } from "@/components/chat/bubbles";
+import { Composer } from "@/components/chat/composer";
 import { Button } from "@/components/ui/button";
 import { API_URL, readSse } from "@/lib/sse";
 import { deleteMyData, loadFacts, saveFacts } from "@/lib/api";
@@ -30,9 +31,10 @@ interface UserMsg {
 }
 type Msg = BotMsg | UserMsg;
 
+const SUGGESTIONS = ["suggestion", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"] as const;
+
 export function Chat() {
   const t = useTranslations("chat");
-  const tc = useTranslations("common");
   const locale = useLocale();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -142,12 +144,17 @@ export function Chat() {
     }
   }
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
+  function submit() {
     const q = input.trim();
     if (!q) return;
     setInput("");
     void ask(q, q, facts);
+  }
+
+  async function newChat() {
+    if (busy) await stop();
+    setMessages([]);
+    setInput("");
   }
 
   async function answerConsent(yes: boolean) {
@@ -180,111 +187,100 @@ export function Chat() {
     void ask(lastQuestion.current, chip.label, next);
   }
 
+  const asked = new Set(messages.filter((m) => m.role === "user").map((m) => m.text));
+  const last = messages[messages.length - 1];
+  const followUps =
+    last?.role === "bot" && !last.streaming && last.chips.length === 0
+      ? SUGGESTIONS.map((k) => t(k)).filter((q) => !asked.has(q)).slice(0, 3)
+      : [];
+
   return (
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_352px]">
-    <div className="mx-auto flex min-h-[calc(100dvh-57px)] w-full max-w-3xl flex-col px-4 xl:min-h-dvh">
-      <div className="flex-1 space-y-4 py-6" aria-live="polite">
-        {messages.length === 0 && (
-          <div className="space-y-3 text-center text-ink-2">
-            <p>{t("empty")}</p>
-            <div className="flex flex-col items-center gap-2">
-              {(["suggestion", "suggestion2", "suggestion3", "suggestion4", "suggestion5", "suggestion6"] as const).map((k) => (
-                <Button key={k} variant="chip" className="whitespace-normal text-left" onClick={() => void ask(t(k), t(k), facts)}>
-                  {t(k)}
-                </Button>
-              ))}
+      <div className="mx-auto flex min-h-[calc(100dvh-57px)] w-full max-w-3xl flex-col px-4 xl:min-h-dvh">
+        <div className="sticky top-0 z-[5] flex items-center justify-between gap-3 bg-bg py-2">
+          <div className="flex items-center gap-2.5">
+            <Avatar className="size-9" />
+            <div className="leading-tight">
+              <p className="font-display text-[17px] font-bold text-ink">Sahaay</p>
+              <p className="text-[12.5px] text-ink-3">{t("assistantLabel")}</p>
             </div>
           </div>
-        )}
-        {messages.map((m, i) =>
-          m.role === "user" ? (
-            <div key={i} className="flex justify-end">
-              <p className="max-w-[78%] rounded-[20px_20px_6px_20px] bg-teal-700 px-4 py-2.5 text-white">{m.text}</p>
-            </div>
-          ) : (
-            <div key={i} className="max-w-[92%]">
-              {m.statuses.length > 0 && (
-                <ul className="mb-2 flex flex-wrap gap-2" aria-label="status">
-                  {m.statuses.map((s) => (
-                    <li key={s.id} className="animate-rise inline-flex items-center gap-1.5 rounded-full bg-bg-sunken px-3 py-1 text-[13px] text-ink-2">
-                      {s.state === "done" ? (
-                        <CheckIcon className="size-3.5 text-ok-500" />
-                      ) : (
-                        <span className="animate-spin-slow inline-block size-3.5 rounded-full border-2 border-teal-700 border-t-transparent" aria-hidden="true" />
-                      )}
-                      {s.label}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {(m.text || m.note) && (
-                <div className="rounded-[20px_20px_20px_6px] border border-line bg-surface px-4 py-3">
-                  {m.text && <p className="whitespace-pre-wrap">{m.text}</p>}
-                  {m.note && <p className="text-[14px] text-ink-3">{m.note}</p>}
-                </div>
-              )}
-              {m.card?.type === "service" && <ServiceCard card={m.card} citations={m.citations} />}
-              {m.card?.type === "guide" && <GuideCard card={m.card} />}
-              {m.card?.type === "web" && <WebCard card={m.card} />}
-              {m.chips.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {m.chips.map((c) => (
-                    <Button key={c.label} variant="chip" onClick={() => pickChip(c)} disabled={busy}>
-                      {c.label}
-                    </Button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ),
-        )}
-        <div ref={bottom} />
-      </div>
-
-      {consent === "asking" && (
-        <section className="mb-2 rounded-2xl border border-line bg-marigold-050 p-3" aria-labelledby="consent-title">
-          <h2 id="consent-title" className="text-[15px] font-bold">{tp("title")}</h2>
-          <p className="text-[14px] text-ink-2">{tp("body")}</p>
-          <div className="mt-2 flex gap-2">
-            <Button variant="accent" onClick={() => void answerConsent(true)}>{tp("yes")}</Button>
-            <Button variant="secondary" onClick={() => void answerConsent(false)}>{tp("no")}</Button>
-          </div>
-        </section>
-      )}
-      {info && <p className="mb-2 text-center text-[13px] text-ok-700" role="status">{info}</p>}
-      {consent === "yes" && (
-        <button type="button" onClick={() => void removeMyData()} className="mx-auto mb-2 block min-h-11 text-[13px] font-semibold text-ink-3 underline">
-          {tp("delete")}
-        </button>
-      )}
-
-      <form onSubmit={submit} className="sticky bottom-0 bg-bg pb-3 pt-2">
-        <div className="flex items-center gap-2 rounded-full border border-line bg-surface p-1.5 pl-4">
-          <label htmlFor="chat-input" className="sr-only">
-            {t("placeholder")}
-          </label>
-          <input
-            id="chat-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={t("placeholder")}
-            className="min-h-11 flex-1 bg-transparent outline-none placeholder:text-ink-3"
-            autoComplete="off"
-          />
-          {busy ? (
-            <Button type="button" size="icon" variant="secondary" onClick={() => void stop()} aria-label={t("stop")}>
-              <StopIcon />
-            </Button>
-          ) : (
-            <Button type="submit" size="icon" variant="accent" aria-label={t("send")} disabled={!input.trim()}>
-              <SendIcon />
+          {messages.length > 0 && (
+            <Button type="button" variant="secondary" onClick={() => void newChat()}>
+              {t("newChat")}
             </Button>
           )}
         </div>
-        <p className="mt-2 text-center text-[12.5px] text-ink-3">{tc("disclaimer")}</p>
-      </form>
-    </div>
-    <CasePanel facts={facts} saved={consent === "yes"} />
+
+        <div className="flex-1 space-y-4 py-4" role="log" aria-live="polite" aria-label={t("log")}>
+          {messages.length === 0 && (
+            <div className="flex flex-col items-center gap-4 pt-6 text-center" data-testid="chat-empty">
+              <Avatar className="size-14" />
+              <p className="max-w-xl text-ink-2">{t("empty")}</p>
+              <div className="grid w-full max-w-2xl gap-2 sm:grid-cols-2">
+                {SUGGESTIONS.map((k) => (
+                  <Button key={k} variant="chip" className="h-auto justify-start whitespace-normal py-2.5 text-left" onClick={() => void ask(t(k), t(k), facts)}>
+                    {t(k)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+          {messages.map((m, i) =>
+            m.role === "user" ? (
+              <UserBubble key={i} text={m.text} />
+            ) : (
+              <BotBubble key={i} statuses={m.statuses} text={m.text} note={m.note} streaming={m.streaming}>
+                {m.card?.type === "service" && <ServiceCard card={m.card} citations={m.citations} />}
+                {m.card?.type === "guide" && <GuideCard card={m.card} />}
+                {m.card?.type === "web" && <WebCard card={m.card} />}
+                {m.chips.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {m.chips.map((c) => (
+                      <Button key={c.label} variant="chip" onClick={() => pickChip(c)} disabled={busy}>
+                        {c.label}
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </BotBubble>
+            ),
+          )}
+          {followUps.length > 0 && (
+            <div className="pl-[42px]" data-testid="follow-ups">
+              <p className="mb-2 text-[13px] text-ink-3">{t("followUps")}</p>
+              <div className="flex flex-wrap gap-2">
+                {followUps.map((q) => (
+                  <Button key={q} variant="chip" className="h-auto whitespace-normal py-2 text-left" onClick={() => void ask(q, q, facts)}>
+                    {q}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+          <div ref={bottom} />
+        </div>
+
+        {consent === "asking" && (
+          <section className="mb-2 rounded-2xl border border-line bg-marigold-050 p-3" aria-labelledby="consent-title">
+            <h2 id="consent-title" className="text-[15px] font-bold">{tp("title")}</h2>
+            <p className="text-[14px] text-ink-2">{tp("body")}</p>
+            <div className="mt-2 flex gap-2">
+              <Button variant="accent" onClick={() => void answerConsent(true)}>{tp("yes")}</Button>
+              <Button variant="secondary" onClick={() => void answerConsent(false)}>{tp("no")}</Button>
+            </div>
+          </section>
+        )}
+        {info && <p className="mb-2 text-center text-[13px] text-ok-700" role="status">{info}</p>}
+        {consent === "yes" && (
+          <button type="button" onClick={() => void removeMyData()} className="mx-auto mb-2 block min-h-11 text-[13px] font-semibold text-ink-3 underline">
+            {tp("delete")}
+          </button>
+        )}
+
+        <Composer value={input} onChange={setInput} onSend={submit} onStop={() => void stop()} busy={busy} />
+      </div>
+      <CasePanel facts={facts} saved={consent === "yes"} />
     </div>
   );
 }

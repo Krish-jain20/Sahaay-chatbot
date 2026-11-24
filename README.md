@@ -14,7 +14,7 @@ done and what is left.
 | Page | What it does |
 |---|---|
 | `/chat` | Ask in any of the three languages. Get a service card with eligibility per rule (met / not met / unknown), fees, prerequisites and sources. |
-| `/compare` | Compare 2 or 3 services side by side. |
+| `/compare` | Expandable service cards; tick up to 3 to compare side by side. |
 | `/case` | Track your own progress through five steps you mark yourself, save the submission date and a masked reference number, download a case summary PDF. |
 | `/documents` | Upload a photo or PDF (read in memory, never stored), correct what was read, confirm, and see which documents are ready or missing. |
 | `/forms` | The official income certificate application with your details written on it. Review, tick "I checked every field", download. |
