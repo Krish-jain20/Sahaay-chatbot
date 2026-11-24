@@ -7,6 +7,7 @@ plus the verified cards that match the words. "Learn more" explains one card fro
 
 from __future__ import annotations
 
+import logging
 import re
 from datetime import date
 from typing import Any
@@ -23,6 +24,7 @@ from app.safety.claims import find_violations
 from app.safety.pii import mask_pii
 
 router = APIRouter()
+log = logging.getLogger("sahaay.help")
 
 LANGS: tuple[Lang, ...] = ("en", "hi", "hn")
 STOP = {
@@ -120,13 +122,18 @@ def ask(body: AskRequest, request: Request, user: CurrentUser) -> dict[str, Any]
     texts = _card_texts(g, matches, body.language)
     if answer is None:
         cards = "\n\n".join(f"[{cid}]\n{t}" for cid, t in texts) or "(no matching card)"
+        reason = "model_unavailable"
         try:
-            answer = _clean(llm.help_answer(question, cards, body.language, user_id=user.id))
-        except (RateLimited, BudgetExceeded, LLMError):
-            answer = None
+            raw = llm.help_answer(question, cards, body.language, user_id=user.id)
+            answer = _clean(raw)
+            reason = "blocked_claim" if raw and not answer else "no_source"
+        except (RateLimited, BudgetExceeded, LLMError) as e:
+            answer, reason = None, type(e).__name__
         if answer:
             basis = "cards"
         elif texts:
+            # Sizes and reasons only: no question text in logs.
+            log.warning("help ask fell back to card text: %s", reason)
             answer, basis = texts[0][1].split("\n", 1)[1], "card_text"
     return {"answer": answer, "web": web, "matches": matches, "basis": basis, "state": basis}
 
