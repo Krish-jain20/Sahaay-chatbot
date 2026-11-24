@@ -85,7 +85,9 @@ Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip whe
 | ID | Status | Notes |
 |---|---|---|
 | S6-02 | done | `/privacy` page: what is kept and never kept, the user's saved data (`GET /me/data`), delete-everything with a tick (`DELETE /me/data` removes facts, cases, documents, steps, submission); tested end to end |
-| S6-01, S6-03 to S6-08 | todo | email sign-in, Postgres checkpointer, safety tests, accessibility pass, Dockerfile and deploy, README, human copy review |
+| S6-06 | partly | `backend/Dockerfile` (Tesseract eng+hin, Pango, Noto fonts, non-root) and `frontend/Dockerfile` written; the Python install step was checked locally, but no Docker daemon was available here, so neither image has been built, and nothing is deployed |
+| S6-08 | done | README: setup, the two settings files, tests, Docker, 5-minute demo script, known gaps (no screenshots yet) |
+| S6-01, S6-03, S6-04, S6-05, S6-07 | todo | email sign-in, Postgres checkpointer, safety tests, accessibility pass, human copy review |
 
 ## Stage 6 and the rest
 Not started: glossary and screenshots (5),
