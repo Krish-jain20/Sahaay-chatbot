@@ -68,6 +68,12 @@ export function Chat() {
   }, []);
 
   useEffect(() => {
+    // A link such as /chat?q=... pre-fills the question; the person still presses Send.
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) setInput(q.slice(0, 500));
+  }, []);
+
+  useEffect(() => {
     bottom.current?.scrollIntoView({ block: "end" });
   }, [messages]);
 
