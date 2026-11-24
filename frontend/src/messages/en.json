@@ -24,7 +24,15 @@
     "suggestion3": "My mother is 67, can she get a pension?",
     "suggestion4": "How do I apply for a ration card in Delhi?",
     "suggestion5": "What documents are needed for a birth certificate in Delhi?",
-    "suggestion6": "How do I renew a driving licence?"
+    "suggestion6": "How do I renew a driving licence?",
+    "you": "You",
+    "typing": "Sahaay is typing",
+    "steps": "Steps",
+    "log": "Conversation",
+    "assistantLabel": "AI assistant",
+    "newChat": "New chat",
+    "followUps": "You could also ask",
+    "hint": "Enter to send, Shift+Enter for a new line"
   },
   "card": {
     "verified": "Verified from official portal · {date}",

@@ -99,7 +99,10 @@ test("keyboard: Tab reaches the main controls on the chat page with a visible fo
       // The Next.js dev-tools badge only exists in development.
       if (!el || el === document.body || el.tagName === "NEXTJS-PORTAL") return null;
       const cs = getComputedStyle(el);
-      const ring = cs.outlineStyle !== "none" || cs.boxShadow !== "none";
+      // A control may show its focus ring on a wrapper that marks itself with data-focus-ring (the message box).
+      const wrap = el.closest("[data-focus-ring]");
+      const wrapRing = wrap ? getComputedStyle(wrap).boxShadow !== "none" : false;
+      const ring = cs.outlineStyle !== "none" || cs.boxShadow !== "none" || wrapRing;
       return { tag: el.tagName, name: el.getAttribute("aria-label") || el.textContent?.trim().slice(0, 25) || "", ring };
     });
     if (info) {

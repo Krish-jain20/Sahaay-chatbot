@@ -24,7 +24,15 @@
     "suggestion3": "Meri maa 67 saal ki hain, kya unhe pension mil sakti hai?",
     "suggestion4": "Delhi mein ration card ke liye apply kaise karein?",
     "suggestion5": "Delhi mein birth certificate ke liye kaun se documents chahiye?",
-    "suggestion6": "Driving licence renew kaise karein?"
+    "suggestion6": "Driving licence renew kaise karein?",
+    "you": "Aap",
+    "typing": "Sahaay likh raha hai",
+    "steps": "Steps",
+    "log": "Baatcheet",
+    "assistantLabel": "AI assistant",
+    "newChat": "Nayi chat",
+    "followUps": "Aap yeh bhi pooch sakte hain",
+    "hint": "Bhejne ke liye Enter, nayi line ke liye Shift+Enter"
   },
   "card": {
     "verified": "Official portal se verified · {date}",
