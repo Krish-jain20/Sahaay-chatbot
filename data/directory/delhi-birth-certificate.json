@@ -1,0 +1,153 @@
+{
+  "id": "delhi-birth-certificate",
+  "category": [
+    "certificate"
+  ],
+  "name": {
+    "en": "Birth certificate",
+    "hi": "जन्म प्रमाण पत्र",
+    "hn": "Birth certificate"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "birth certificate",
+    "janm praman patra",
+    "जन्म प्रमाण पत्र",
+    "birth registration"
+  ],
+  "summary": {
+    "en": "Register a birth and get the certificate from the local body (MCD, NDMC or Delhi Cantonment Board).",
+    "hi": "जन्म का पंजीकरण कराएँ और स्थानीय निकाय (MCD, NDMC या दिल्ली छावनी बोर्ड) से प्रमाण पत्र पाएँ।",
+    "hn": "Birth register karayein aur local body (MCD, NDMC ya Delhi Cantonment Board) se certificate payein."
+  },
+  "benefit": {
+    "text": {
+      "en": "An official birth certificate issued by the local body (MCD, NDMC or Delhi Cantonment Board).",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "Every birth must be reported and registered within 21 days at the place where it occurred. A hospital reports its own births; for a birth at home the head of the family reports it.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Registration after 21 days but within 30 days needs a late fee of ₹2. After a month but within one year it needs the Registrar's written permission and a fee of ₹5.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    },
+    {
+      "text": {
+        "en": "After one year, a Birth Registration Order is needed. It is for a citizen of India or NRI born in Delhi who has no birth certificate from any government agency in India, applying at least one year after the birth.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "For the Birth Registration Order (late registration): identity proof of the person and, for a minor, of the parents; present and permanent address proof; date of birth proof; place of birth proof (hospital report, or the parents' address proof for a home birth).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    },
+    {
+      "text": {
+        "en": "A notarised affidavit on ₹10 non-judicial e-stamp paper in the prescribed format, and one colour passport size photo (5 cm x 4.5 cm).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Additional copies are ₹5 each. Searching one entry in the current year costs ₹2, plus ₹2 for each additional year searched. The fee for the first copy is not stated: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Within 7 days of receiving your application, if the birth is already registered.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Report the birth within 21 days to the Registrar of Births and Deaths of your local body: an MCD zonal office or vaccination centre, an NDMC vaccination centre, or the Delhi Cantonment registration centre.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Apply for the certificate at the registration centre or zonal office of that local body.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "If the birth was never registered and a year has passed, apply for a Birth Registration Order with the documents listed.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Registration of births and deaths, delayed registration (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/issue-orders-delayed-registration-birthdeath",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Directorate of Economics and Statistics: births and deaths FAQ",
+      "url": "https://des.delhi.gov.in/des/frequently-asked-questions-faq",
+      "publisher": "Directorate of Economics and Statistics, GNCTD (Chief Registrar, Births and Deaths)",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s3",
+      "title": "Birth Registration Order guidelines (DM New Delhi)",
+      "url": "https://dmnewdelhi.delhi.gov.in/service/birth-certificate",
+      "publisher": "District Magistrate New Delhi, Revenue Department",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The MCD portal link is for births and deaths registered with MCD. NDMC and Cantonment areas use their own centres.",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "apply_url": "https://mcdonline.nic.in/rbd"
+}

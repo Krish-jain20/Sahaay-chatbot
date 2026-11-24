@@ -78,6 +78,9 @@ All curated knowledge lives in `data/` as JSON, validated by Pydantic on load. *
 6. Rule `field` must be a known profile key (section 4); `op` valid for its type.
 7. `date_checked` older than `FRESHNESS_DAYS` marks the record stale at runtime.
 
+### 2a. Directory service (`data/directory/<id>.json`)
+Information-only card for Compare (no eligibility rules, so it can never say "you qualify"). Fields: `id` (= filename), `jurisdiction`, `name`, `department`, `summary` (localised), `category`, `aliases`, `benefit`, `fee`, `time` (each an `{text, source_ref}` or null), `who`, `documents`, `steps` (lists of `{text, source_ref}`), `apply_url`, `sources` (same shape as in service records, every one with `date_checked`), `notes`. Details may be English only (`hi` and `hn` null fall back to `en`). A fact that no official page states is left null and shown as "Verify locally". Hosts of every source and `apply_url` must be in the allowlist.
+
 ## 3. Rule operators
 
 `eq, ne, lt, lte, gt, gte, between [min,max], in, not_in, exists, is_true, is_false, age_between [min,max]`.

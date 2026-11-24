@@ -193,3 +193,31 @@ class Allowlist(Strict):
     version: int
     updated_on: date
     domains: list[AllowedDomain]
+
+
+class InfoFact(Strict):
+    """One sourced line on a directory card. Missing facts are simply left out of the record."""
+
+    text: LText
+    source_ref: str
+
+
+class InfoService(Strict):
+    """A citizen service shown as a card on Compare. Information only: no eligibility verdicts."""
+
+    id: str
+    jurisdiction: Jurisdiction
+    name: LText
+    department: LText
+    category: list[str]
+    aliases: list[str] = []
+    summary: LText
+    benefit: InfoFact | None
+    who: list[InfoFact]
+    documents: list[InfoFact]
+    fee: InfoFact | None
+    time: InfoFact | None
+    steps: list[InfoFact]
+    apply_url: str | None
+    sources: list[Source]
+    notes: str | None = None

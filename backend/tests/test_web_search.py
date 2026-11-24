@@ -164,7 +164,7 @@ class FakeSummary:
 
 
 GOV_ROWS = [
-    ("Ration card", "https://fsd.delhi.gov.in/des/ration-card", "Apply with proof of address and ID."),
+    ("Ration card", "https://fcs.example.gov.in/ration-card", "Apply with proof of address and ID."),
     ("FAQ", "https://revenue.delhi.gov.in/x", "More on documents."),
 ]
 
@@ -186,9 +186,9 @@ def test_tavily_searches_government_sites_first_then_summarises_with_real_links(
     assert "proof of address" in said
     card = cards[0]
     kinds = {s["title"]: s["kind"] for s in card["sources"]}
-    assert kinds == {"fsd.delhi.gov.in": "gov_unchecked", "revenue.delhi.gov.in": "official"}
+    assert kinds == {"fcs.example.gov.in": "gov_unchecked", "revenue.delhi.gov.in": "official"}
     assert (
-        card["sources"][0]["url"] == "https://fsd.delhi.gov.in/des/ration-card"
+        card["sources"][0]["url"] == "https://fcs.example.gov.in/ration-card"
     )  # the real page, not a redirect
 
 

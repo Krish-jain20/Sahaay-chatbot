@@ -35,9 +35,12 @@ test("student finds the scholarship, confirms facts, sees the chain, then compar
 
   // Compare with another service.
   await page.goto("/compare");
-  await expect(page.getByRole("table")).toBeVisible();
   await page.getByRole("button", { name: /Old Age Assistance/ }).click();
-  await expect(page.getByRole("columnheader")).toHaveCount(4);
+  await page.getByLabel(/Compare: Old Age Assistance/).check();
+  await page.getByRole("button", { name: /Merit Scholarship/ }).click();
+  await page.getByLabel(/Compare: Merit Scholarship/).check();
+  await expect(page.getByRole("table")).toBeVisible();
+  await expect(page.getByRole("columnheader")).toHaveCount(3);
   await expect(page.getByRole("link", { name: /Financial Assistance Schemes/ }).first()).toBeVisible();
 });
 

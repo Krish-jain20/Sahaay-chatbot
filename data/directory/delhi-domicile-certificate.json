@@ -1,0 +1,162 @@
+{
+  "id": "delhi-domicile-certificate",
+  "category": [
+    "certificate"
+  ],
+  "name": {
+    "en": "Domicile certificate",
+    "hi": "निवास (डोमिसाइल) प्रमाण पत्र",
+    "hn": "Domicile certificate"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "domicile certificate",
+    "domicile",
+    "residence certificate",
+    "niwas praman patra",
+    "निवास प्रमाण पत्र"
+  ],
+  "summary": {
+    "en": "A Revenue Department certificate that you have lived in Delhi.",
+    "hi": "राजस्व विभाग का प्रमाण पत्र कि आप दिल्ली में रहते हैं।",
+    "hn": "Revenue Department ka certificate ki aap Delhi mein rehte hain."
+  },
+  "benefit": {
+    "text": {
+      "en": "A domicile certificate from the Revenue Department showing you have lived in Delhi.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You must be able to show continuous stay in Delhi for the last 3 years.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A minor's application needs a self-declaration from a major, since the applicant is under 18.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Completed application form, self-attested.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Aadhaar. It is not compulsory: if you have none, give any one identity proof from PAN, passport, driving licence or voter card. The name must match your application.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Self-declaration in the prescribed format.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Present residence proof such as a voter card, electricity, water or telephone bill.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Proof of date of birth: birth certificate, school certificate or passport.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Proof of continuous stay in Delhi for the last 3 years, such as an education certificate, electricity bill, house tax or water bill.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Contact number and ID copy of the Class I gazetted officer who attested the form. All documents need to be attested by a gazetted officer.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "No fee.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "14 days.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Go to the SDM of your area, or the Deputy Commissioner's office, between 10:00 AM and 1:00 PM on any working day. You can also apply online on e-District.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Your photo is captured by webcam when you submit or at verification, and it should match the photo on your Aadhaar.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Domicile Certificate (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/domicile-certificate",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}

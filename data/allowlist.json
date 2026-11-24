@@ -66,6 +66,41 @@
       "host": "www.india.gov.in",
       "owner": "National Portal of India (NIC, Government of India). Its services directory was seen through a web search on 2026-11-24; direct connections from the build environment fail",
       "verified_on": "2026-11-24"
+    },
+    {
+      "host": "fsd.delhi.gov.in",
+      "owner": "Department of Food Supplies and Consumer Affairs, GNCTD. Pages read through a web search on 2026-11-24; direct connections from the build environment fail",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "des.delhi.gov.in",
+      "owner": "Directorate of Economics and Statistics, GNCTD (Chief Registrar, Births and Deaths). Read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "dmnewdelhi.delhi.gov.in",
+      "owner": "District Magistrate New Delhi, Revenue Department, GNCTD. Read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "transport.delhi.gov.in",
+      "owner": "Transport Department, GNCTD. Read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "voters.eci.gov.in",
+      "owner": "Election Commission of India voter services portal. Form 6 guide read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "www.ceodelhi.gov.in",
+      "owner": "Chief Electoral Officer, Delhi. FAQ page read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
+    },
+    {
+      "host": "mcdonline.nic.in",
+      "owner": "Municipal Corporation of Delhi online portal (NIC). Birth and death registration pages read through a web search on 2026-11-24",
+      "verified_on": "2026-11-24"
     }
   ]
 }

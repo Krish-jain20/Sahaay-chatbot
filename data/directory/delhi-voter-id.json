@@ -1,0 +1,147 @@
+{
+  "id": "delhi-voter-id",
+  "jurisdiction": {
+    "level": "central",
+    "state": null
+  },
+  "category": [
+    "identity"
+  ],
+  "name": {
+    "en": "Voter ID card (EPIC): new registration",
+    "hi": "मतदाता पहचान पत्र (EPIC): नया पंजीकरण",
+    "hn": "Voter ID card (EPIC): new registration"
+  },
+  "department": {
+    "en": "Election Commission of India (Chief Electoral Officer, Delhi)",
+    "hi": "भारत निर्वाचन आयोग (मुख्य निर्वाचन अधिकारी, दिल्ली)",
+    "hn": "Election Commission of India (CEO Delhi)"
+  },
+  "aliases": [
+    "voter id",
+    "voter card",
+    "epic",
+    "form 6",
+    "new voter",
+    "मतदाता पहचान पत्र"
+  ],
+  "summary": {
+    "en": "Register as a voter with Form 6 and receive the Elector's Photo Identity Card.",
+    "hi": "फ़ॉर्म 6 से मतदाता के रूप में पंजीकरण करें और मतदाता फ़ोटो पहचान पत्र पाएँ।",
+    "hn": "Form 6 se voter register karein aur Elector's Photo ID Card payein."
+  },
+  "benefit": {
+    "text": {
+      "en": "Your name in the electoral roll, and an Elector's Photo Identity Card (EPIC) delivered to your postal address by speed post.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "An Indian citizen.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    },
+    {
+      "text": {
+        "en": "Aged 18 or more on a qualifying date: 1 January, 1 April, 1 July or 1 October. If you turn 18 later in the year you can send an advance Form 6, and it is processed in the quarter you attain the age.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    },
+    {
+      "text": {
+        "en": "An ordinary resident of the area of the constituency you apply in.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Form 6, addressed to the Electoral Registration Officer of the constituency where you ordinarily live. You can fill it in English or the state's official language.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A recent passport size unsigned colour photo (4.5 cm x 3.5 cm), white background, eyes open, both edges of the face visible.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A self-attested copy of one of the documents listed in the form as age proof, and proof of ordinary residence.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "The EPIC is delivered free of cost.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Not stated on the official pages: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Fill Form 6 and attach the photo and documents. Apply in the constituency where you ordinarily live.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "After enrolment the EPIC is sent to your postal address by speed post against acknowledgement.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Guidelines for filling Form 6 (Election Commission of India)",
+      "url": "https://voters.eci.gov.in/guidelines/Form-6_en.pdf",
+      "publisher": "Election Commission of India",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Electoral roll and voter services FAQs (CEO Delhi)",
+      "url": "https://www.ceodelhi.gov.in/Voter_services_Electoral_Roll_FAQs.aspx",
+      "publisher": "Chief Electoral Officer, Delhi",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The portal address is the host of the official Form 6 guide; the page itself was not opened.",
+  "apply_url": "https://voters.eci.gov.in/"
+}

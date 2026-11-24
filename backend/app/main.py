@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, cases, chat, compare, documents, drafts, forms, guidance, me, services
+from app.api import auth, cards, cases, chat, compare, documents, drafts, forms, guidance, me, services
 from app.config import get_settings
 from app.data.guidance import load_guidance
 from app.data.loader import load_catalog
@@ -46,6 +46,7 @@ app.add_middleware(
 app.include_router(chat.router)
 app.include_router(services.router)
 app.include_router(compare.router)
+app.include_router(cards.router)
 app.include_router(documents.router)
 app.include_router(me.router)
 app.include_router(cases.router)

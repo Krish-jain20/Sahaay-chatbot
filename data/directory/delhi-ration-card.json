@@ -1,0 +1,153 @@
+{
+  "id": "delhi-ration-card",
+  "category": [
+    "food"
+  ],
+  "name": {
+    "en": "Ration card (National Food Security card)",
+    "hi": "राशन कार्ड (राष्ट्रीय खाद्य सुरक्षा कार्ड)",
+    "hn": "Ration card (NFS card)"
+  },
+  "department": {
+    "en": "Department of Food Supplies and Consumer Affairs, Govt of NCT of Delhi",
+    "hi": "खाद्य आपूर्ति एवं उपभोक्ता मामले विभाग, दिल्ली सरकार",
+    "hn": "Food Supplies and Consumer Affairs Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "ration card",
+    "nfs card",
+    "food security card",
+    "राशन कार्ड"
+  ],
+  "summary": {
+    "en": "A ration card under the National Food Security Act for eligible Delhi households.",
+    "hi": "राष्ट्रीय खाद्य सुरक्षा अधिनियम के तहत पात्र दिल्ली परिवारों के लिए राशन कार्ड।",
+    "hn": "National Food Security Act ke tahat eligible Delhi parivaaron ke liye ration card."
+  },
+  "benefit": {
+    "text": {
+      "en": "A National Food Security (NFS) ration card for an eligible household. Holders of an Antyodaya Anna Yojana (AAY) card can get 1 kg of subsidised sugar per card. How much grain you get and at what price: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "Households in vulnerable groups, for example residents of slums, resettlement colonies (F, G and H categories) or notified rural abadis, shelterless people, transgender persons, households with a disabled member (with the prescribed medical certificate), single women including widows, and children living without protection.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Other households with annual income below ₹1 lakh.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The Head of Family is the eldest woman member aged 18 or above. If there is none, the eldest male member.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Aadhaar of all family members.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Passport size photo of the Head of Family.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Latest electricity bill.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "If your address differs from the Head of Family's Aadhaar address: residence proof such as a telephone or water bill, a rent agreement with the owner's ownership proof, a voter ID, or any other government-issued document.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Not stated for a new card: verify locally. The official FAQ says there is no fee for adding or removing names or for changing a name or address.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "30 days under the 2015 Control Order, first come first served, after document and home verification and subject to the limit of beneficiaries fixed by the Government of India.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Apply online on the e-District portal (register, upload documents, submit), with Mobile Sahayak, or at your Circle office with a filled form and documents.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The concerned FSI verifies your documents and does a physical verification.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "There is no temporary ration card and an NFS card needs no renewal. A duplicate is the e-Ration Card, which you can download from the NFS or e-District portal.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Ration Card FAQ (page says updated 15 July 2026)",
+      "url": "https://fsd.delhi.gov.in/des/ration-card",
+      "publisher": "Department of Food Supplies and Consumer Affairs, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The department home page also lists the Delhi Food Security Rules, 2026 and an SOP for new ration cards (February 2026). Those documents were not read, so some rules may differ.",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}

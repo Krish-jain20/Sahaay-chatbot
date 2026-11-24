@@ -1,0 +1,162 @@
+{
+  "id": "delhi-family-benefit-scheme",
+  "category": [
+    "pension"
+  ],
+  "name": {
+    "en": "Delhi Family Benefit Scheme",
+    "hi": "दिल्ली परिवार लाभ योजना",
+    "hn": "Delhi Family Benefit Scheme"
+  },
+  "department": {
+    "en": "Social Welfare Department, Govt of NCT of Delhi",
+    "hi": "समाज कल्याण विभाग, दिल्ली सरकार",
+    "hn": "Social Welfare Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "family benefit scheme",
+    "delhi family benefit",
+    "death of breadwinner",
+    "bread earner death assistance",
+    "परिवार लाभ योजना"
+  ],
+  "summary": {
+    "en": "A one-time ₹20,000 for the family of a breadwinner who died aged 18 to 60, if family income is low.",
+    "hi": "18 से 60 वर्ष की उम्र में कमाने वाले की मृत्यु पर, कम आय वाले परिवार को एक बार ₹20,000।",
+    "hn": "18 se 60 saal ki umar mein kamane wale ki maut par, kam income wale parivaar ko ek baar ₹20,000."
+  },
+  "benefit": {
+    "text": {
+      "en": "One-time assistance of ₹20,000, paid to the applicant's Aadhaar-linked bank account through PFMS.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "The scheme is for family members of a household's main earner (the member whose earnings were the largest part of household income) who died while aged 18 to 60.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The applicant has lived in Delhi for more than 5 years before applying.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Family income of the applicant is not more than ₹1,00,000 a year.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The applicant has an Aadhaar number and a singly-operated bank account in the National Capital Territory of Delhi linked to Aadhaar.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Age proof and residence proof (the same lists as for the old-age pension: for example a birth certificate, ration card, voter card, Aadhaar, passport or utility bill).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Bank account number (single account).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Proof of the earner's death: a death certificate from the Registrar of Births and Deaths, a cremation ground or graveyard receipt, a hospital certificate, a certificate of the Block Development Officer if the death was outside Delhi or in a village, or a post mortem report.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "One passport size photo, and an income self-declaration in the format on the portal.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Not stated on the official page: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Normally within 45 days of receiving the application, unless circumstances dictate otherwise.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Apply online on the e-District portal after registering through citizen login, or at your District Social Welfare Office. Aadhaar is mandatory: the portal does not work without it. Scan and upload the documents.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The District Social Welfare Office scrutinises the application and may call you with documents for verification.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "If sanctioned, the one-time amount is sent to your bank account.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Financial Assistance Schemes (Social Welfare Department)",
+      "url": "https://socialwelfare.delhi.gov.in/social/financials-assistance-schemes",
+      "publisher": "Social Welfare Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}

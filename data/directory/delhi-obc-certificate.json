@@ -1,0 +1,152 @@
+{
+  "id": "delhi-obc-certificate",
+  "category": [
+    "certificate"
+  ],
+  "name": {
+    "en": "OBC certificate",
+    "hi": "OBC प्रमाण पत्र",
+    "hn": "OBC certificate"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "obc certificate",
+    "other backward classes certificate",
+    "obc praman patra"
+  ],
+  "summary": {
+    "en": "A Revenue Department certificate that you belong to an Other Backward Class in Delhi.",
+    "hi": "राजस्व विभाग का प्रमाण पत्र कि आप दिल्ली में अन्य पिछड़ा वर्ग से हैं।",
+    "hn": "Revenue Department ka certificate ki aap Delhi mein OBC se hain."
+  },
+  "benefit": {
+    "text": {
+      "en": "An OBC certificate issued in Delhi.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You must show your caste and continuous stay in Delhi since 1993, with two attestations by an MP, MLA, Councillor or gazetted officer.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A copy of an OBC certificate of your father, brother, sister or paternal blood relative helps, if available.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Completed application form.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Aadhaar. It is not compulsory: if you have none, give any one identity proof from PAN, passport, driving licence or voter card.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Self-declaration in the prescribed format (from a major if the applicant is under 18).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Present residence proof such as a voter card, electricity, water or telephone bill.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Two attestations by an MP, MLA, Councillor or gazetted officer declaring your caste and continuous stay in Delhi since 1993, and supporting residence proof in Delhi since 1993.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Family income proof such as ITR, salary slip or Form-16. All documents need to be attested by an MP, MLA or gazetted officer.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "No fee.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "14 days.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Go to the SDM of your area, or the Deputy Commissioner's office, between 10:00 AM and 1:00 PM on any working day. You can also apply online on e-District.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Your photo is captured by webcam when you submit or at verification, and it should match the photo on your Aadhaar.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "OBC Certificate (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/obc-certificate",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://edistrict.delhigovt.nic.in/"
+}

@@ -1,0 +1,154 @@
+{
+  "id": "delhi-permanent-driving-licence",
+  "category": [
+    "licence"
+  ],
+  "name": {
+    "en": "Permanent driving licence",
+    "hi": "स्थायी ड्राइविंग लाइसेंस",
+    "hn": "Permanent driving licence"
+  },
+  "department": {
+    "en": "Transport Department, Govt of NCT of Delhi",
+    "hi": "परिवहन विभाग, दिल्ली सरकार",
+    "hn": "Transport Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "permanent driving licence",
+    "permanent driving license",
+    "driving test",
+    "dl",
+    "स्थायी ड्राइविंग लाइसेंस"
+  ],
+  "summary": {
+    "en": "The full driving licence, issued after a driving test, to people who held a learner's licence.",
+    "hi": "लर्नर लाइसेंस के बाद ड्राइविंग टेस्ट पास करने पर मिलने वाला पूरा लाइसेंस।",
+    "hn": "Learner licence ke baad driving test pass karne par milne wala poora licence."
+  },
+  "benefit": {
+    "text": {
+      "en": "A permanent driving licence authorising you to drive the category of vehicle you are tested on. Nobody may drive in a public place without one.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "You must have held a learner's licence for at least 30 days.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Apply after one month and within six months of the learner's licence being issued, and know the vehicle systems, driving and traffic rules.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "Form 4.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Your effective learner's licence (original).",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "A recent passport size photo.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For a transport vehicle licence: driving certificate, Forms 5, 14 and 15.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "The prescribed fee under Rule 32 of the Central Motor Vehicles Rules, 1989.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "₹400 (₹200 plus ₹200 for the smart card).",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Not stated on the official page: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Submit your documents to your local zonal office of the licensing authority.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    },
+    {
+      "text": {
+        "en": "After the documents are checked you take a driving test. Bring your own vehicle and pay the prescribed fee.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Permanent Driving Licence (Transport Department)",
+      "url": "https://transport.delhi.gov.in/transport/permanent-driving-licence",
+      "publisher": "Transport Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Driving Licence FAQ (Transport Department)",
+      "url": "https://transport.delhi.gov.in/transport/driving-license",
+      "publisher": "Transport Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "notes": null,
+  "apply_url": "https://transport.delhi.gov.in/"
+}

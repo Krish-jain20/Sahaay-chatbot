@@ -1,0 +1,161 @@
+{
+  "id": "delhi-death-certificate",
+  "category": [
+    "certificate"
+  ],
+  "name": {
+    "en": "Death certificate",
+    "hi": "मृत्यु प्रमाण पत्र",
+    "hn": "Death certificate"
+  },
+  "department": {
+    "en": "Revenue Department, Govt of NCT of Delhi",
+    "hi": "राजस्व विभाग, दिल्ली सरकार",
+    "hn": "Revenue Department, Delhi Sarkar"
+  },
+  "aliases": [
+    "death certificate",
+    "mrityu praman patra",
+    "मृत्यु प्रमाण पत्र",
+    "death registration"
+  ],
+  "summary": {
+    "en": "Register a death and get the certificate from the local body (MCD, NDMC or Delhi Cantonment Board).",
+    "hi": "मृत्यु का पंजीकरण कराएँ और स्थानीय निकाय से प्रमाण पत्र पाएँ।",
+    "hn": "Death register karayein aur local body se certificate payein."
+  },
+  "benefit": {
+    "text": {
+      "en": "An official death certificate issued by the local body (MCD, NDMC or Delhi Cantonment Board).",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "who": [
+    {
+      "text": {
+        "en": "Every death must be reported and registered within 21 days at the place where it occurred.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Registration after 21 days but within 30 days needs a late fee of ₹2. After a month but within one year it needs the Registrar's written permission and a fee of ₹5.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s2"
+    },
+    {
+      "text": {
+        "en": "After one year, a Death Registration Order is needed. The death must have happened in Delhi, the deceased must be a citizen of India or an NRI born in Delhi with no death certificate from any government agency in India, and at least one year must have passed.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "documents": [
+    {
+      "text": {
+        "en": "For the Death Registration Order (late registration): identity proof and residential address proof of the applicant; identity proof and permanent address proof of the deceased.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    },
+    {
+      "text": {
+        "en": "Proof of death: cremation or burial slip, police enquiry report, hospital or nursing home report, or a court order.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    },
+    {
+      "text": {
+        "en": "A notarised affidavit on ₹10 non-judicial e-stamp paper in the prescribed format, a photo of the deceased, and a signed self-declaration.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "fee": {
+    "text": {
+      "en": "Additional copies are ₹5 each. Searching one entry in the current year costs ₹2, plus ₹2 for each additional year searched. The fee for the first copy is not stated: verify locally.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "time": {
+    "text": {
+      "en": "Within 7 days of receiving your application, if the death is already registered.",
+      "hi": null,
+      "hn": null
+    },
+    "source_ref": "s1"
+  },
+  "steps": [
+    {
+      "text": {
+        "en": "Report the death within 21 days to the Registrar of Births and Deaths of your local body (MCD zonal office or vaccination centre, NDMC, or Delhi Cantonment). MCD also registers deaths at several cremation grounds.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "Apply for the certificate at the registration centre or zonal office of that local body.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s1"
+    },
+    {
+      "text": {
+        "en": "For a Death Registration Order, apply at a Citizen Service Centre or upload documents on e-District. Submit the original affidavit to the SDM, Tehsildar or CSC by hand or by registered or speed post, quoting your acknowledgement number.",
+        "hi": null,
+        "hn": null
+      },
+      "source_ref": "s3"
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Registration of births and deaths, delayed registration (Revenue Department)",
+      "url": "https://revenue.delhi.gov.in/revenue/issue-orders-delayed-registration-birthdeath",
+      "publisher": "Revenue Department, GNCTD",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s2",
+      "title": "Directorate of Economics and Statistics: births and deaths FAQ",
+      "url": "https://des.delhi.gov.in/des/frequently-asked-questions-faq",
+      "publisher": "Directorate of Economics and Statistics, GNCTD (Chief Registrar, Births and Deaths)",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    },
+    {
+      "id": "s3",
+      "title": "Death Registration Order guidelines (DM North West)",
+      "url": "https://dmnorthwest.delhi.gov.in/service/apply-for-death-certificate",
+      "publisher": "District Magistrate North West, Revenue Department",
+      "date_checked": "2026-11-24",
+      "effective_date": null
+    }
+  ],
+  "notes": "The MCD portal link is for deaths registered with MCD. NDMC and Cantonment areas use their own centres.",
+  "jurisdiction": {
+    "level": "state",
+    "state": "Delhi"
+  },
+  "apply_url": "https://mcdonline.nic.in/rbd"
+}

@@ -33,9 +33,9 @@
   },
   "benefit": {
     "amount_text": {
-      "en": null,
-      "hi": null,
-      "hn": null
+      "en": "A certificate of your family's annual income, issued by the Revenue Department. No fee, and issued in about 14 days.",
+      "hi": "आपके परिवार की सालाना आय का प्रमाण पत्र, राजस्व विभाग द्वारा जारी। कोई शुल्क नहीं, लगभग 14 दिन में जारी।",
+      "hn": "Aapke parivaar ki saalana income ka certificate, Revenue Department dwara jaari. Koi fee nahi, lagbhag 14 din mein jaari."
     },
     "amount_inr": null,
     "frequency": null,
