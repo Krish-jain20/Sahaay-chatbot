@@ -50,6 +50,11 @@ T: dict[str, dict[Lang, str]] = {
         "hi": "इसकी सत्यापित जानकारी अभी मेरे पास नहीं है। अभी मैं दिल्ली की तीन सेवाओं में मदद कर सकता हूँ: आय प्रमाण पत्र, SC/ST/OBC मेरिट छात्रवृत्ति और वृद्धावस्था पेंशन।",
         "hn": "Iski verified jaankari abhi mere paas nahi hai. Abhi main Delhi ki teen services mein madad kar sakta hoon: income certificate, SC/ST/OBC merit scholarship aur old-age pension.",
     },
+    "guard.blocked": {
+        "en": "I can't give that answer safely. Please check the official page for this service.",
+        "hi": "मैं यह उत्तर सुरक्षित रूप से नहीं दे सकता। कृपया इस सेवा का आधिकारिक पेज देखें।",
+        "hn": "Main yeh jawaab safely nahi de sakta. Please is service ka official page dekhein.",
+    },
     "error.busy": {
         "en": "I'm getting too many requests right now. Please try again in a minute.",
         "hi": "अभी बहुत ज़्यादा अनुरोध आ रहे हैं। कृपया एक मिनट बाद फिर कोशिश करें।",

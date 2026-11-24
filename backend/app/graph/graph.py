@@ -27,6 +27,7 @@ from app.graph.templates import t
 from app.llm.client import LLM, BudgetExceeded, LLMError, RateLimited, Understanding
 from app.rules.eligibility import Fact, check
 from app.rules.fees import fee_strip, is_stale
+from app.safety.claims import find_violations
 from app.safety.pii import mask_pii
 
 Event = tuple[str, dict[str, Any]]
@@ -158,6 +159,12 @@ def compose(state: CaseState, config: RunnableConfig) -> CaseState:
     if rec.fees.official_online_inr is None or rec.timeline.sla_days is None:
         text += " " + t("verify_locally_note", lang)
     text += f" [{card['service']['source_n']}]"
+    if find_violations(text):
+        # A forbidden claim (e.g. "approved") must never reach the user, even from our own data.
+        for ev in stream_words(t("guard.blocked", lang)):
+            _emit(*ev)
+        _emit("done", {"refused": True})
+        return {}
     for ev in stream_words(text):
         _emit(*ev)
     for c in citations:

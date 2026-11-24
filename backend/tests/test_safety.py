@@ -160,20 +160,7 @@ def test_every_link_shown_as_official_is_allowlisted(catalog, client):
 
 # ---------------------------------------------------------------- claims we must never make
 
-FORBIDDEN = [
-    r"guarantee",
-    r"will be approved",
-    r"definitely (eligible|qualify)",
-    r"(document|certificate) is (genuine|authentic|real|valid)",
-    r"(verified|checked) (as )?(genuine|authentic)",
-    r"authenticity (is |has been )?verified",
-    r"live (government )?status",
-    r"status of your application is",
-    r"₹\[",
-    r"\[fee\]",
-    r"गारंटी",
-    r"ज़रूर (मंज़ूर|स्वीकृत)",
-]
+from app.safety.claims import FORBIDDEN  # noqa: E402
 
 
 def _strings(obj):

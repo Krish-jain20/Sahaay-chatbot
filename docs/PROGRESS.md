@@ -101,3 +101,5 @@ Delete-my-data already exists as an API (`DELETE /me/data`) and a link in chat.
 ## How to see the work
 - Everything merged is on `main`: https://github.com/Krish-jain20/Sahaay-chatbot
 - Run it: see README.md. Eval: `cd backend && uv run python -m tests.eval.run`.
+
+| S2-04 guard | done | `app/safety/claims.py` forbidden-claim scan (approved, guaranteed, genuine, live status, fee placeholders; en/hi/hn) runs on every answer in `compose` before streaming; a hit is replaced by a safe fallback. Tests plant an "approved" and scan all service data |
