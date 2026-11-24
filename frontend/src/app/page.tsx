@@ -21,6 +21,9 @@ export default function Home() {
             <Link href="/compare">{t("compare.link")}</Link>
           </Button>
           <Button asChild variant="secondary">
+            <Link href="/case">{t("nav.case")}</Link>
+          </Button>
+          <Button asChild variant="secondary">
             <Link href="/documents">{t("nav.documents")}</Link>
           </Button>
           <Button asChild variant="secondary">

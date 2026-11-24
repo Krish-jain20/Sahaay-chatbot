@@ -84,7 +84,8 @@
     "menu": "Main menu",
     "documents": "Documents",
     "drafts": "Drafts",
-    "forms": "Official form"
+    "forms": "Official form",
+    "case": "My case"
   },
   "panel": {
     "title": "Your details",
@@ -264,5 +265,45 @@
       "district": "District",
       "country": "Country"
     }
+  },
+  "case": {
+    "title": "My case",
+    "sub": "Track your own progress on one service. You mark each step yourself.",
+    "service": "Service",
+    "own": "Your own progress, not government status",
+    "s1": "Eligibility checked",
+    "s2": "Documents verified",
+    "s3": "Form filled",
+    "s4": "Submitted on official portal",
+    "s5": "Reference saved",
+    "done": "Done",
+    "current": "Current step",
+    "upcoming": "Not yet",
+    "mark": "Mark as done",
+    "undo": "Undo",
+    "next": "Next step",
+    "n1": "Check what you qualify for in the chat, then mark this step.",
+    "n2": "Add your documents and see what is missing, then mark this step.",
+    "n3": "Prepare your form, check every field, then mark this step.",
+    "n4": "Submit on the official portal or office. Enter the date you submitted, then mark this step.",
+    "n5": "Enter the reference number you received. We keep only the last 4 characters.",
+    "n6": "All five steps are recorded. Keep your reference number safe.",
+    "submittedOn": "Date you submitted",
+    "reference": "Reference number",
+    "referenceKept": "Saved as {ref}",
+    "submittedDate": "Submitted on {date}",
+    "readiness": "Documents ready",
+    "readyCount": "{done} of {total} required documents ready",
+    "readyCaption": "Based on your checklist. Not a prediction of approval.",
+    "openChat": "Open chat",
+    "openDocs": "Check documents",
+    "openForm": "Fill the official form",
+    "openDrafts": "Complaint or RTI draft",
+    "summary": "Download case summary (PDF)",
+    "loading": "Loading…",
+    "error": "Could not load. Please try again.",
+    "saveError": "Could not save. Please try again.",
+    "tooShort": "Please enter at least 4 letters or digits.",
+    "futureDate": "The date cannot be in the future."
   }
 }

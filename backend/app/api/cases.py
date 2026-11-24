@@ -7,14 +7,17 @@ itself is never stored. Readiness is computed from the stored documents by a pur
 
 from __future__ import annotations
 
+import re
 from dataclasses import asdict
 from datetime import date
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from app.api.auth import CurrentUser
+from app.rules.journey import STEP_KEYS, journey
 from app.rules.readiness import readiness
 
 router = APIRouter()
@@ -22,6 +25,12 @@ router = APIRouter()
 
 class CaseIn(BaseModel):
     service_id: str
+
+
+class StepIn(BaseModel):
+    step: int = Field(ge=1, le=len(STEP_KEYS))
+    submitted_on: date | None = None  # step 4
+    reference: str | None = Field(default=None, max_length=40)  # step 5; only the last 4 characters are kept
 
 
 class DocumentIn(BaseModel):
@@ -67,7 +76,63 @@ def get_case(case_id: str, user: CurrentUser, request: Request) -> dict[str, Any
     if case is None:
         raise HTTPException(404, "Case not found")
     docs = store.list_documents(user.id, case_id)
-    return {**case, "documents": docs, "readiness": _readiness(request, case, docs)}
+    return {
+        **case,
+        "documents": docs,
+        "readiness": _readiness(request, case, docs),
+        **_journey_view(store, user.id, case_id),
+    }
+
+
+def _journey_view(store: Any, user_id: str, case_id: str) -> dict[str, Any]:
+    j = journey(store.list_events(user_id, case_id))
+    return {
+        "journey": jsonable(
+            {
+                "label": "your_own_progress",  # user-recorded steps only, never government status
+                "steps": [asdict(s) for s in j.steps],
+                "current": j.current,
+                "completed": j.completed,
+            }
+        ),
+        "submission": store.get_submission(user_id, case_id),
+    }
+
+
+def mask_reference(raw: str) -> str:
+    """Keep only the last 4 letters/digits of a reference number."""
+    chars = re.sub(r"[^A-Za-z0-9]", "", raw)
+    if len(chars) < 4:
+        raise HTTPException(422, "Reference number is too short")
+    return "XXXX" + chars[-4:].upper()
+
+
+@router.post("/cases/{case_id}/steps", status_code=201)
+def record_step(case_id: str, body: StepIn, user: CurrentUser, request: Request) -> dict[str, Any]:
+    store = request.app.state.store
+    if store.get_case(user.id, case_id) is None:
+        raise HTTPException(404, "Case not found")
+    if body.submitted_on and body.submitted_on > date.today():
+        raise HTTPException(422, "Submission date cannot be in the future")
+    reference = None
+    if body.step == 5:
+        if not body.reference:
+            raise HTTPException(422, "Reference number is required for this step")
+        reference = mask_reference(body.reference)
+    store.add_event(user.id, case_id, body.step, None)
+    if reference or body.submitted_on:
+        store.save_submission(
+            user.id, case_id, reference, body.submitted_on.isoformat() if body.submitted_on else None
+        )
+    return _journey_view(store, user.id, case_id)
+
+
+@router.delete("/cases/{case_id}/steps/{step}")
+def undo_step(case_id: str, step: int, user: CurrentUser, request: Request) -> dict[str, Any]:
+    store = request.app.state.store
+    if not 1 <= step <= len(STEP_KEYS) or not store.delete_event(user.id, case_id, step):
+        raise HTTPException(404, "Case or step not found")
+    return _journey_view(store, user.id, case_id)
 
 
 @router.post("/cases/{case_id}/documents", status_code=201)
@@ -107,3 +172,39 @@ def save_document(case_id: str, body: DocumentIn, user: CurrentUser, request: Re
     doc = store.save_document(user.id, case_id, body.doc_type, fields, str(issue) if issue else None)
     docs = store.list_documents(user.id, case_id)
     return {"document": doc, "readiness": _readiness(request, case, docs)}
+
+
+@router.get("/cases/{case_id}/summary.pdf")
+def summary_pdf(case_id: str, user: CurrentUser, request: Request, lang: str = "en") -> Response:
+    from app.pdf import summary
+
+    store = request.app.state.store
+    case = store.get_case(user.id, case_id)
+    if case is None:
+        raise HTTPException(404, "Case not found")
+    record = request.app.state.catalog.services[case["service_id"]]
+    docs = store.list_documents(user.id, case_id)
+    lang_ = "hi" if lang == "hi" else "en"
+    doc_names = {
+        d["id"]: (d["name"].get("hi") if lang_ == "hi" else d["name"].get("en")) or d["id"]
+        for d in request.app.state.doc_types.values()
+    }
+    try:
+        pdf = summary.render_pdf(
+            record,
+            lang_,
+            readiness(record, docs, date.today()),
+            journey(store.list_events(user.id, case_id)),
+            store.get_submission(user.id, case_id),
+            doc_names,
+        )
+    except Exception as e:  # noqa: BLE001 - WeasyPrint raises many types when system libraries are missing
+        raise HTTPException(503, "pdf_unavailable") from e
+    return Response(
+        pdf,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": 'attachment; filename="sahaay-case-summary.pdf"',
+            "Cache-Control": "no-store",
+        },
+    )

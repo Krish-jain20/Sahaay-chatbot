@@ -58,10 +58,27 @@ export interface Readiness {
   total: number;
   checks: Check[];
 }
+export interface JourneyStep {
+  n: number;
+  key: string;
+  done: boolean;
+  done_at: string | null;
+}
+export interface Journey {
+  steps: JourneyStep[];
+  current: number | null;
+  completed: number;
+}
+export interface Submission {
+  reference_no_masked: string | null;
+  submitted_on: string | null;
+}
 export interface CaseView {
   id: string;
   service_id: string;
   readiness: Readiness;
+  journey: Journey;
+  submission: Submission | null;
 }
 export interface DocTypeInfo {
   id: string;
@@ -186,4 +203,25 @@ export async function downloadForm(id: string, values: Record<string, string>, h
     body: JSON.stringify({ values, confirmed_hash: hash, checked_all_fields: true }),
   });
   return res.ok ? await res.blob() : formError(res);
+}
+
+// ---- Journey (steps the user records themselves) ----------------------------------------
+
+export async function recordStep(
+  caseId: string,
+  step: number,
+  extra: { submitted_on?: string; reference?: string } = {},
+): Promise<{ journey: Journey; submission: Submission | null } | { error: string }> {
+  const res = await authed(`/cases/${caseId}/steps`, { method: "POST", body: JSON.stringify({ step, ...extra }) });
+  return res.ok ? await res.json() : formError(res);
+}
+
+export async function undoStep(caseId: string, step: number): Promise<{ journey: Journey; submission: Submission | null } | null> {
+  const res = await authed(`/cases/${caseId}/steps/${step}`, { method: "DELETE" });
+  return res.ok ? await res.json() : null;
+}
+
+export async function downloadSummary(caseId: string, lang: string): Promise<Blob | null> {
+  const res = await authed(`/cases/${caseId}/summary.pdf?lang=${lang === "hi" ? "hi" : "en"}`);
+  return res.ok ? await res.blob() : null;
 }
