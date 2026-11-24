@@ -58,6 +58,19 @@ T: dict[str, dict[str, Any]] = {
         "checked": "checked",
         "footer": "Drafted with Sahaay, an AI assistant, not an official government channel. Confirm details on the official source.",
         "rs": "Rs.",
+        "added": "A service you added. These details are your own and are not checked by Sahaay.",
+        "ai": "Some details were suggested by AI from a web search and are not checked by Sahaay. Confirm them at the office or on the official portal.",
+        "your_docs": "Your document list",
+        "have": "You said you have it",
+        "need": "Not yet",
+        "your_steps": "Steps you noted",
+        "portal": "Link you added",
+        "timeline": "Expected time (your own estimate)",
+        "days_plain": "{n} days",
+        "key_date": "Your date",
+        "kinds": {"deadline": "Last date", "appointment": "Appointment", "other": "Date"},
+        "todos": "Your to-do list",
+        "ai_sources": "Pages the AI suggestion used",
     },
     "hi": {
         "title": "केस सारांश",
@@ -90,6 +103,19 @@ T: dict[str, dict[str, Any]] = {
         "checked": "जाँचा",
         "footer": "यह सारांश सहाय (AI सहायक, सरकारी माध्यम नहीं) की मदद से बना है। विवरण आधिकारिक स्रोत से पक्का करें।",
         "rs": "रु.",
+        "added": "आपकी जोड़ी हुई सेवा। ये विवरण आपके अपने हैं, सहाय ने इन्हें जाँचा नहीं है।",
+        "ai": "कुछ विवरण AI ने वेब खोज से सुझाए हैं और सहाय ने इन्हें जाँचा नहीं है। दफ़्तर या आधिकारिक पोर्टल पर पक्का करें।",
+        "your_docs": "आपकी दस्तावेज़ सूची",
+        "have": "आपने कहा आपके पास है",
+        "need": "अभी नहीं",
+        "your_steps": "आपके लिखे चरण",
+        "portal": "आपका जोड़ा हुआ लिंक",
+        "timeline": "अनुमानित समय (आपका अपना अनुमान)",
+        "days_plain": "{n} दिन",
+        "key_date": "आपकी तारीख",
+        "kinds": {"deadline": "आख़िरी तारीख", "appointment": "अपॉइंटमेंट", "other": "तारीख"},
+        "todos": "आपकी करने की सूची",
+        "ai_sources": "AI सुझाव में इस्तेमाल हुए पेज",
     },
 }
 
@@ -161,6 +187,84 @@ def build_html(
         + " h2 { font-size: 12.5pt; color: #0f4c5c; margin: 14pt 0 4pt; } ul { padding-left: 14pt; font-size: 9.5pt; }"
     )
     return f"<!doctype html><html lang='{lang}'><head><meta charset='utf-8'><style>{css}</style></head><body>{''.join(p)}</body></html>"
+
+
+def _progress(t: dict[str, Any], jr: Journey, submission: dict[str, Any] | None) -> list[str]:
+    p = [f"<p><b>{_e(t['own'])}</b></p>", "<dl>"]
+    for s in jr.steps:
+        when = f" ({s.done_at.date().isoformat()})" if s.done and s.done_at else ""
+        mark = t["done"] if s.done else t["todo"]
+        p.append(f"<dt>{s.n}. {_e(t['steps'][s.n - 1])}</dt><dd>{_e(mark)}{_e(when)}</dd>")
+    p.append("</dl>")
+    if submission and (submission.get("submitted_on") or submission.get("reference_no_masked")):
+        p.append(f"<h2>{_e(t['submission'])}</h2><dl>")
+        if submission.get("submitted_on"):
+            p.append(f"<dt>{_e(t['submitted_on'])}</dt><dd>{_e(submission['submitted_on'])}</dd>")
+        if submission.get("reference_no_masked"):
+            p.append(f"<dt>{_e(t['reference'])}</dt><dd>{_e(submission['reference_no_masked'])}</dd>")
+        p.append("</dl>")
+    return p
+
+
+def build_custom_html(
+    custom: dict[str, Any],
+    lang: Lang,
+    ready: Readiness,
+    jr: Journey,
+    submission: dict[str, Any] | None,
+    state: dict[str, Any],
+) -> str:
+    """Summary of a service the user added: only their own details, each labelled as such."""
+    t = T[lang]
+    p = [f"<h1>{_e(t['title'])}: {_e(custom.get('name', ''))}</h1>"]
+    if custom.get("department"):
+        p.append(f"<p>{_e(custom['department'])}</p>")
+    p.append(f"<p>{_e(t['added'])}</p>")
+    if custom.get("ai_suggested"):
+        p.append(f"<p>{_e(t['ai'])}</p>")
+    p += _progress(t, jr, submission)
+    kd = state.get("key_date")
+    if kd and kd.get("on"):
+        kind = t["kinds"].get(kd.get("kind"), t["kinds"]["other"])
+        label = f" ({kd['label']})" if kd.get("label") else ""
+        p.append(f"<h2>{_e(t['key_date'])}</h2><dl><dt>{_e(kind)}{_e(label)}</dt><dd>{_e(kd['on'])}</dd></dl>")
+    names = {d["id"]: d["name"] for d in custom.get("documents", [])}
+    if ready.checks:
+        p.append(f"<h2>{_e(t['your_docs'])}</h2><p>{_e(t['ready'].format(done=ready.completed, total=ready.total))}</p><dl>")
+        for c in ready.checks:
+            p.append(f"<dt>{_e(names.get(c.doc_type, c.doc_type))}</dt><dd>{_e(t['have'] if c.status.value == 'ok' else t['need'])}</dd>")
+        p.append("</dl>")
+    if custom.get("steps"):
+        p.append(f"<h2>{_e(t['your_steps'])}</h2><ol>")
+        p += [f"<li>{_e(st)}</li>" for st in custom["steps"]]
+        p.append("</ol>")
+    todos = state.get("todos") or []
+    if todos:
+        p.append(f"<h2>{_e(t['todos'])}</h2><ul>")
+        p += [f"<li>{_e(t['done'] if td.get('done') else t['todo'])}: {_e(td['text'])}</li>" for td in todos]
+        p.append("</ul>")
+    p.append("<dl>")
+    days = t["days_plain"].format(n=custom["timeline_days"]) if custom.get("timeline_days") else t["verify"]
+    p.append(f"<dt>{_e(t['timeline'])}</dt><dd>{_e(days)}</dd>")
+    if custom.get("portal_url"):
+        p.append(f"<dt>{_e(t['portal'])}</dt><dd>{_e(custom['portal_url'])}</dd>")
+    p.append("</dl>")
+    if custom.get("sources"):
+        p.append(f"<h2>{_e(t['ai_sources'])}</h2><ul>")
+        p += [f"<li>{_e(src.get('title') or '')}, {_e(src['url'])}</li>" for src in custom["sources"]]
+        p.append("</ul>")
+    p.append(f"<div class='foot'>{_e(t['footer'])} {date.today().isoformat()}</div>")
+    css = (
+        CSS
+        + " h2 { font-size: 12.5pt; color: #0f4c5c; margin: 14pt 0 4pt; } ul, ol { padding-left: 14pt; font-size: 9.5pt; }"
+    )
+    return f"<!doctype html><html lang='{lang}'><head><meta charset='utf-8'><style>{css}</style></head><body>{''.join(p)}</body></html>"
+
+
+def render_custom_pdf(*args: Any, **kwargs: Any) -> bytes:
+    from weasyprint import HTML
+
+    return HTML(string=build_custom_html(*args, **kwargs)).write_pdf()
 
 
 def render_pdf(*args: Any, **kwargs: Any) -> bytes:

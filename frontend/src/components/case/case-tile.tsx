@@ -3,12 +3,21 @@
 import { useTranslations } from "next-intl";
 
 import { AlertIcon, ArrowRightIcon } from "@/components/icons";
-import type { CaseCard } from "@/lib/api";
+import type { CaseCard, KeyDate } from "@/lib/api";
+import { cn } from "@/lib/utils";
+
+type Tr = (key: string, values?: Record<string, string | number>) => string;
+
+/** "3 days left", "Today", "2 days ago": the user's own date, worded the same everywhere. */
+export function dateWhen(tt: Tr, kd: KeyDate): string {
+  if (kd.days_left === 0) return tt("dateToday");
+  return kd.passed ? tt("datePassed", { n: -kd.days_left }) : tt("dateLeft", { n: kd.days_left });
+}
 
 /** One case as a card: same look as the Drafts and Home cards. Progress is the user's own record. */
 export function CaseTile({ card, onOpen }: { card: CaseCard; onOpen: () => void }) {
   const t = useTranslations("case");
-  const tt = t as unknown as (key: string, values?: Record<string, string | number>) => string;
+  const tt = t as unknown as Tr;
   const ov = card.overview;
   const pct = Math.round((ov.steps_done / ov.steps_total) * 100);
   return (
@@ -18,8 +27,25 @@ export function CaseTile({ card, onOpen }: { card: CaseCard; onOpen: () => void 
       data-testid={`case-${card.service_id}`}
       className="group flex h-full min-h-44 w-full flex-col rounded-[20px] border border-line bg-surface p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-teal-700 hover:shadow-[0_10px_24px_rgba(15,76,92,0.12)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
     >
+      {card.custom && (
+        <span className="mb-2 self-start rounded-full bg-bg-sunken px-2.5 py-0.5 text-[12px] font-semibold text-ink-2" data-testid="added-by-you">
+          {t("addedByYou")}
+        </span>
+      )}
       <span className="font-display text-[19px] font-bold leading-tight">{card.service_name}</span>
-      <span className="mt-0.5 text-[13.5px] text-ink-3">{card.department}</span>
+      {card.department && <span className="mt-0.5 text-[13.5px] text-ink-3">{card.department}</span>}
+
+      {card.key_date && (
+        <span
+          className={cn(
+            "mt-3 self-start rounded-full px-2.5 py-1 text-[13px] font-semibold",
+            card.key_date.passed ? "bg-bg-sunken text-ink-2" : card.key_date.soon ? "bg-marigold-500 text-ink" : "bg-teal-100 text-teal-700",
+          )}
+          data-testid="tile-date"
+        >
+          {tt(`kind.${card.key_date.kind}`)}: {card.key_date.on} · {dateWhen(tt, card.key_date)}
+        </span>
+      )}
 
       <span className="mt-4 text-[13.5px] font-semibold text-ink-2">{tt("stepsRecorded", { done: ov.steps_done, total: ov.steps_total })}</span>
       <span aria-hidden className="mt-1.5 block h-2 overflow-hidden rounded-full bg-bg-sunken">
@@ -37,7 +63,10 @@ export function CaseTile({ card, onOpen }: { card: CaseCard; onOpen: () => void 
       )}
 
       <span className="mt-auto flex items-center justify-between gap-2 pt-4 text-[13.5px]">
-        <span className="text-ink-3">{tt("docsReady", { done: ov.docs_ready, total: ov.docs_total })}</span>
+        <span className="text-ink-3">
+          {tt("docsReady", { done: ov.docs_ready, total: ov.docs_total })}
+          {card.todos.length > 0 && <span className="block">{tt("todoCount", { done: card.todos_done, total: card.todos.length })}</span>}
+        </span>
         <ArrowRightIcon className="size-4 text-teal-700 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
       </span>
     </button>
