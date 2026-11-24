@@ -96,6 +96,7 @@ class LLMRequest:
     schema: type[BaseModel] | None = None
     image: bytes | None = None
     image_mime: str = "image/png"
+    web: bool = False  # let the provider ground the answer in a live web search
 
 
 @dataclass
@@ -103,6 +104,13 @@ class LLMResponse:
     text: str
     tokens_in: int = 0
     tokens_out: int = 0
+    sources: list[dict[str, str]] = field(default_factory=list)  # [{"title", "url"}] from web grounding
+
+
+@dataclass
+class WebAnswer:
+    text: str
+    sources: list[dict[str, str]]
 
 
 class Provider(Protocol):
@@ -129,6 +137,8 @@ class GeminiProvider:
         if req.schema is not None:
             config["response_mime_type"] = "application/json"
             config["response_schema"] = req.schema
+        if req.web:
+            config["tools"] = [t.Tool(google_search=t.GoogleSearch())]
         contents: list[Any] = [req.text]
         if req.image is not None:
             contents.insert(0, t.Part.from_bytes(data=req.image, mime_type=req.image_mime))
@@ -136,10 +146,17 @@ class GeminiProvider:
             model=req.model, contents=contents, config=t.GenerateContentConfig(**config)
         )
         usage = resp.usage_metadata
+        sources: list[dict[str, str]] = []
+        if req.web and resp.candidates:
+            meta = resp.candidates[0].grounding_metadata
+            for chunk in (meta.grounding_chunks or []) if meta else []:
+                if chunk.web and chunk.web.uri:
+                    sources.append({"title": chunk.web.title or "", "url": chunk.web.uri})
         return LLMResponse(
             text=resp.text or "",
             tokens_in=(usage.prompt_token_count or 0) if usage else 0,
             tokens_out=(usage.candidates_token_count or 0) if usage else 0,
+            sources=sources,
         )
 
 
@@ -340,6 +357,26 @@ class LLM:
             image_mime=mime,
         )
         return VisionResult.model_validate_json(self._call(user_id, req).text)
+
+    @property
+    def web_enabled(self) -> bool:
+        return self.live and self.settings.web_search_enabled
+
+    def web_search(self, question: str, lang: str, *, user_id: str) -> WebAnswer | None:
+        """Answer from a live web search. `question` is masked in `_call`; returns None if unavailable."""
+        if not self.web_enabled:
+            return None
+        req = LLMRequest(
+            model=self.settings.llm_model_web or self.settings.llm_model_strong,
+            system=load_prompt("web_search") + f"\nLanguage: {lang}",
+            text=f"<question>\n{question}\n</question>",
+            web=True,
+        )
+        resp = self._call(user_id, req)
+        text = resp.text.strip()
+        if not text or text == "NO_SOURCE":
+            return None
+        return WebAnswer(text=text, sources=resp.sources)
 
     def draft(self, kind: str, facts: dict[str, Any], lang: str, *, user_id: str) -> str:
         req = LLMRequest(

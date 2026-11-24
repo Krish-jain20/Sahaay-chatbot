@@ -344,7 +344,8 @@
     "loading": "Load ho raha hai…",
     "error": "Load nahi ho paya. Dobara try kijiye.",
     "deleteError": "Delete nahi ho paya. Dobara try kijiye.",
-    "reports": "Har jawab ke saath official sources aur check ki date dikhti hai. Kuch galat lage to service card par “Galat information report karein” use kijiye."
+    "reports": "Har jawab ke saath official sources aur check ki date dikhti hai. Kuch galat lage to service card par “Galat information report karein” use kijiye.",
+    "webNote": "Agar aapke sawaal ka Sahaay ke paas verified record nahi hai, to woh web par search kar sakta hai. Sirf aapka sawaal, jismein identity numbers pehle hi chhupa diye jaate hain, AI model aur uske search provider (Google) ko jaata hai. Web ke jawaab unverified ke roop mein mark hote hain."
   },
   "account": {
     "title": "Aapka account",
@@ -365,5 +366,11 @@
     "loading": "Load ho raha hai...",
     "error": "Yeh guide load nahi ho saki. Please dobara try karein.",
     "note": "Official portals se general jaankari, legal advice nahi. Sahaay ek AI assistant hai, official government channel nahi."
+  },
+  "web": {
+    "sources": "Web par mile sources",
+    "official": "Sahaay ki checked official list mein",
+    "unofficial": "Sahaay ki official list mein nahi",
+    "retrieved": "{date} ko search kiya gaya. Kuch bhi karne se pehle official page check kar lein. Yeh approval ya kisi benefit ka vaada nahi hai."
   }
 }

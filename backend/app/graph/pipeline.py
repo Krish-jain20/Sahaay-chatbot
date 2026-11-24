@@ -53,13 +53,18 @@ def retrieve(catalog: Catalog, message: str, u: Understanding) -> list[ServiceRe
         score = sum(3 for n in names if n and n.casefold() in text)
         name_words = set(re.findall(r"\w+", " ".join(names).casefold())) - STOPWORDS
         score += len(words & name_words)
+        # A bare category word ("certificate") is not enough: "domicile certificate" must not
+        # match the income certificate. A record needs its own name, or a stated fact that fits it.
+        evidence = score > 0
         for cat in rec.category:
             score += sum(2 for w in CATEGORY_WORDS.get(cat, ()) if w in text)
             if cat == "scholarship" and u.facts.occupation == "student":
                 score += 2
+                evidence = True
             if cat == "pension" and ((u.facts.age or 0) >= 60 or u.facts.occupation == "retired"):
                 score += 2
-        if score:
+                evidence = True
+        if score and evidence:
             scored.append((score, rec))
     scored.sort(key=lambda x: -x[0])
     return [r for _, r in scored]

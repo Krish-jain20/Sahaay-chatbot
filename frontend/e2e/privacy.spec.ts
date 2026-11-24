@@ -22,3 +22,8 @@ test("account panel says sign-in is unavailable when Supabase is not configured"
   await page.goto("/privacy");
   await expect(page.getByTestId("signin-unavailable")).toBeVisible();
 });
+
+test("privacy page says questions may go to a web search provider", async ({ page }) => {
+  await page.goto("/privacy");
+  await expect(page.getByTestId("web-note")).toContainText("search provider");
+});

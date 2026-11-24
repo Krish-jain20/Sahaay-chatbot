@@ -28,6 +28,7 @@ export default async function PrivacyPage() {
           {list(["never1", "never2", "never3"])}
         </section>
         <p className="rounded-xl bg-marigold-050 px-4 py-3 text-[14px] text-ink-2">{t("privacy.modelNote")}</p>
+        <p className="rounded-xl bg-marigold-050 px-4 py-3 text-[14px] text-ink-2" data-testid="web-note">{t("privacy.webNote")}</p>
         <p className="text-[14px] text-ink-3">{t("privacy.reports")}</p>
         <AccountPanel />
         <MyDataPanel />
