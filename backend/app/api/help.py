@@ -17,10 +17,10 @@ from pydantic import BaseModel, Field
 from app.api.auth import CurrentUser
 from app.data.guidance import GuidanceSet
 from app.data.models import Lang
-from app.graph.websearch import _URL, run_web_search
+from app.graph.websearch import _URL, run_web_search, web_card
 from app.llm.client import BudgetExceeded, LLMError, RateLimited
 from app.safety.claims import find_violations
-from app.safety.pii import mask, mask_pii
+from app.safety.pii import mask_pii
 
 router = APIRouter()
 
@@ -37,21 +37,27 @@ def _words(text: str) -> set[str]:
 
 
 def _all_cards(g: GuidanceSet) -> list[tuple[str, str, str]]:
-    """(card id, topic id, searchable text in every language)."""
+    """(card id, heading text, body text), each in every language."""
     out = []
     for topic in g.topics.values():
         for p in topic.points:
-            text = " ".join(f"{p.heading.get(lg) or ''} {p.body.get(lg) or ''}" for lg in LANGS)
-            out.append((f"{topic.id}.{p.id}", topic.id, text))
+            head = " ".join(p.heading.get(lg) or "" for lg in LANGS)
+            text = " ".join(p.body.get(lg) or "" for lg in LANGS)
+            out.append((f"{topic.id}.{p.id}", head, text))
     return out
 
 
 def match_cards(g: GuidanceSet, question: str, limit: int = 3) -> list[str]:
     q = _words(question)
     scored = []
-    for cid, _topic, text in _all_cards(g):
-        hay = _words(text)
-        score = sum(1 for w in q if w in hay or any(w in h for h in hay if len(w) >= 4))
+    for cid, head, text in _all_cards(g):
+        hay_h, hay_b = _words(head), _words(text)
+
+        def hit(w: str, hay: set[str]) -> bool:
+            return w in hay or (len(w) >= 4 and any(w in h for h in hay))
+
+        # A word in the card's heading counts double.
+        score = sum((2 if hit(w, hay_h) else 0) + (1 if hit(w, hay_b) else 0) for w in q)
         if score:
             scored.append((score, cid))
     scored.sort(key=lambda s: (-s[0], s[1]))
@@ -74,31 +80,55 @@ class AskRequest(BaseModel):
     language: Lang = "en"
 
 
+def _clean(text: str | None) -> str | None:
+    """Model text is shown only without links or identity numbers and without a forbidden claim."""
+    if not text:
+        return None
+    out = _URL.sub("", mask_pii(text)[0]).strip()
+    return None if not out or find_violations(out) else out
+
+
+def _card_texts(g: GuidanceSet, ids: list[str], lang: Lang) -> list[tuple[str, str]]:
+    out = []
+    for cid in ids:
+        topic_id, _, point_id = cid.partition(".")
+        point = next(p for p in g.topics[topic_id].points if p.id == point_id)
+        out.append((cid, f"{point.heading.get(lang)}\n{point.body.get(lang)}"))
+    return out
+
+
 @router.post("/help/ask")
 def ask(body: AskRequest, request: Request, user: CurrentUser) -> dict[str, Any]:
+    """Answer a free question. Order: live web answer, then the matching cards with labelled general
+    guidance, then the top card's own text. A person with a matching card never gets a bare 'no answer'."""
     g: GuidanceSet = request.app.state.guidance
     question = mask_pii(body.question)[0].strip()
     matches = match_cards(g, question)
+    llm = request.app.state.llm
+    today = date.today().isoformat()
     answer: str | None = None
     web: dict[str, Any] | None = None
-    state = "unavailable"
-    llm = request.app.state.llm
+    basis = "none"
     if llm.web_enabled:
         # The question doubles as the search query: a long preamble drowns it and the search returns
         # unrelated government pages, so add only a short place hint.
         res = run_web_search(
-            llm,
-            request.app.state.catalog,
-            help_query(question),
-            body.language,
-            user.id,
-            date.today().isoformat(),
+            llm, request.app.state.catalog, help_query(question), body.language, user.id, today
         )
-        if res.card is None:
-            state = "blocked" if res.blocked else "none"
-        else:
-            answer, web, state = res.text, res.card, "ok"
-    return {"answer": answer, "web": web, "matches": matches, "state": state}
+        if res.card is not None:
+            answer, web, basis = res.text, res.card, "web"
+    texts = _card_texts(g, matches, body.language)
+    if answer is None:
+        cards = "\n\n".join(f"[{cid}]\n{t}" for cid, t in texts) or "(no matching card)"
+        try:
+            answer = _clean(llm.help_answer(question, cards, body.language, user_id=user.id))
+        except (RateLimited, BudgetExceeded, LLMError):
+            answer = None
+        if answer:
+            basis = "cards"
+        elif texts:
+            answer, basis = texts[0][1].split("\n", 1)[1], "card_text"
+    return {"answer": answer, "web": web, "matches": matches, "basis": basis, "state": basis}
 
 
 class ExplainRequest(BaseModel):
@@ -108,7 +138,9 @@ class ExplainRequest(BaseModel):
 
 
 @router.post("/help/explain")
-def explain(body: ExplainRequest, request: Request, user: CurrentUser) -> dict[str, str]:
+def explain(body: ExplainRequest, request: Request, user: CurrentUser) -> dict[str, Any]:
+    """Without a situation: the card in plain words. With one: a practical answer to that situation,
+    from the card text plus a web lookup (official pages first), with sources and the search date."""
     g: GuidanceSet = request.app.state.guidance
     topic_id, _, point_id = body.card_id.partition(".")
     topic = g.topics.get(topic_id)
@@ -116,15 +148,20 @@ def explain(body: ExplainRequest, request: Request, user: CurrentUser) -> dict[s
     if point is None:
         raise HTTPException(404, "unknown_card")
     card_text = f"{point.heading.get(body.language)}\n{point.body.get(body.language)}"
+    situation = mask_pii(body.situation)[0].strip()
+    llm = request.app.state.llm
+    text: str | None = None
+    web: dict[str, Any] | None = None
     try:
-        out = request.app.state.llm.explain_card(
-            card_text, mask(body.situation).strip(), body.language, user_id=user.id
-        )
+        if situation:
+            ans = llm.situation_answer(card_text, situation, body.language, user_id=user.id)
+            text = _clean(ans.text) if ans else None
+            if text and ans and ans.sources:
+                web = web_card(ans.sources, request.app.state.catalog, date.today().isoformat())
+        else:
+            text = _clean(llm.explain_card(card_text, "", body.language, user_id=user.id))
     except (RateLimited, BudgetExceeded, LLMError):
-        out = None
-    if not out:
+        text = None
+    if not text:
         raise HTTPException(503, "explain_unavailable")
-    text = _URL.sub("", mask_pii(out)[0]).strip()
-    if not text or find_violations(text):
-        raise HTTPException(503, "explain_unavailable")
-    return {"text": text}
+    return {"text": text, "web": web, "basis": "web" if web else "card"}

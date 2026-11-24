@@ -5,7 +5,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { WebCard } from "@/components/cards/web-card";
 import { ChevronDownIcon } from "@/components/icons";
-import { askHelp, explainHelpCard, type HelpAnswer } from "@/lib/api";
+import { askHelp, explainHelpCard, type HelpAnswer, type HelpExplanation } from "@/lib/api";
 import { API_URL } from "@/lib/sse";
 import type { GuideCardData } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -128,14 +128,14 @@ export function HelpHub() {
             <>
               {reply.answer ? (
                 <>
-                  <p className="text-[13.5px] font-semibold text-ink-3">{t("aiNote")}</p>
+                  <p className="text-[13.5px] font-semibold text-ink-3">
+                    {reply.basis === "web" ? t("aiNote") : reply.basis === "cards" ? t("askCardsNote") : t("askCardTextNote")}
+                  </p>
                   <p data-testid="help-answer-text">{reply.answer}</p>
                   {reply.web && <WebCard card={reply.web} />}
                 </>
               ) : (
-                <p role="status" data-testid="help-answer-none">
-                  {reply.state === "unavailable" ? t("aiOff") : t("noAnswer")}
-                </p>
+                <p role="status" data-testid="help-answer-none">{t("noAnswer")}</p>
               )}
               {reply.matches.length > 0 && (
                 <div>
@@ -225,7 +225,7 @@ function HelpCard({ id, point, open, lit, onToggle }: { id: string; point: Point
   const panelId = `${uid}-panel`;
   const [situation, setSituation] = useState("");
   const [busy, setBusy] = useState(false);
-  const [text, setText] = useState<string | null>(null);
+  const [result, setResult] = useState<HelpExplanation | null>(null);
   const [failed, setFailed] = useState(false);
   const seen = useRef(locale);
 
@@ -233,7 +233,7 @@ function HelpCard({ id, point, open, lit, onToggle }: { id: string; point: Point
   useEffect(() => {
     if (seen.current !== locale) {
       seen.current = locale;
-      setText(null);
+      setResult(null);
     }
   }, [locale]);
 
@@ -243,7 +243,7 @@ function HelpCard({ id, point, open, lit, onToggle }: { id: string; point: Point
     setFailed(false);
     const r = await explainHelpCard(id, locale, situation.trim());
     setBusy(false);
-    if (r) setText(r);
+    if (r) setResult(r);
     else setFailed(true);
   }
 
@@ -290,10 +290,11 @@ function HelpCard({ id, point, open, lit, onToggle }: { id: string; point: Point
               {busy ? t("explaining") : t("explain")}
             </button>
           </div>
-          {text && (
-            <div role="status" data-testid="help-explanation" className="space-y-1">
-              <p className="text-[12.5px] font-semibold text-ink-3">{t("explainNote")}</p>
-              <p>{text}</p>
+          {result && (
+            <div role="status" data-testid="help-explanation" className="space-y-2">
+              <p className="text-[12.5px] font-semibold text-ink-3">{result.web ? t("explainNote") : t("explainNoteCard")}</p>
+              <p className="whitespace-pre-line">{result.text}</p>
+              {result.web && <WebCard card={result.web} />}
             </div>
           )}
           {failed && <p role="status" className="text-[14px] text-ink-2">{t("explainFailed")}</p>}
