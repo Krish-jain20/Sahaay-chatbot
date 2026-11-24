@@ -89,7 +89,8 @@ Needs the WeasyPrint system libraries (Pango) and Noto fonts; PDF tests skip whe
 | S6-08 | done | README: setup, the two settings files, tests, Docker, 5-minute demo script, known gaps (no screenshots yet) |
 | S6-04 | done | `tests/test_safety.py`: full numbers never reach the model, logs, responses or stored reports; injection in chat and in uploaded documents is inert (document text never reaches the model); allowlist is exact-host and every shown link is on it; no forbidden claims (guarantee, authenticity verified, live status, fee placeholders) in any language; no emblem assets |
 | S6-05 | done, automated only | axe-core (WCAG 2.1 A/AA) over all 8 pages at phone and desktop width plus chat with a card and the draft review screen: no violations. Also tested: 44px tap targets, reduced motion (no animation), visible focus ring while tabbing, streaming announced politely. Fixed: language buttons were 36px high. Not done: a manual keyboard and screen-reader pass with real assistive tech |
-| S6-01, S6-03, S6-07 | todo | email sign-in, Postgres checkpointer, human copy review |
+| S6-03 | done, local Postgres only | `app/graph/checkpoint.py`: Postgres checkpointer when `DATABASE_URL` is set, in-memory otherwise. Chat messages are PII-masked before they enter checkpointed state. Verified against a local Postgres (state survives a restart, no raw identity numbers stored). Not yet run against the real Supabase database: needs `DATABASE_URL` |
+| S6-01, S6-07 | todo | email sign-in, human copy review |
 
 ## Stage 6 and the rest
 Not started: glossary and screenshots (5),

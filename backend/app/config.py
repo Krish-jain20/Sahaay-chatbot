@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_anon_key: str = ""
     supabase_secret_key: str = ""
+    database_url: str = ""  # Postgres connection string; empty keeps conversation state in memory
     auth_required: bool = True
     freshness_days: int = 90
     data_dir: Path = REPO_ROOT / "data"
